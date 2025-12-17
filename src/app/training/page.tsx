@@ -139,8 +139,10 @@ export default function TrainingPage() {
               : 0
             
             const totalInCategory = allQuestions[cat].length
+            // If user completed all questions, set to total (shows "Complete" screen)
+            // Otherwise, set to max answered (shows next question)
             newIndices[cat] = maxQuestionNumber >= totalInCategory 
-              ? totalInCategory - 1 
+              ? totalInCategory 
               : maxQuestionNumber
           })
           setCurrentQuestionIndex(newIndices)
