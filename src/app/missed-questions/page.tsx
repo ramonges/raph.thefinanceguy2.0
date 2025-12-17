@@ -30,7 +30,7 @@ const categoryIcons: Record<Category, React.ElementType> = {
 }
 
 const categoryColors: Record<Category, string> = {
-  'mental-maths': '#00d4aa',
+  'mental-maths': '#f97316',
   'proba': '#6366f1',
   'trading': '#f59e0b',
   'behavioral': '#8b5cf6',
@@ -61,7 +61,7 @@ function MissedQuestionCard({
 }) {
   const section = question.section as Category
   const Icon = categoryIcons[section] || Calculator
-  const color = categoryColors[section] || '#00d4aa'
+  const color = categoryColors[section] || '#f97316'
 
   return (
     <div className="bg-[#111827] border border-[#1f2937] rounded-xl overflow-hidden transition-all duration-200 hover:border-[#374151]">
@@ -104,7 +104,7 @@ function MissedQuestionCard({
       {expanded && (
         <div className="px-5 pb-5 border-t border-[#1f2937] pt-4 fade-in">
           <div className="bg-[#0a0f1a] rounded-xl p-4 mb-4">
-            <h4 className="text-sm font-semibold text-[#00d4aa] mb-2">Correct Answer:</h4>
+            <h4 className="text-sm font-semibold text-[#f97316] mb-2">Correct Answer:</h4>
             <p className="text-[#e8eaed] whitespace-pre-wrap">{question.correct_answer}</p>
           </div>
           
@@ -125,7 +125,7 @@ function MissedQuestionCard({
                   e.stopPropagation()
                   onMarkReviewed()
                 }}
-                className="flex items-center gap-2 text-sm text-[#00d4aa] hover:text-[#00b894] transition-colors"
+                className="flex items-center gap-2 text-sm text-[#f97316] hover:text-[#ea580c] transition-colors"
               >
                 <CheckCircle2 className="w-4 h-4" />
                 Mark as Reviewed
@@ -266,7 +266,7 @@ export default function MissedQuestionsPage() {
   if (loading) {
     return (
       <div className="min-h-screen gradient-bg flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-[#00d4aa]" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#f97316]" />
       </div>
     )
   }
@@ -293,7 +293,7 @@ export default function MissedQuestionsPage() {
                   onClick={() => setFilterCategory('all')}
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                     filterCategory === 'all'
-                      ? 'bg-[#00d4aa] text-[#0a0f1a]'
+                      ? 'bg-[#f97316] text-[#0a0f1a]'
                       : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
                   }`}
                 >
@@ -324,7 +324,7 @@ export default function MissedQuestionsPage() {
                   type="checkbox"
                   checked={showReviewed}
                   onChange={(e) => setShowReviewed(e.target.checked)}
-                  className="w-4 h-4 rounded border-[#374151] bg-[#1f2937] text-[#00d4aa] focus:ring-[#00d4aa] focus:ring-offset-0"
+                  className="w-4 h-4 rounded border-[#374151] bg-[#1f2937] text-[#f97316] focus:ring-[#f97316] focus:ring-offset-0"
                 />
                 <span className="text-sm text-[#9ca3af]">Show reviewed</span>
               </label>
@@ -334,9 +334,9 @@ export default function MissedQuestionsPage() {
           {/* Questions List */}
           {filteredQuestions.length === 0 ? (
             <div className="bg-[#111827] border border-[#1f2937] rounded-2xl p-12 text-center">
-              <div className="w-16 h-16 bg-[#00d4aa]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#f97316]/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 {missedQuestions.length === 0 ? (
-                  <CheckCircle2 className="w-8 h-8 text-[#00d4aa]" />
+                  <CheckCircle2 className="w-8 h-8 text-[#f97316]" />
                 ) : (
                   <AlertCircle className="w-8 h-8 text-[#f59e0b]" />
                 )}
@@ -388,7 +388,7 @@ export default function MissedQuestionsPage() {
                 <p className="text-xs text-[#6b7280]">Pending Review</p>
               </div>
               <div className="bg-[#111827] border border-[#1f2937] rounded-xl p-4 text-center">
-                <div className="text-2xl font-bold" style={{ color: categoryColors[filterCategory as Category] || '#00d4aa' }}>
+                <div className="text-2xl font-bold" style={{ color: categoryColors[filterCategory as Category] || '#f97316' }}>
                   {filteredQuestions.length}
                 </div>
                 <p className="text-xs text-[#6b7280]">Showing</p>

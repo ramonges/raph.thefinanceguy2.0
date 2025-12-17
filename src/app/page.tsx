@@ -18,7 +18,7 @@ const features = [
     icon: Calculator,
     title: "Mental Math & Quick Calculations",
     description: "Practice rapid calculations with timed questions to build speed and accuracy.",
-    color: "#00d4aa"
+    color: "#f97316"
   },
   {
     icon: Brain,
@@ -76,7 +76,7 @@ export default function HomePage() {
       <section className="pt-32 pb-20 px-6">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#111827] border border-[#1f2937] mb-8 fade-in">
-            <Sparkles className="w-4 h-4 text-[#00d4aa]" />
+            <Sparkles className="w-4 h-4 text-[#f97316]" />
             <span className="text-sm text-[#9ca3af]">Trading Interview Preparation Platform</span>
           </div>
           
@@ -107,12 +107,12 @@ export default function HomePage() {
       <section className="py-16 px-6 border-t border-[#1f2937]">
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex items-center justify-center gap-3 mb-6">
-            <Building2 className="w-8 h-8 text-[#00d4aa]" />
+            <Building2 className="w-8 h-8 text-[#f97316]" />
             <h2 className="text-2xl md:text-3xl font-bold">Built from Top Notch Finance Interviews</h2>
           </div>
           <p className="text-[#9ca3af] text-lg leading-relaxed">
             Every question in the platform comes from real interview experiences of students and junior 
-            professionals across <span className="text-[#00d4aa] font-semibold">top investment banks</span>, 
+            professionals across <span className="text-[#f97316] font-semibold">top investment banks</span>, 
             <span className="text-[#6366f1] font-semibold"> prop trading firms</span>, and 
             <span className="text-[#f59e0b] font-semibold"> elite hedge funds</span>.
           </p>

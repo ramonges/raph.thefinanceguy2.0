@@ -10,7 +10,7 @@ interface StatisticsProps {
 }
 
 const categoryColors: Record<Category, string> = {
-  'mental-maths': '#00d4aa',
+  'mental-maths': '#f97316',
   'proba': '#6366f1',
   'trading': '#f59e0b',
   'behavioral': '#8b5cf6',
@@ -65,7 +65,7 @@ export default function Statistics({ stats, onClose }: StatisticsProps) {
         {/* Overall Stats */}
         <div className="bg-[#0a0f1a] rounded-xl p-6 mb-8">
           <div className="text-center">
-            <div className="text-5xl font-bold mb-2" style={{ color: '#00d4aa' }}>
+            <div className="text-5xl font-bold mb-2" style={{ color: '#f97316' }}>
               {overallPercentage}%
             </div>
             <p className="text-[#9ca3af]">Overall Accuracy</p>
@@ -90,7 +90,7 @@ export default function Statistics({ stats, onClose }: StatisticsProps) {
         {/* Summary */}
         <div className="mt-8 grid grid-cols-3 gap-4">
           <div className="bg-[#0a0f1a] rounded-xl p-4 text-center">
-            <div className="text-2xl font-bold text-[#00d4aa]">{stats.overall.total}</div>
+            <div className="text-2xl font-bold text-[#f97316]">{stats.overall.total}</div>
             <p className="text-xs text-[#6b7280]">Total Questions</p>
           </div>
           <div className="bg-[#0a0f1a] rounded-xl p-4 text-center">

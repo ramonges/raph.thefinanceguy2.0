@@ -78,7 +78,7 @@ export default function QuestionCard({
     const ratio = timeSpent / targetTime
     if (ratio >= 1) return 'text-red-400 timer-danger'
     if (ratio >= 0.75) return 'text-yellow-400 timer-warning'
-    return 'text-[#00d4aa]'
+    return 'text-[#f97316]'
   }
 
   const formatTime = (seconds: number) => {
@@ -123,10 +123,10 @@ export default function QuestionCard({
             {/* STAR Checklist */}
             {showAnswer && (
               <div className="mt-6 fade-in">
-                <h4 className="font-semibold mb-3 text-[#00d4aa]">STAR Method Checklist:</h4>
+                <h4 className="font-semibold mb-3 text-[#f97316]">STAR Method Checklist:</h4>
                 {question.starChecks.map((check, i) => (
                   <div key={i} className="star-check">
-                    <CheckCircle className="w-4 h-4 text-[#00d4aa] flex-shrink-0" />
+                    <CheckCircle className="w-4 h-4 text-[#f97316] flex-shrink-0" />
                     <span>{check}</span>
                   </div>
                 ))}
@@ -155,12 +155,12 @@ export default function QuestionCard({
             {/* Answer Section */}
             {showAnswer && (
               <div className="mt-6 p-4 bg-[#0a0f1a] rounded-xl border border-[#1f2937] fade-in">
-                <h4 className="font-semibold mb-2 text-[#00d4aa]">Answer:</h4>
+                <h4 className="font-semibold mb-2 text-[#f97316]">Answer:</h4>
                 <p className="text-lg mb-4">{question.answer}</p>
                 
                 {'explanation' in question && question.explanation && (
                   <>
-                    <h4 className="font-semibold mb-2 text-[#00d4aa] mt-4">Explanation:</h4>
+                    <h4 className="font-semibold mb-2 text-[#f97316] mt-4">Explanation:</h4>
                     <ul className="space-y-2">
                       {question.explanation.map((point, i) => (
                         <li key={i} className="text-[#9ca3af] flex items-start gap-2">

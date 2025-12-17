@@ -3,8 +3,8 @@
 :root {
   --background: #0a0f1a;
   --foreground: #e8eaed;
-  --accent: #00d4aa;
-  --accent-hover: #00b894;
+  --accent: #f97316;
+  --accent-hover: #ea580c;
   --card-bg: #111827;
   --card-border: #1f2937;
   --muted: #6b7280;
@@ -65,8 +65,8 @@ body {
 /* Gradient background pattern */
 .gradient-bg {
   background: 
-    radial-gradient(ellipse at 20% 20%, rgba(0, 212, 170, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 20%, rgba(249, 115, 22, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(251, 146, 60, 0.08) 0%, transparent 50%),
     var(--background);
 }
 
@@ -82,7 +82,7 @@ body {
   position: absolute;
   inset: -1px;
   border-radius: 17px;
-  background: linear-gradient(135deg, var(--accent), #6366f1, var(--accent));
+  background: linear-gradient(135deg, var(--accent), #fb923c, var(--accent));
   background-size: 200% 200%;
   animation: gradient-shift 3s ease infinite;
   z-index: -1;
@@ -95,8 +95,8 @@ body {
 
 /* Button styles */
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent), #00b894);
-  color: #0a0f1a;
+  background: linear-gradient(135deg, var(--accent), #ea580c);
+  color: #ffffff;
   font-weight: 600;
   padding: 12px 28px;
   border-radius: 12px;
@@ -108,7 +108,7 @@ body {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0, 212, 170, 0.4);
+  box-shadow: 0 8px 30px rgba(249, 115, 22, 0.4);
 }
 
 .btn-primary:active {
@@ -333,15 +333,12 @@ input::placeholder, textarea::placeholder {
 .logo {
   font-weight: 700;
   font-size: 1.25rem;
-  background: linear-gradient(135deg, var(--accent), #6366f1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ffffff;
 }
 
 /* Hero section gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #fff, var(--accent));
+  background: linear-gradient(135deg, #fff, #fb923c);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

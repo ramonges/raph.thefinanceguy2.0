@@ -60,7 +60,7 @@ export default function DashboardNav({ profile, onOpenStats }: DashboardNavProps
               href={item.href}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                 pathname === item.href
-                  ? 'bg-[#00d4aa]/10 text-[#00d4aa]'
+                  ? 'bg-[#f97316]/10 text-[#f97316]'
                   : 'text-[#9ca3af] hover:text-white hover:bg-[#1f2937]'
               }`}
             >
@@ -81,7 +81,7 @@ export default function DashboardNav({ profile, onOpenStats }: DashboardNavProps
           <div className="relative ml-2" ref={menuRef}>
             <button
               onClick={() => setShowMenu(!showMenu)}
-              className="w-10 h-10 rounded-full bg-[#1f2937] border-2 border-[#374151] hover:border-[#00d4aa] transition-colors overflow-hidden flex items-center justify-center"
+              className="w-10 h-10 rounded-full bg-[#1f2937] border-2 border-[#374151] hover:border-[#f97316] transition-colors overflow-hidden flex items-center justify-center"
             >
               {profile?.avatar_url ? (
                 <img

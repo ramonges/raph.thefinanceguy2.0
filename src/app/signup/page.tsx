@@ -83,7 +83,7 @@ export default function SignupPage() {
             </div>
             <h1 className="text-2xl font-bold mb-2">Check your email</h1>
             <p className="text-[#9ca3af] mb-6">
-              We&apos;ve sent a confirmation link to <span className="text-[#00d4aa]">{email}</span>. 
+              We&apos;ve sent a confirmation link to <span className="text-[#f97316]">{email}</span>. 
               Click the link to activate your account.
             </p>
             <Link href="/login" className="btn-secondary inline-block">
@@ -216,7 +216,7 @@ export default function SignupPage() {
 
           <p className="text-center text-[#9ca3af] mt-6">
             Already have an account?{' '}
-            <Link href="/login" className="text-[#00d4aa] hover:underline">
+            <Link href="/login" className="text-[#f97316] hover:underline">
               Sign in
             </Link>
           </p>

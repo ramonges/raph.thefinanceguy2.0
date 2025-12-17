@@ -239,7 +239,7 @@ export default function TrainingPage() {
   if (loading) {
     return (
       <div className="min-h-screen gradient-bg flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-[#00d4aa]" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#f97316]" />
       </div>
     )
   }
@@ -279,8 +279,8 @@ export default function TrainingPage() {
           {/* Question Card */}
           {isComplete ? (
             <div className="bg-[#111827] border border-[#1f2937] rounded-2xl p-12 text-center">
-              <div className="w-20 h-20 bg-[#00d4aa]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Calculator className="w-10 h-10 text-[#00d4aa]" />
+              <div className="w-20 h-20 bg-[#f97316]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Calculator className="w-10 h-10 text-[#f97316]" />
               </div>
               <h2 className="text-2xl font-bold mb-4">
                 🎉 Category Complete!
@@ -316,7 +316,7 @@ export default function TrainingPage() {
             </div>
             <div className="progress-bar">
               <div
-                className="progress-bar-fill bg-[#00d4aa]"
+                className="progress-bar-fill bg-[#f97316]"
                 style={{ width: `${(currentIndex / questions.length) * 100}%` }}
               />
             </div>
