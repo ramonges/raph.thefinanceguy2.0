@@ -49,34 +49,34 @@ export default function Statistics({ stats, onClose }: StatisticsProps) {
   return (
     <div className="stats-overlay" onClick={onClose}>
       <div 
-        className="bg-[#111827] border border-[#1f2937] rounded-2xl p-8 w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto"
+        className="bg-[#111827] border border-[#1f2937] rounded-xl sm:rounded-2xl p-4 sm:p-8 w-full max-w-lg mx-3 sm:mx-4 max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-bold">Your Statistics</h2>
+        <div className="flex items-center justify-between mb-4 sm:mb-8">
+          <h2 className="text-xl sm:text-2xl font-bold">Your Statistics</h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-[#1f2937] rounded-lg transition-colors"
+            className="p-1.5 sm:p-2 hover:bg-[#1f2937] rounded-lg transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Overall Stats */}
-        <div className="bg-[#0a0f1a] rounded-xl p-6 mb-8">
+        <div className="bg-[#0a0f1a] rounded-lg sm:rounded-xl p-4 sm:p-6 mb-4 sm:mb-8">
           <div className="text-center">
-            <div className="text-5xl font-bold mb-2" style={{ color: '#f97316' }}>
+            <div className="text-4xl sm:text-5xl font-bold mb-1 sm:mb-2" style={{ color: '#f97316' }}>
               {overallPercentage}%
             </div>
-            <p className="text-[#9ca3af]">Overall Accuracy</p>
-            <p className="text-sm text-[#6b7280] mt-2">
+            <p className="text-[#9ca3af] text-sm sm:text-base">Overall Accuracy</p>
+            <p className="text-xs sm:text-sm text-[#6b7280] mt-1 sm:mt-2">
               {stats.overall.correct} correct out of {stats.overall.total} questions
             </p>
           </div>
         </div>
 
         {/* Category Breakdown */}
-        <h3 className="text-lg font-semibold mb-4">By Category</h3>
+        <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">By Category</h3>
         
         {(Object.keys(categoryColors) as Category[]).map((category) => (
           <StatBar
@@ -88,23 +88,23 @@ export default function Statistics({ stats, onClose }: StatisticsProps) {
         ))}
 
         {/* Summary */}
-        <div className="mt-8 grid grid-cols-3 gap-4">
-          <div className="bg-[#0a0f1a] rounded-xl p-4 text-center">
-            <div className="text-2xl font-bold text-[#f97316]">{stats.overall.total}</div>
-            <p className="text-xs text-[#6b7280]">Total Questions</p>
+        <div className="mt-6 sm:mt-8 grid grid-cols-3 gap-2 sm:gap-4">
+          <div className="bg-[#0a0f1a] rounded-lg sm:rounded-xl p-2 sm:p-4 text-center">
+            <div className="text-lg sm:text-2xl font-bold text-[#f97316]">{stats.overall.total}</div>
+            <p className="text-xs text-[#6b7280]">Total</p>
           </div>
-          <div className="bg-[#0a0f1a] rounded-xl p-4 text-center">
-            <div className="text-2xl font-bold text-green-500">{stats.overall.correct}</div>
+          <div className="bg-[#0a0f1a] rounded-lg sm:rounded-xl p-2 sm:p-4 text-center">
+            <div className="text-lg sm:text-2xl font-bold text-green-500">{stats.overall.correct}</div>
             <p className="text-xs text-[#6b7280]">Correct</p>
           </div>
-          <div className="bg-[#0a0f1a] rounded-xl p-4 text-center">
-            <div className="text-2xl font-bold text-red-400">{stats.overall.wrong}</div>
+          <div className="bg-[#0a0f1a] rounded-lg sm:rounded-xl p-2 sm:p-4 text-center">
+            <div className="text-lg sm:text-2xl font-bold text-red-400">{stats.overall.wrong}</div>
             <p className="text-xs text-[#6b7280]">Wrong</p>
           </div>
         </div>
 
         {stats.overall.total === 0 && (
-          <p className="text-center text-[#6b7280] mt-6">
+          <p className="text-center text-[#6b7280] mt-4 sm:mt-6 text-sm">
             Start practicing to see your statistics!
           </p>
         )}

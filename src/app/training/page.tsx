@@ -253,10 +253,10 @@ export default function TrainingPage() {
     <div className="min-h-screen gradient-bg">
       <DashboardNav profile={profile} onOpenStats={() => setShowStats(true)} />
 
-      <main className="pt-24 pb-12 px-6">
+      <main className="pt-16 sm:pt-24 pb-8 sm:pb-12 px-3 sm:px-6">
         <div className="max-w-4xl mx-auto">
           {/* Category Tabs */}
-          <div className="bg-[#111827] border border-[#1f2937] rounded-2xl p-2 mb-8 overflow-x-auto">
+          <div className="bg-[#111827] border border-[#1f2937] rounded-xl sm:rounded-2xl p-1.5 sm:p-2 mb-4 sm:mb-8 overflow-x-auto">
             <div className="flex gap-1 min-w-max">
               {categories.map((cat) => {
                 const Icon = categoryIcons[cat]
@@ -264,12 +264,12 @@ export default function TrainingPage() {
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
-                    className={`category-tab flex items-center gap-2 ${
+                    className={`category-tab flex items-center gap-1 sm:gap-2 text-xs sm:text-base px-2 sm:px-4 py-1.5 sm:py-3 ${
                       activeCategory === cat ? 'active' : ''
                     }`}
                   >
-                    <Icon className="w-4 h-4" />
-                    <span>{categoryLabels[cat]}</span>
+                    <Icon className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <span className="whitespace-nowrap">{categoryLabels[cat]}</span>
                   </button>
                 )
               })}
@@ -278,14 +278,14 @@ export default function TrainingPage() {
 
           {/* Question Card */}
           {isComplete ? (
-            <div className="bg-[#111827] border border-[#1f2937] rounded-2xl p-12 text-center">
-              <div className="w-20 h-20 bg-[#f97316]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Calculator className="w-10 h-10 text-[#f97316]" />
+            <div className="bg-[#111827] border border-[#1f2937] rounded-xl sm:rounded-2xl p-6 sm:p-12 text-center">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#f97316]/10 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                <Calculator className="w-8 h-8 sm:w-10 sm:h-10 text-[#f97316]" />
               </div>
-              <h2 className="text-2xl font-bold mb-4">
+              <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">
                 🎉 Category Complete!
               </h2>
-              <p className="text-[#9ca3af] mb-6">
+              <p className="text-[#9ca3af] mb-4 sm:mb-6 text-sm sm:text-base">
                 You&apos;ve completed all {questions.length} questions in {categoryLabels[activeCategory]}.
               </p>
               <button
@@ -307,10 +307,10 @@ export default function TrainingPage() {
           )}
 
           {/* Progress Bar */}
-          <div className="mt-6">
+          <div className="mt-4 sm:mt-6">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-[#6b7280]">Progress in {categoryLabels[activeCategory]}</span>
-              <span className="text-sm text-[#6b7280]">
+              <span className="text-xs sm:text-sm text-[#6b7280]">Progress in {categoryLabels[activeCategory]}</span>
+              <span className="text-xs sm:text-sm text-[#6b7280]">
                 {currentIndex}/{questions.length}
               </span>
             </div>

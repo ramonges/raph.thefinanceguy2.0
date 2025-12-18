@@ -48,40 +48,40 @@ export default function DashboardNav({ profile, onOpenStats }: DashboardNavProps
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#0a0f1a]/90 border-b border-[#1f2937]">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link href="/training" className="logo text-xl">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2 sm:py-4 flex items-center justify-between">
+        <Link href="/training" className="logo text-sm sm:text-xl">
           @raph.thefinanceguy
         </Link>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+              className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg transition-colors ${
                 pathname === item.href
                   ? 'bg-[#f97316]/10 text-[#f97316]'
                   : 'text-[#9ca3af] hover:text-white hover:bg-[#1f2937]'
               }`}
             >
               <item.icon className="w-4 h-4" />
-              <span className="hidden sm:inline">{item.label}</span>
+              <span className="hidden md:inline text-sm">{item.label}</span>
             </Link>
           ))}
 
           <button
             onClick={onOpenStats}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg text-[#9ca3af] hover:text-white hover:bg-[#1f2937] transition-colors"
+            className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg text-[#9ca3af] hover:text-white hover:bg-[#1f2937] transition-colors"
           >
             <BarChart3 className="w-4 h-4" />
-            <span className="hidden sm:inline">Statistics</span>
+            <span className="hidden md:inline text-sm">Statistics</span>
           </button>
 
           {/* Profile Dropdown */}
-          <div className="relative ml-2" ref={menuRef}>
+          <div className="relative ml-1 sm:ml-2" ref={menuRef}>
             <button
               onClick={() => setShowMenu(!showMenu)}
-              className="w-10 h-10 rounded-full bg-[#1f2937] border-2 border-[#374151] hover:border-[#f97316] transition-colors overflow-hidden flex items-center justify-center"
+              className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#1f2937] border-2 border-[#374151] hover:border-[#f97316] transition-colors overflow-hidden flex items-center justify-center"
             >
               {profile?.avatar_url ? (
                 <img
@@ -90,7 +90,7 @@ export default function DashboardNav({ profile, onOpenStats }: DashboardNavProps
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <User className="w-5 h-5 text-[#9ca3af]" />
+                <User className="w-4 h-4 sm:w-5 sm:h-5 text-[#9ca3af]" />
               )}
             </button>
 
