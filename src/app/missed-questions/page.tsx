@@ -297,9 +297,9 @@ export default function MissedQuestionsPage() {
   })
 
   // Get unique filter values
-  const blockTypes = Array.from(new Set(missedQuestions.map(q => q.block_type).filter(Boolean)))
-  const assetCategories = Array.from(new Set(missedQuestions.map(q => q.asset_category).filter(Boolean)))
-  const strategyCategories = Array.from(new Set(missedQuestions.map(q => q.strategy_category).filter(Boolean)))
+  const blockTypes = Array.from(new Set(missedQuestions.map(q => q.block_type).filter((bt): bt is string => Boolean(bt))))
+  const assetCategories = Array.from(new Set(missedQuestions.map(q => q.asset_category).filter((ac): ac is string => Boolean(ac))))
+  const strategyCategories = Array.from(new Set(missedQuestions.map(q => q.strategy_category).filter((sc): sc is string => Boolean(sc))))
 
   const categoryCounts = missedQuestions.reduce((acc, q) => {
     const cat = q.section as Category
