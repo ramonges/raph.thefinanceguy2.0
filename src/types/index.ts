@@ -50,6 +50,50 @@ export type Question = MathQuestion | ProbaQuestion | TradingQuestion | Behavior
 
 export type Category = 'mental-maths' | 'proba' | 'trading' | 'behavioral' | 'ml-ai'
 
+// New structure types
+export type BlockType = 'sales' | 'trading' | 'quant'
+
+export type SalesCategory = 
+  | 'behavioral-fit'
+  | 'market-awareness'
+  | 'product-knowledge'
+  | 'sales-case'
+
+export type TradingCategory = 
+  | 'behavioral'
+  | 'mental-calculation'
+  | 'proba-exercises'
+  | 'brainteaser'
+  | 'trading-intuition'
+  | 'ml-questions'
+
+export type QuantCategory = 
+  | 'mental-calculations'
+  | 'probability-exercises'
+  | 'brainteasers'
+  | 'coding-project'
+  | 'statistics-ml'
+  | 'trading-intuition'
+  | 'research-discussion'
+
+export type AssetCategory = 
+  | 'equity'
+  | 'commodities'
+  | 'fixed-income'
+  | 'credit'
+  | 'foreign-exchange'
+  | 'rates-derivatives'
+  | 'structured-products'
+
+export type StrategyCategory = 
+  | 'equity-strategies'
+  | 'fixed-income-strategies'
+  | 'alternative-strategies'
+  | 'macro-strategies'
+  | 'quantitative-strategies'
+  | 'income-strategies'
+  | 'multi-asset-strategies'
+
 export interface UserProgress {
   id: string
   user_id: string
@@ -67,6 +111,9 @@ export interface UserAnsweredQuestion {
   was_correct: boolean
   time_spent: number
   created_at: string
+  block_type?: string | null
+  asset_category?: string | null
+  strategy_category?: string | null
 }
 
 export interface UserMissedQuestion {
@@ -78,6 +125,10 @@ export interface UserMissedQuestion {
   correct_answer: string
   user_attempted_at: string
   reviewed: boolean
+  block_type?: string | null
+  asset_category?: string | null
+  strategy_category?: string | null
+  understood?: boolean | null
 }
 
 export interface Profile {
