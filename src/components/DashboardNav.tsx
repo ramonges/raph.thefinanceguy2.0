@@ -122,4 +122,3 @@ export default function DashboardNav({ profile, onOpenStats, blockType }: Dashbo
     </nav>
   )
 }
-
