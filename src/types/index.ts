@@ -34,6 +34,8 @@ export interface BehavioralQuestion {
   prompt: string
   tags: string[]
   starChecks: string[]
+  answer?: string
+  explanation?: string[]
 }
 
 export interface MLQuestion {
