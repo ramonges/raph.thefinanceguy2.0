@@ -27,7 +27,7 @@ export default function LoginPage() {
 
       if (error) throw error
 
-      router.push('/training')
+      router.push('/select-block')
       router.refresh()
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred')

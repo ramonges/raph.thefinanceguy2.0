@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import { BookOpen, XCircle, BarChart3, LogOut, User } from 'lucide-react'
+import { BookOpen, XCircle, BarChart3, LogOut, User, Layers, TrendingUp, Target } from 'lucide-react'
 
 interface Profile {
   full_name: string | null
@@ -42,14 +42,16 @@ export default function DashboardNav({ profile, onOpenStats }: DashboardNavProps
   }
 
   const navItems = [
-    { href: '/training', label: 'Training', icon: BookOpen },
-    { href: '/missed-questions', label: 'Missed Questions', icon: XCircle },
+    { href: '/select-block', label: 'Practice', icon: Target },
+    { href: '/assets', label: 'Assets', icon: Layers },
+    { href: '/strategies', label: 'Strategies', icon: TrendingUp },
+    { href: '/missed-questions', label: 'Missed', icon: XCircle },
   ]
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#0a0f1a]/90 border-b border-[#1f2937]">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2 sm:py-4 flex items-center justify-between">
-        <Link href="/training" className="logo text-sm sm:text-xl">
+        <Link href="/select-block" className="logo text-sm sm:text-xl">
           @raph.thefinanceguy
         </Link>
 

@@ -40,7 +40,7 @@ export default function SignupPage() {
         setSuccess(true)
       } else if (data.session) {
         // If no email confirmation needed, redirect
-        router.push('/training')
+        router.push('/select-block')
         router.refresh()
       }
     } catch (err) {
