@@ -11,6 +11,7 @@ import { salesBlockQuestions, salesCategoryLabels } from '@/data/salesBlockQuest
 import { UserStats, Profile, BehavioralQuestion, Question } from '@/types'
 import { Calculator, Loader2 } from 'lucide-react'
 import { calculateStats, detectBlockTypeFromPath } from '@/lib/stats'
+import { loadUserProgress, saveUserProgress, markQuestionAsWrong } from '@/lib/progress'
 
 const emptyStats: UserStats = {
   overall: { total: 0, correct: 0, wrong: 0, percentage: 0 },
@@ -93,19 +94,18 @@ export default function SalesCategoryTrainingPage() {
           // Calculate stats
           const newStats = calculateStats(answeredQuestions, blockType || undefined)
           setStats(newStats)
+        }
 
-          // Calculate current question index
-          if (answeredQuestions.length > 0) {
-            const maxQuestionNumber = Math.max(...answeredQuestions.map(q => q.question_number))
-            const totalInCategory = questions.length
-            setCurrentQuestionIndex(
-              maxQuestionNumber >= totalInCategory 
-                ? totalInCategory 
-                : maxQuestionNumber
-            )
-          } else {
-            setCurrentQuestionIndex(0)
-          }
+        // Load user's last position in this section
+        const lastQuestionIndex = await loadUserProgress(supabase, user.id, sectionId)
+        const totalInCategory = questions.length
+        
+        // If user completed all questions, show completion screen
+        // Otherwise, resume from last position
+        if (lastQuestionIndex >= totalInCategory) {
+          setCurrentQuestionIndex(totalInCategory)
+        } else {
+          setCurrentQuestionIndex(lastQuestionIndex)
         }
 
         setLoading(false)
@@ -119,6 +119,22 @@ export default function SalesCategoryTrainingPage() {
       initialize()
     }
   }, [categoryId, router, supabase, blockType, questions.length])
+
+  // Save progress whenever currentQuestionIndex changes (even if user doesn't answer)
+  useEffect(() => {
+    if (userId && categoryId && currentQuestionIndex >= 0) {
+      const sectionId = `sales-${categoryId}`
+      saveUserProgress(
+        supabase,
+        userId,
+        sectionId,
+        currentQuestionIndex,
+        'sales',
+        null,
+        null
+      ).catch(console.error)
+    }
+  }, [userId, categoryId, currentQuestionIndex, supabase])
 
   const handleAnswer = useCallback(async (correct: boolean, timeSpent: number) => {
     if (!userId || !categoryId) return
@@ -142,17 +158,19 @@ export default function SalesCategoryTrainingPage() {
 
       // If wrong, add to missed questions
       if (!correct) {
-        await supabase.from('user_missed_questions').upsert({
-          user_id: userId,
-          section: sectionId,
-          question_number: currentQuestionIndex + 1,
-          question_text: question.prompt,
-          correct_answer: question.starChecks.join(', '),
-          reviewed: false,
-          block_type: 'sales',
-        }, {
-          onConflict: 'user_id,section,question_number',
-        })
+        const questionText = question.prompt
+        const answerText = question.answer || question.starChecks.join(', ')
+        await markQuestionAsWrong(
+          supabase,
+          userId,
+          sectionId,
+          currentQuestionIndex + 1,
+          questionText,
+          answerText,
+          'sales',
+          null,
+          null
+        )
       } else {
         // If correct and it was previously missed, mark as reviewed
         await supabase
@@ -186,11 +204,19 @@ export default function SalesCategoryTrainingPage() {
 
       // Move to next question
       const nextIndex = currentQuestionIndex + 1
-      if (nextIndex < questions.length) {
-        setCurrentQuestionIndex(nextIndex)
-      } else {
-        setCurrentQuestionIndex(questions.length)
-      }
+      const finalIndex = nextIndex < questions.length ? nextIndex : questions.length
+      setCurrentQuestionIndex(finalIndex)
+      
+      // Save progress after moving to next question
+      await saveUserProgress(
+        supabase,
+        userId,
+        sectionId,
+        finalIndex,
+        'sales',
+        null,
+        null
+      )
     } catch (error) {
       console.error('Error recording answer:', error)
     }

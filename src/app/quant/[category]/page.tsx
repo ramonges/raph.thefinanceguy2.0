@@ -11,6 +11,7 @@ import { quantBlockQuestions, quantCategoryLabels } from '@/data/quantBlockQuest
 import { UserStats, Profile, Question, Category } from '@/types'
 import { Calculator, Loader2 } from 'lucide-react'
 import { calculateStats, detectBlockTypeFromPath } from '@/lib/stats'
+import { loadUserProgress, saveUserProgress, markQuestionAsWrong } from '@/lib/progress'
 
 const emptyStats: UserStats = {
   overall: { total: 0, correct: 0, wrong: 0, percentage: 0 },
@@ -105,19 +106,18 @@ export default function QuantCategoryTrainingPage() {
           // Calculate stats
           const newStats = calculateStats(answeredQuestions, blockType || undefined)
           setStats(newStats)
+        }
 
-          // Calculate current question index
-          if (answeredQuestions.length > 0) {
-            const maxQuestionNumber = Math.max(...answeredQuestions.map(q => q.question_number))
-            const totalInCategory = questions.length
-            setCurrentQuestionIndex(
-              maxQuestionNumber >= totalInCategory 
-                ? totalInCategory 
-                : maxQuestionNumber
-            )
-          } else {
-            setCurrentQuestionIndex(0)
-          }
+        // Load user's last position in this section
+        const lastQuestionIndex = await loadUserProgress(supabase, user.id, sectionId)
+        const totalInCategory = questions.length
+        
+        // If user completed all questions, show completion screen
+        // Otherwise, resume from last position
+        if (lastQuestionIndex >= totalInCategory) {
+          setCurrentQuestionIndex(totalInCategory)
+        } else {
+          setCurrentQuestionIndex(lastQuestionIndex)
         }
 
         setLoading(false)
@@ -131,6 +131,22 @@ export default function QuantCategoryTrainingPage() {
       initialize()
     }
   }, [categoryId, router, supabase, blockType, questions.length])
+
+  // Save progress whenever currentQuestionIndex changes (even if user doesn't answer)
+  useEffect(() => {
+    if (userId && categoryId && currentQuestionIndex >= 0) {
+      const sectionId = `quant-${categoryId}`
+      saveUserProgress(
+        supabase,
+        userId,
+        sectionId,
+        currentQuestionIndex,
+        'quant',
+        null,
+        null
+      ).catch(console.error)
+    }
+  }, [userId, categoryId, currentQuestionIndex, supabase])
 
   const handleAnswer = useCallback(async (correct: boolean, timeSpent: number) => {
     if (!userId || !categoryId) return
@@ -157,17 +173,17 @@ export default function QuantCategoryTrainingPage() {
         const questionText = 'prompt' in question ? question.prompt : question.question
         const answerText = 'answer' in question ? question.answer : (question as any).starChecks?.join(', ') || ''
         
-        await supabase.from('user_missed_questions').upsert({
-          user_id: userId,
-          section: sectionId,
-          question_number: currentQuestionIndex + 1,
-          question_text: questionText,
-          correct_answer: answerText,
-          reviewed: false,
-          block_type: 'quant',
-        }, {
-          onConflict: 'user_id,section,question_number',
-        })
+        await markQuestionAsWrong(
+          supabase,
+          userId,
+          sectionId,
+          currentQuestionIndex + 1,
+          questionText,
+          answerText,
+          'quant',
+          null,
+          null
+        )
       } else {
         // If correct and it was previously missed, mark as reviewed
         await supabase
@@ -201,11 +217,19 @@ export default function QuantCategoryTrainingPage() {
 
       // Move to next question
       const nextIndex = currentQuestionIndex + 1
-      if (nextIndex < questions.length) {
-        setCurrentQuestionIndex(nextIndex)
-      } else {
-        setCurrentQuestionIndex(questions.length)
-      }
+      const finalIndex = nextIndex < questions.length ? nextIndex : questions.length
+      setCurrentQuestionIndex(finalIndex)
+      
+      // Save progress after moving to next question
+      await saveUserProgress(
+        supabase,
+        userId,
+        sectionId,
+        finalIndex,
+        'quant',
+        null,
+        null
+      )
     } catch (error) {
       console.error('Error recording answer:', error)
     }
