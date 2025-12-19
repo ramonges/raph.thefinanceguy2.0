@@ -7,6 +7,7 @@ import { categoryLabels } from '@/data/questions'
 interface StatisticsProps {
   stats: UserStats
   onClose: () => void
+  blockType?: 'sales' | 'trading' | 'quant' | null
 }
 
 const categoryColors: Record<Category, string> = {
@@ -41,10 +42,17 @@ function StatBar({ label, stats, color }: { label: string; stats: CategoryStats;
   )
 }
 
-export default function Statistics({ stats, onClose }: StatisticsProps) {
+export default function Statistics({ stats, onClose, blockType }: StatisticsProps) {
+  // Stats are already filtered by block type when passed from parent pages
   const overallPercentage = stats.overall.total > 0 
     ? Math.round((stats.overall.correct / stats.overall.total) * 100) 
     : 0
+
+  const blockTypeLabels: Record<string, string> = {
+    sales: 'Sales',
+    trading: 'Trading',
+    quant: 'Quant',
+  }
 
   return (
     <div className="stats-overlay" onClick={onClose}>
@@ -53,7 +61,14 @@ export default function Statistics({ stats, onClose }: StatisticsProps) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4 sm:mb-8">
-          <h2 className="text-xl sm:text-2xl font-bold">Your Statistics</h2>
+          <div>
+            <h2 className="text-xl sm:text-2xl font-bold">Your Statistics</h2>
+            {blockType && (
+              <p className="text-sm text-[#6b7280] mt-1">
+                {blockTypeLabels[blockType]} Track
+              </p>
+            )}
+          </div>
           <button
             onClick={onClose}
             className="p-1.5 sm:p-2 hover:bg-[#1f2937] rounded-lg transition-colors"
@@ -68,7 +83,9 @@ export default function Statistics({ stats, onClose }: StatisticsProps) {
             <div className="text-4xl sm:text-5xl font-bold mb-1 sm:mb-2" style={{ color: '#f97316' }}>
               {overallPercentage}%
             </div>
-            <p className="text-[#9ca3af] text-sm sm:text-base">Overall Accuracy</p>
+            <p className="text-[#9ca3af] text-sm sm:text-base">
+              {blockType ? `${blockTypeLabels[blockType]} ` : ''}Overall Accuracy
+            </p>
             <p className="text-xs sm:text-sm text-[#6b7280] mt-1 sm:mt-2">
               {stats.overall.correct} correct out of {stats.overall.total} questions
             </p>

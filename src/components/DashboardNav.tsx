@@ -15,9 +15,10 @@ interface Profile {
 interface DashboardNavProps {
   profile: Profile | null
   onOpenStats: () => void
+  blockType?: 'sales' | 'trading' | 'quant' | null
 }
 
-export default function DashboardNav({ profile, onOpenStats }: DashboardNavProps) {
+export default function DashboardNav({ profile, onOpenStats, blockType }: DashboardNavProps) {
   const [showMenu, setShowMenu] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
   const router = useRouter()

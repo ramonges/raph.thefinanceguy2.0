@@ -1,12 +1,13 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import DashboardNav from '@/components/DashboardNav'
 import Statistics from '@/components/Statistics'
 import { categoryLabels } from '@/data/questions'
 import { Profile, UserMissedQuestion, Category, UserStats } from '@/types'
+import { calculateStats, detectBlockTypeFromPath } from '@/lib/stats'
 import { 
   Loader2, 
   ChevronDown, 
@@ -169,7 +170,9 @@ export default function MissedQuestionsPage() {
   const [stats, setStats] = useState<UserStats>(emptyStats)
   
   const router = useRouter()
+  const pathname = usePathname()
   const supabase = createClient()
+  const blockType = detectBlockTypeFromPath(pathname)
 
   useEffect(() => {
     async function initialize() {
@@ -210,39 +213,8 @@ export default function MissedQuestionsPage() {
           .eq('user_id', user.id)
 
         if (answeredQuestions) {
-          const newStats: UserStats = { ...emptyStats }
-          newStats.byCategory = { ...emptyStats.byCategory }
-
-          answeredQuestions.forEach((q) => {
-            const section = q.section as Category
-            if (newStats.byCategory[section]) {
-              newStats.byCategory[section].total++
-              newStats.overall.total++
-              if (q.was_correct) {
-                newStats.byCategory[section].correct++
-                newStats.overall.correct++
-              } else {
-                newStats.byCategory[section].wrong++
-                newStats.overall.wrong++
-              }
-            }
-          })
-
-          // Calculate percentages
-          Object.keys(newStats.byCategory).forEach((cat) => {
-            const c = cat as Category
-            if (newStats.byCategory[c].total > 0) {
-              newStats.byCategory[c].percentage = Math.round(
-                (newStats.byCategory[c].correct / newStats.byCategory[c].total) * 100
-              )
-            }
-          })
-          if (newStats.overall.total > 0) {
-            newStats.overall.percentage = Math.round(
-              (newStats.overall.correct / newStats.overall.total) * 100
-            )
-          }
-
+          // Calculate stats filtered by block type
+          const newStats = calculateStats(answeredQuestions, blockType || undefined)
           setStats(newStats)
         }
 
@@ -317,7 +289,7 @@ export default function MissedQuestionsPage() {
 
   return (
     <div className="min-h-screen gradient-bg">
-      <DashboardNav profile={profile} onOpenStats={() => setShowStats(true)} />
+      <DashboardNav profile={profile} onOpenStats={() => setShowStats(true)} blockType={blockType} />
 
       <main className="pt-24 pb-12 px-6">
         <div className="max-w-4xl mx-auto">
@@ -551,7 +523,7 @@ export default function MissedQuestionsPage() {
 
       {/* Statistics Modal */}
       {showStats && (
-        <Statistics stats={stats} onClose={() => setShowStats(false)} />
+        <Statistics stats={stats} onClose={() => setShowStats(false)} blockType={blockType || undefined} />
       )}
     </div>
   )

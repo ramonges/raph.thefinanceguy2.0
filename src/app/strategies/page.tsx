@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import DashboardNav from '@/components/DashboardNav'
 import { Profile, StrategyCategory } from '@/types'
+import { detectBlockTypeFromPath } from '@/lib/stats'
 import { 
   TrendingUp,
   BarChart3,
@@ -130,7 +131,9 @@ export default function StrategiesPage() {
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
   const router = useRouter()
+  const pathname = usePathname()
   const supabase = createClient()
+  const blockType = detectBlockTypeFromPath(pathname)
 
   useEffect(() => {
     async function initialize() {
@@ -171,7 +174,7 @@ export default function StrategiesPage() {
 
   return (
     <div className="min-h-screen gradient-bg">
-      <DashboardNav profile={profile} onOpenStats={() => {}} />
+      <DashboardNav profile={profile} onOpenStats={() => {}} blockType={blockType} />
 
       <main className="pt-16 sm:pt-24 pb-12 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
