@@ -1,6 +1,9 @@
 'use client'
 
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { createClient } from '@/lib/supabase/client'
 import { 
   Calculator, 
   Brain, 
@@ -53,6 +56,20 @@ const features = [
 ]
 
 export default function HomePage() {
+  const router = useRouter()
+  const supabase = createClient()
+
+  // Redirect authenticated users to select-block page
+  useEffect(() => {
+    async function checkAuth() {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        router.push('/select-block')
+      }
+    }
+    checkAuth()
+  }, [router, supabase])
+
   return (
     <div className="min-h-screen gradient-bg">
       {/* Navigation */}
