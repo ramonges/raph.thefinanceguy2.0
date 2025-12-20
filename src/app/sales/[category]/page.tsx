@@ -149,6 +149,26 @@ export default function SalesCategoryTrainingPage() {
     }
   }, [userId, categoryId, currentQuestionIndex, supabase, loading])
 
+  // Function to reload stats from database
+  const reloadStats = useCallback(async () => {
+    if (!userId) return
+
+    try {
+      const { data: answeredQuestions } = await supabase
+        .from('user_answered_questions')
+        .select('*')
+        .eq('user_id', userId)
+        .eq('block_type', 'sales')
+
+      if (answeredQuestions) {
+        const newStats = calculateStats(answeredQuestions, 'sales')
+        setStats(newStats)
+      }
+    } catch (error) {
+      console.error('Error reloading stats:', error)
+    }
+  }, [userId, supabase])
+
   const handleAnswer = useCallback(async (correct: boolean, timeSpent: number) => {
     if (!userId || !categoryId) return
 
@@ -195,16 +215,7 @@ export default function SalesCategoryTrainingPage() {
       }
 
       // Reload stats from database to get accurate stats across all categories
-      const { data: answeredQuestions } = await supabase
-        .from('user_answered_questions')
-        .select('*')
-        .eq('user_id', userId)
-        .eq('block_type', 'sales')
-
-      if (answeredQuestions) {
-        const newStats = calculateStats(answeredQuestions, 'sales')
-        setStats(newStats)
-      }
+      await reloadStats()
 
       // Move to next question
       const nextIndex = currentQuestionIndex + 1
@@ -226,7 +237,13 @@ export default function SalesCategoryTrainingPage() {
     } catch (error) {
       console.error('Error recording answer:', error)
     }
-  }, [userId, currentQuestionIndex, questions, categoryId, supabase])
+  }, [userId, currentQuestionIndex, questions, categoryId, supabase, reloadStats])
+
+  // Handle opening stats - reload from database first
+  const handleOpenStats = useCallback(async () => {
+    await reloadStats()
+    setShowStats(true)
+  }, [reloadStats])
 
   if (loading) {
     return (
@@ -254,7 +271,7 @@ export default function SalesCategoryTrainingPage() {
 
   return (
     <div className="min-h-screen gradient-bg">
-      <DashboardNav profile={profile} onOpenStats={() => setShowStats(true)} blockType={blockType} />
+      <DashboardNav profile={profile} onOpenStats={handleOpenStats} blockType={blockType} />
 
       <main className="pt-16 sm:pt-24 pb-8 sm:pb-12 px-3 sm:px-6">
         <div className="max-w-4xl mx-auto">

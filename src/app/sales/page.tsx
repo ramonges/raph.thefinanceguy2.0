@@ -1,14 +1,20 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import DashboardNav from '@/components/DashboardNav'
-import { Profile } from '@/types'
-import { detectBlockTypeFromPath } from '@/lib/stats'
+import Statistics from '@/components/Statistics'
+import { Profile, UserStats } from '@/types'
+import { detectBlockTypeFromPath, calculateStats } from '@/lib/stats'
 import { salesBlockQuestions, salesCategoryLabels } from '@/data/salesBlockQuestions'
 import { Loader2, ArrowRight, Users, TrendingUp, BookOpen, Briefcase } from 'lucide-react'
+
+const emptyStats: UserStats = {
+  overall: { total: 0, correct: 0, wrong: 0, percentage: 0 },
+  byCategory: {}
+}
 
 const categoryIcons: Record<string, React.ElementType> = {
   'behavioral-fit': Users,
@@ -20,6 +26,9 @@ const categoryIcons: Record<string, React.ElementType> = {
 export default function SalesPage() {
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
+  const [showStats, setShowStats] = useState(false)
+  const [stats, setStats] = useState<UserStats>(emptyStats)
+  const [userId, setUserId] = useState<string | null>(null)
   const router = useRouter()
   const pathname = usePathname()
   const supabase = createClient()
@@ -35,6 +44,8 @@ export default function SalesPage() {
           return
         }
 
+        setUserId(user.id)
+
         const { data: profileData } = await supabase
           .from('profiles')
           .select('*')
@@ -43,6 +54,18 @@ export default function SalesPage() {
 
         if (profileData) {
           setProfile(profileData)
+        }
+
+        // Load stats for Sales track
+        const { data: answeredQuestions } = await supabase
+          .from('user_answered_questions')
+          .select('*')
+          .eq('user_id', user.id)
+          .eq('block_type', 'sales')
+
+        if (answeredQuestions) {
+          const newStats = calculateStats(answeredQuestions, 'sales')
+          setStats(newStats)
         }
       } catch (error) {
         console.error('Error initializing:', error)
@@ -53,6 +76,32 @@ export default function SalesPage() {
 
     initialize()
   }, [router, supabase])
+
+  // Function to reload stats from database
+  const reloadStats = useCallback(async () => {
+    if (!userId) return
+
+    try {
+      const { data: answeredQuestions } = await supabase
+        .from('user_answered_questions')
+        .select('*')
+        .eq('user_id', userId)
+        .eq('block_type', 'sales')
+
+      if (answeredQuestions) {
+        const newStats = calculateStats(answeredQuestions, 'sales')
+        setStats(newStats)
+      }
+    } catch (error) {
+      console.error('Error reloading stats:', error)
+    }
+  }, [userId, supabase])
+
+  // Handle opening stats - reload from database first
+  const handleOpenStats = useCallback(async () => {
+    await reloadStats()
+    setShowStats(true)
+  }, [reloadStats])
 
   if (loading) {
     return (
@@ -66,7 +115,7 @@ export default function SalesPage() {
 
   return (
     <div className="min-h-screen gradient-bg">
-      <DashboardNav profile={profile} onOpenStats={() => {}} blockType={blockType} />
+      <DashboardNav profile={profile} onOpenStats={handleOpenStats} blockType={blockType} />
 
       <main className="pt-16 sm:pt-24 pb-12 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
@@ -120,6 +169,11 @@ export default function SalesPage() {
           </div>
         </div>
       </main>
+
+      {/* Statistics Modal */}
+      {showStats && (
+        <Statistics stats={stats} onClose={() => setShowStats(false)} blockType="sales" />
+      )}
     </div>
   )
 }
