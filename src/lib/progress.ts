@@ -13,6 +13,12 @@ export async function saveUserProgress(
   strategyCategory?: string | null
 ) {
   try {
+    // Validate inputs
+    if (!userId || !section || currentQuestionIndex < 0) {
+      console.warn('⚠️ Invalid parameters for saveUserProgress:', { userId, section, currentQuestionIndex })
+      return
+    }
+
     const { data, error } = await supabase
       .from('user_section_progress')
       .upsert({
@@ -28,16 +34,21 @@ export async function saveUserProgress(
       })
 
     if (error) {
-      console.error('Error saving user progress:', error)
+      console.error('❌ Error saving user progress:', error)
+      console.error('Details:', { userId, section, currentQuestionIndex, blockType, assetCategory, strategyCategory })
       // If table doesn't exist, log a helpful message
       if (error.message?.includes('relation') || error.message?.includes('does not exist')) {
         console.error('⚠️ user_section_progress table does not exist! Please run the SQL script in Supabase.')
       }
+      // If RLS policy issue
+      if (error.message?.includes('permission') || error.message?.includes('policy')) {
+        console.error('⚠️ RLS policy issue! Check that user is authenticated and policies are set correctly.')
+      }
     } else {
-      console.log(`✅ Progress saved: ${section} -> question ${currentQuestionIndex + 1}`)
+      console.log(`✅ Progress saved successfully: ${section} -> question ${currentQuestionIndex + 1} (index ${currentQuestionIndex})`)
     }
   } catch (error) {
-    console.error('Error saving user progress:', error)
+    console.error('❌ Exception saving user progress:', error)
   }
 }
 
@@ -51,6 +62,12 @@ export async function loadUserProgress(
   section: string
 ): Promise<number> {
   try {
+    // Validate inputs
+    if (!userId || !section) {
+      console.warn('⚠️ Invalid parameters for loadUserProgress:', { userId, section })
+      return 0
+    }
+
     const { data, error } = await supabase
       .from('user_section_progress')
       .select('current_question_index')
@@ -63,6 +80,13 @@ export async function loadUserProgress(
       if (error.message?.includes('relation') || error.message?.includes('does not exist')) {
         console.error('⚠️ user_section_progress table does not exist! Please run the SQL script in Supabase.')
         console.log('📝 Falling back to answered_questions table...')
+      } else if (error.code === 'PGRST116') {
+        // No rows returned (expected if no progress saved yet)
+        console.log(`ℹ️ No saved progress found for ${section}, starting from beginning`)
+        return 0
+      } else {
+        console.error('❌ Error loading user progress:', error)
+        console.error('Details:', { userId, section, errorCode: error.code, errorMessage: error.message })
       }
       // No progress found, check answered questions as fallback
       const fallbackIndex = await loadProgressFromAnsweredQuestions(supabase, userId, section)
@@ -73,17 +97,17 @@ export async function loadUserProgress(
     if (!data) {
       // No progress found, check answered questions as fallback
       const fallbackIndex = await loadProgressFromAnsweredQuestions(supabase, userId, section)
-      console.log(`📊 Loaded progress from fallback: ${section} -> question ${fallbackIndex + 1}`)
+      console.log(`📊 Loaded progress from fallback (no data): ${section} -> question ${fallbackIndex + 1}`)
       return fallbackIndex
     }
 
-    console.log(`✅ Loaded progress: ${section} -> question ${data.current_question_index + 1}`)
+    console.log(`✅ Loaded progress: ${section} -> question ${data.current_question_index + 1} (index ${data.current_question_index})`)
     return data.current_question_index
   } catch (error) {
-    console.error('Error loading user progress:', error)
+    console.error('❌ Exception loading user progress:', error)
     // Fallback to answered questions
     const fallbackIndex = await loadProgressFromAnsweredQuestions(supabase, userId, section)
-    console.log(`📊 Loaded progress from fallback (error): ${section} -> question ${fallbackIndex + 1}`)
+    console.log(`📊 Loaded progress from fallback (exception): ${section} -> question ${fallbackIndex + 1}`)
     return fallbackIndex
   }
 }

@@ -123,12 +123,13 @@ export default function AssetSubcategoryTrainingPage() {
   }, [assetId, subcategoryId, asset, subcategory, router, supabase, blockType])
 
   // Save progress whenever currentQuestionIndex changes (even if user doesn't answer)
+  // This ensures progress is saved even if user navigates away without answering
   useEffect(() => {
-    if (!userId || !assetId || !subcategoryId || currentQuestionIndex < 0) return
+    if (!userId || !assetId || !subcategoryId || currentQuestionIndex < 0 || loading) return
 
     const sectionId = `asset-${assetId}-${subcategoryId}`
     
-    // Save immediately
+    // Save immediately with current index
     saveUserProgress(
       supabase,
       userId,
@@ -137,7 +138,9 @@ export default function AssetSubcategoryTrainingPage() {
       null,
       assetId,
       subcategoryId
-    ).catch(console.error)
+    ).catch((err) => {
+      console.error('Error saving progress in useEffect:', err)
+    })
 
     // Also save when component unmounts (user leaves page)
     return () => {
@@ -149,9 +152,11 @@ export default function AssetSubcategoryTrainingPage() {
         null,
         assetId,
         subcategoryId
-      ).catch(console.error)
+      ).catch((err) => {
+        console.error('Error saving progress on unmount:', err)
+      })
     }
-  }, [userId, assetId, subcategoryId, currentQuestionIndex, supabase])
+  }, [userId, assetId, subcategoryId, currentQuestionIndex, supabase, loading])
 
   const handleAnswer = useCallback(async (correct: boolean, timeSpent: number) => {
     if (!userId || !asset || !subcategory) return
@@ -222,9 +227,8 @@ export default function AssetSubcategoryTrainingPage() {
       // Move to next question
       const nextIndex = currentQuestionIndex + 1
       const finalIndex = nextIndex < questions.length ? nextIndex : questions.length
-      setCurrentQuestionIndex(finalIndex)
       
-      // Save progress after moving to next question
+      // Save progress BEFORE updating state to ensure it's saved
       await saveUserProgress(
         supabase,
         userId,
@@ -234,6 +238,9 @@ export default function AssetSubcategoryTrainingPage() {
         assetId,
         subcategoryId
       )
+      
+      // Update state after saving
+      setCurrentQuestionIndex(finalIndex)
     } catch (error) {
       console.error('Error recording answer:', error)
     }

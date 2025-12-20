@@ -170,12 +170,13 @@ export default function StrategySubcategoryTrainingPage() {
   }, [categoryId, subcategoryId, router, supabase, blockType, questions.length])
 
   // Save progress whenever currentQuestionIndex changes (even if user doesn't answer)
+  // This ensures progress is saved even if user navigates away without answering
   useEffect(() => {
-    if (!userId || !categoryId || !subcategoryId || currentQuestionIndex < 0) return
+    if (!userId || !categoryId || !subcategoryId || currentQuestionIndex < 0 || loading) return
 
     const sectionId = `strategy-${categoryId}-${subcategoryId}`
     
-    // Save immediately
+    // Save immediately with current index
     saveUserProgress(
       supabase,
       userId,
@@ -184,7 +185,9 @@ export default function StrategySubcategoryTrainingPage() {
       null,
       null,
       categoryId
-    ).catch(console.error)
+    ).catch((err) => {
+      console.error('Error saving progress in useEffect:', err)
+    })
 
     // Also save when component unmounts (user leaves page)
     return () => {
@@ -196,9 +199,11 @@ export default function StrategySubcategoryTrainingPage() {
         null,
         null,
         categoryId
-      ).catch(console.error)
+      ).catch((err) => {
+        console.error('Error saving progress on unmount:', err)
+      })
     }
-  }, [userId, categoryId, subcategoryId, currentQuestionIndex, supabase])
+  }, [userId, categoryId, subcategoryId, currentQuestionIndex, supabase, loading])
 
   const handleAnswer = useCallback(async (correct: boolean, timeSpent: number) => {
     if (!userId || !categoryId || !subcategoryId) return
@@ -270,9 +275,8 @@ export default function StrategySubcategoryTrainingPage() {
       // Move to next question
       const nextIndex = currentQuestionIndex + 1
       const finalIndex = nextIndex < questions.length ? nextIndex : questions.length
-      setCurrentQuestionIndex(finalIndex)
       
-      // Save progress after moving to next question
+      // Save progress BEFORE updating state to ensure it's saved
       await saveUserProgress(
         supabase,
         userId,
@@ -282,6 +286,9 @@ export default function StrategySubcategoryTrainingPage() {
         null,
         categoryId
       )
+      
+      // Update state after saving
+      setCurrentQuestionIndex(finalIndex)
     } catch (error) {
       console.error('Error recording answer:', error)
     }

@@ -121,12 +121,13 @@ export default function SalesCategoryTrainingPage() {
   }, [categoryId, router, supabase, blockType, questions.length])
 
   // Save progress whenever currentQuestionIndex changes (even if user doesn't answer)
+  // This ensures progress is saved even if user navigates away without answering
   useEffect(() => {
-    if (!userId || !categoryId || currentQuestionIndex < 0) return
+    if (!userId || !categoryId || currentQuestionIndex < 0 || loading) return
 
     const sectionId = `sales-${categoryId}`
     
-    // Save immediately
+    // Save immediately with current index
     saveUserProgress(
       supabase,
       userId,
@@ -135,7 +136,9 @@ export default function SalesCategoryTrainingPage() {
       'sales',
       null,
       null
-    ).catch(console.error)
+    ).catch((err) => {
+      console.error('Error saving progress in useEffect:', err)
+    })
 
     // Also save when component unmounts (user leaves page)
     return () => {
@@ -147,9 +150,11 @@ export default function SalesCategoryTrainingPage() {
         'sales',
         null,
         null
-      ).catch(console.error)
+      ).catch((err) => {
+        console.error('Error saving progress on unmount:', err)
+      })
     }
-  }, [userId, categoryId, currentQuestionIndex, supabase])
+  }, [userId, categoryId, currentQuestionIndex, supabase, loading])
 
   const handleAnswer = useCallback(async (correct: boolean, timeSpent: number) => {
     if (!userId || !categoryId) return
@@ -220,9 +225,8 @@ export default function SalesCategoryTrainingPage() {
       // Move to next question
       const nextIndex = currentQuestionIndex + 1
       const finalIndex = nextIndex < questions.length ? nextIndex : questions.length
-      setCurrentQuestionIndex(finalIndex)
       
-      // Save progress after moving to next question
+      // Save progress BEFORE updating state to ensure it's saved
       await saveUserProgress(
         supabase,
         userId,
@@ -232,6 +236,9 @@ export default function SalesCategoryTrainingPage() {
         null,
         null
       )
+      
+      // Update state after saving
+      setCurrentQuestionIndex(finalIndex)
     } catch (error) {
       console.error('Error recording answer:', error)
     }
