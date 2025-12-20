@@ -15,13 +15,7 @@ import { loadUserProgress, saveUserProgress, markQuestionAsWrong } from '@/lib/p
 
 const emptyStats: UserStats = {
   overall: { total: 0, correct: 0, wrong: 0, percentage: 0 },
-  byCategory: {
-    'mental-maths': { total: 0, correct: 0, wrong: 0, percentage: 0 },
-    'proba': { total: 0, correct: 0, wrong: 0, percentage: 0 },
-    'trading': { total: 0, correct: 0, wrong: 0, percentage: 0 },
-    'behavioral': { total: 0, correct: 0, wrong: 0, percentage: 0 },
-    'ml-ai': { total: 0, correct: 0, wrong: 0, percentage: 0 },
-  }
+  byCategory: {}
 }
 
 export default function AssetSubcategoryTrainingPage() {
