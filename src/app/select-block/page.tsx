@@ -1,12 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import DashboardNav from '@/components/DashboardNav'
-import { Profile } from '@/types'
-import { detectBlockTypeFromPath } from '@/lib/stats'
+import Statistics from '@/components/Statistics'
+import { Profile, UserStats } from '@/types'
+import { detectBlockTypeFromPath, calculateStats } from '@/lib/stats'
 import { 
   Users, 
   TrendingUp, 
@@ -14,6 +15,11 @@ import {
   ArrowRight,
   Loader2
 } from 'lucide-react'
+
+const emptyStats: UserStats = {
+  overall: { total: 0, correct: 0, wrong: 0, percentage: 0 },
+  byCategory: {}
+}
 
 const blocks = [
   {
@@ -68,6 +74,9 @@ const blocks = [
 export default function SelectBlockPage() {
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
+  const [showStats, setShowStats] = useState(false)
+  const [stats, setStats] = useState<UserStats>(emptyStats)
+  const [userId, setUserId] = useState<string | null>(null)
   const router = useRouter()
   const pathname = usePathname()
   const supabase = createClient()
@@ -83,6 +92,8 @@ export default function SelectBlockPage() {
           return
         }
 
+        setUserId(user.id)
+
         const { data: profileData } = await supabase
           .from('profiles')
           .select('*')
@@ -92,6 +103,17 @@ export default function SelectBlockPage() {
         if (profileData) {
           setProfile(profileData)
         }
+
+        // Load global stats (all tracks)
+        const { data: answeredQuestions } = await supabase
+          .from('user_answered_questions')
+          .select('*')
+          .eq('user_id', user.id)
+
+        if (answeredQuestions) {
+          const newStats = calculateStats(answeredQuestions, null) // null = all tracks
+          setStats(newStats)
+        }
       } catch (error) {
         console.error('Error initializing:', error)
       } finally {
@@ -100,7 +122,32 @@ export default function SelectBlockPage() {
     }
 
     initialize()
-  })
+  }, [router, supabase])
+
+  // Function to reload stats from database
+  const reloadStats = useCallback(async () => {
+    if (!userId) return
+
+    try {
+      const { data: answeredQuestions } = await supabase
+        .from('user_answered_questions')
+        .select('*')
+        .eq('user_id', userId)
+
+      if (answeredQuestions) {
+        const newStats = calculateStats(answeredQuestions, null) // null = all tracks
+        setStats(newStats)
+      }
+    } catch (error) {
+      console.error('Error reloading stats:', error)
+    }
+  }, [userId, supabase])
+
+  // Handle opening stats - reload from database first
+  const handleOpenStats = useCallback(async () => {
+    await reloadStats()
+    setShowStats(true)
+  }, [reloadStats])
 
   if (loading) {
     return (
@@ -112,7 +159,7 @@ export default function SelectBlockPage() {
 
   return (
     <div className="min-h-screen gradient-bg">
-      <DashboardNav profile={profile} onOpenStats={() => {}} blockType={blockType} />
+      <DashboardNav profile={profile} onOpenStats={handleOpenStats} blockType={blockType} />
 
       <main className="pt-16 sm:pt-24 pb-12 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
@@ -202,6 +249,17 @@ export default function SelectBlockPage() {
           </div>
         </div>
       </main>
+
+      {/* Statistics Modal - Global Stats with Track Switching */}
+      {showStats && (
+        <Statistics 
+          stats={stats} 
+          onClose={() => setShowStats(false)} 
+          blockType={null}
+          userId={userId}
+          showGlobalStats={true}
+        />
+      )}
     </div>
   )
 }

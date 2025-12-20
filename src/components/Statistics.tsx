@@ -1,13 +1,17 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { X } from 'lucide-react'
 import { CategoryStats, UserStats } from '@/types'
-import { salesCategoryLabels, tradingCategoryLabels, quantCategoryLabels } from '@/lib/stats'
+import { salesCategoryLabels, tradingCategoryLabels, quantCategoryLabels, calculateStats } from '@/lib/stats'
+import { createClient } from '@/lib/supabase/client'
 
 interface StatisticsProps {
   stats: UserStats
   onClose: () => void
   blockType?: 'sales' | 'trading' | 'quant' | null
+  userId?: string | null
+  showGlobalStats?: boolean // If true, show global stats with track switching
 }
 
 // Color palette for categories (reused cyclically if needed)
@@ -50,27 +54,75 @@ function StatBar({ label, stats, color }: { label: string; stats: CategoryStats;
   )
 }
 
-export default function Statistics({ stats, onClose, blockType }: StatisticsProps) {
-  // Stats are already filtered by block type when passed from parent pages
-  const overallPercentage = stats.overall.total > 0 
-    ? Math.round((stats.overall.correct / stats.overall.total) * 100) 
+export default function Statistics({ stats, onClose, blockType, userId, showGlobalStats = false }: StatisticsProps) {
+  const [selectedTrack, setSelectedTrack] = useState<'all' | 'sales' | 'trading' | 'quant'>(blockType || 'all')
+  const [trackStats, setTrackStats] = useState<Record<string, UserStats>>({})
+  const [loadingStats, setLoadingStats] = useState(false)
+  const supabase = createClient()
+
+  // Load stats for all tracks if showGlobalStats is true
+  useEffect(() => {
+    if (!userId || !showGlobalStats) return
+
+    const loadAllStats = async () => {
+      setLoadingStats(true)
+      try {
+        const { data: answeredQuestions } = await supabase
+          .from('user_answered_questions')
+          .select('*')
+          .eq('user_id', userId)
+
+        if (answeredQuestions) {
+          // Calculate stats for all tracks
+          const allStats = calculateStats(answeredQuestions, null) // null = all tracks
+          const salesStats = calculateStats(answeredQuestions, 'sales')
+          const tradingStats = calculateStats(answeredQuestions, 'trading')
+          const quantStats = calculateStats(answeredQuestions, 'quant')
+
+          setTrackStats({
+            all: allStats,
+            sales: salesStats,
+            trading: tradingStats,
+            quant: quantStats,
+          })
+        }
+      } catch (error) {
+        console.error('Error loading global stats:', error)
+      } finally {
+        setLoadingStats(false)
+      }
+    }
+
+    loadAllStats()
+  }, [userId, showGlobalStats, supabase])
+
+  // Determine which stats to display
+  const displayStats: UserStats = showGlobalStats && trackStats[selectedTrack]
+    ? trackStats[selectedTrack]
+    : stats
+  const displayBlockType = showGlobalStats ? (selectedTrack === 'all' ? null : selectedTrack) : blockType
+
+  const overallPercentage = displayStats.overall.total > 0 
+    ? Math.round((displayStats.overall.correct / displayStats.overall.total) * 100) 
     : 0
 
   const blockTypeLabels: Record<string, string> = {
     sales: 'Sales',
     trading: 'Trading',
     quant: 'Quant',
+    all: 'All Tracks',
   }
 
   // Get category labels based on block type
   const getCategoryLabel = (category: string): string => {
-    if (blockType === 'sales' && salesCategoryLabels[category]) {
+    const currentBlockType = displayBlockType || selectedTrack
+    if (currentBlockType === 'sales' && salesCategoryLabels[category]) {
       return salesCategoryLabels[category]
     }
-    if (blockType === 'trading' && tradingCategoryLabels[category]) {
+    if (currentBlockType === 'trading' && tradingCategoryLabels[category]) {
       return tradingCategoryLabels[category]
     }
-    if (blockType === 'quant' && quantCategoryLabels[category]) {
+    if (currentBlockType === 'quant' && quantCategoryLabels[category]) {
       return quantCategoryLabels[category]
     }
     // Fallback: capitalize and format category name
@@ -80,8 +132,8 @@ export default function Statistics({ stats, onClose, blockType }: StatisticsProp
   }
 
   // Get categories sorted by total (most answered first)
-  const categories = Object.keys(stats.byCategory).sort((a, b) => 
-    stats.byCategory[b].total - stats.byCategory[a].total
+  const categories = Object.keys(displayStats.byCategory).sort((a, b) => 
+    displayStats.byCategory[b].total - displayStats.byCategory[a].total
   )
 
   return (
@@ -93,9 +145,25 @@ export default function Statistics({ stats, onClose, blockType }: StatisticsProp
         <div className="flex items-center justify-between mb-4 sm:mb-8">
           <div>
             <h2 className="text-xl sm:text-2xl font-bold">Your Statistics</h2>
-            {blockType && (
+            {showGlobalStats ? (
+              <div className="flex gap-2 mt-2">
+                {(['all', 'sales', 'trading', 'quant'] as const).map((track) => (
+                  <button
+                    key={track}
+                    onClick={() => setSelectedTrack(track)}
+                    className={`px-3 py-1 text-xs rounded-lg transition-colors ${
+                      selectedTrack === track
+                        ? 'bg-[#f97316] text-white'
+                        : 'bg-[#1f2937] text-[#9ca3af] hover:bg-[#374151]'
+                    }`}
+                  >
+                    {blockTypeLabels[track]}
+                  </button>
+                ))}
+              </div>
+            ) : displayBlockType && (
               <p className="text-sm text-[#6b7280] mt-1">
-                {blockTypeLabels[blockType]} Track
+                {blockTypeLabels[displayBlockType]} Track
               </p>
             )}
           </div>
@@ -114,10 +182,10 @@ export default function Statistics({ stats, onClose, blockType }: StatisticsProp
               {overallPercentage}%
             </div>
             <p className="text-[#9ca3af] text-sm sm:text-base">
-              {blockType ? `${blockTypeLabels[blockType]} ` : ''}Overall Accuracy
+              {displayBlockType ? `${blockTypeLabels[displayBlockType]} ` : ''}Overall Accuracy
             </p>
             <p className="text-xs sm:text-sm text-[#6b7280] mt-1 sm:mt-2">
-              {stats.overall.correct} correct out of {stats.overall.total} questions
+              {displayStats.overall.correct} correct out of {displayStats.overall.total} questions
             </p>
           </div>
         </div>
@@ -131,7 +199,7 @@ export default function Statistics({ stats, onClose, blockType }: StatisticsProp
               <StatBar
                 key={category}
                 label={getCategoryLabel(category)}
-                stats={stats.byCategory[category]}
+                stats={displayStats.byCategory[category]}
                 color={getCategoryColor(index)}
               />
             ))}
@@ -141,20 +209,26 @@ export default function Statistics({ stats, onClose, blockType }: StatisticsProp
         {/* Summary */}
         <div className="mt-6 sm:mt-8 grid grid-cols-3 gap-2 sm:gap-4">
           <div className="bg-[#0a0f1a] rounded-lg sm:rounded-xl p-2 sm:p-4 text-center">
-            <div className="text-lg sm:text-2xl font-bold text-[#f97316]">{stats.overall.total}</div>
+            <div className="text-lg sm:text-2xl font-bold text-[#f97316]">{displayStats.overall.total}</div>
             <p className="text-xs text-[#6b7280]">Total</p>
           </div>
           <div className="bg-[#0a0f1a] rounded-lg sm:rounded-xl p-2 sm:p-4 text-center">
-            <div className="text-lg sm:text-2xl font-bold text-green-500">{stats.overall.correct}</div>
+            <div className="text-lg sm:text-2xl font-bold text-green-500">{displayStats.overall.correct}</div>
             <p className="text-xs text-[#6b7280]">Correct</p>
           </div>
           <div className="bg-[#0a0f1a] rounded-lg sm:rounded-xl p-2 sm:p-4 text-center">
-            <div className="text-lg sm:text-2xl font-bold text-red-400">{stats.overall.wrong}</div>
+            <div className="text-lg sm:text-2xl font-bold text-red-400">{displayStats.overall.wrong}</div>
             <p className="text-xs text-[#6b7280]">Wrong</p>
           </div>
         </div>
 
-        {stats.overall.total === 0 && (
+        {loadingStats && (
+          <p className="text-center text-[#6b7280] mt-4 sm:mt-6 text-sm">
+            Loading statistics...
+          </p>
+        )}
+
+        {!loadingStats && displayStats.overall.total === 0 && (
           <p className="text-center text-[#6b7280] mt-4 sm:mt-6 text-sm">
             Start practicing to see your statistics!
           </p>
