@@ -131,6 +131,13 @@ export default function Statistics({ stats, onClose, blockType, userId, showGlob
   // Get category labels based on block type
   const getCategoryLabel = (category: string): string => {
     const currentBlockType = displayBlockType || selectedTrack
+    
+    // For global view (All Tracks), category is already formatted as "Track - Category"
+    if (selectedTrack === 'all' && category.includes(' - ')) {
+      return category // Already formatted
+    }
+    
+    // For specific tracks, use the category labels
     if (currentBlockType === 'sales' && salesCategoryLabels[category]) {
       return salesCategoryLabels[category]
     }

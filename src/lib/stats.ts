@@ -29,7 +29,18 @@ export const quantCategoryLabels: Record<string, string> = {
 
 // Extract category from section string (e.g., "sales-behavioral-fit" -> "behavioral-fit")
 function extractCategory(section: string, blockType: string | null): string | null {
-  if (!blockType) return null
+  if (!blockType) {
+    // For global view, extract both block type and category
+    // e.g., "sales-behavioral-fit" -> "sales-behavioral-fit" (full section)
+    // or we can extract just the category part if section starts with known prefixes
+    const prefixes = ['sales-', 'trading-', 'quant-']
+    for (const prefix of prefixes) {
+      if (section.startsWith(prefix)) {
+        return section // Return full section for global view
+      }
+    }
+    return section // Fallback: return section as-is
+  }
   
   const prefix = `${blockType}-`
   if (section.startsWith(prefix)) {
@@ -57,8 +68,39 @@ export function calculateStats(
     : answeredQuestions
 
   filteredQuestions.forEach((q) => {
-    // Extract category from section (e.g., "sales-behavioral-fit" -> "behavioral-fit")
-    const category = extractCategory(q.section, blockType || null)
+    // Extract category from section
+    let category: string | null = null
+    
+    if (blockType) {
+      // For specific track, extract just the category part
+      category = extractCategory(q.section, blockType)
+    } else {
+      // For global view (all tracks), use full section or format as "Track - Category"
+      if (q.block_type && q.section) {
+        // Format: "sales-behavioral-fit" -> "Sales - Behavioral Fit"
+        const trackLabel = q.block_type.charAt(0).toUpperCase() + q.block_type.slice(1)
+        const categoryPart = q.section.replace(`${q.block_type}-`, '')
+        // Try to get proper label for category
+        let categoryLabel = categoryPart
+        if (q.block_type === 'sales' && salesCategoryLabels[categoryPart]) {
+          categoryLabel = salesCategoryLabels[categoryPart]
+        } else if (q.block_type === 'trading' && tradingCategoryLabels[categoryPart]) {
+          categoryLabel = tradingCategoryLabels[categoryPart]
+        } else if (q.block_type === 'quant' && quantCategoryLabels[categoryPart]) {
+          categoryLabel = quantCategoryLabels[categoryPart]
+        } else {
+          // Format category name nicely
+          categoryLabel = categoryPart.split('-').map(word => 
+            word.charAt(0).toUpperCase() + word.slice(1)
+          ).join(' ')
+        }
+        category = `${trackLabel} - ${categoryLabel}`
+      } else {
+        // Fallback: use section as-is
+        category = q.section
+      }
+    }
+    
     if (!category) return
 
     // Initialize category stats if not exists
