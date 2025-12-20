@@ -175,7 +175,13 @@ export default function QuantPage() {
 
       {/* Statistics Modal */}
       {showStats && (
-        <Statistics stats={stats} onClose={() => setShowStats(false)} blockType="quant" />
+        <Statistics 
+          stats={stats} 
+          onClose={() => setShowStats(false)} 
+          blockType="quant"
+          userId={userId}
+          showGlobalStats={true}
+        />
       )}
     </div>
   )

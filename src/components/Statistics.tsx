@@ -54,15 +54,15 @@ function StatBar({ label, stats, color }: { label: string; stats: CategoryStats;
   )
 }
 
-export default function Statistics({ stats, onClose, blockType, userId, showGlobalStats = false }: StatisticsProps) {
+export default function Statistics({ stats, onClose, blockType, userId, showGlobalStats = true }: StatisticsProps) {
   const [selectedTrack, setSelectedTrack] = useState<'all' | 'sales' | 'trading' | 'quant'>(blockType || 'all')
   const [trackStats, setTrackStats] = useState<Record<string, UserStats>>({})
   const [loadingStats, setLoadingStats] = useState(false)
   const supabase = createClient()
 
-  // Load stats for all tracks if showGlobalStats is true
+  // ALWAYS load stats from database if userId is provided
   useEffect(() => {
-    if (!userId || !showGlobalStats) return
+    if (!userId) return
 
     const loadAllStats = async () => {
       setLoadingStats(true)
@@ -85,22 +85,37 @@ export default function Statistics({ stats, onClose, blockType, userId, showGlob
             trading: tradingStats,
             quant: quantStats,
           })
+        } else {
+          // If no answered questions, initialize with empty stats
+          const emptyStats: UserStats = {
+            overall: { total: 0, correct: 0, wrong: 0, percentage: 0 },
+            byCategory: {}
+          }
+          setTrackStats({
+            all: emptyStats,
+            sales: emptyStats,
+            trading: emptyStats,
+            quant: emptyStats,
+          })
         }
       } catch (error) {
         console.error('Error loading global stats:', error)
+        // On error, use the stats passed as props as fallback
       } finally {
         setLoadingStats(false)
       }
     }
 
     loadAllStats()
-  }, [userId, showGlobalStats, supabase])
+  }, [userId, supabase])
 
   // Determine which stats to display
-  const displayStats: UserStats = showGlobalStats && trackStats[selectedTrack]
+  // If userId is provided, always use stats from database (trackStats)
+  // Otherwise, fall back to props stats
+  const displayStats: UserStats = userId && trackStats[selectedTrack]
     ? trackStats[selectedTrack]
     : stats
-  const displayBlockType = showGlobalStats ? (selectedTrack === 'all' ? null : selectedTrack) : blockType
+  const displayBlockType = userId ? (selectedTrack === 'all' ? null : selectedTrack) : blockType
 
   const overallPercentage = displayStats.overall.total > 0 
     ? Math.round((displayStats.overall.correct / displayStats.overall.total) * 100) 
@@ -145,8 +160,8 @@ export default function Statistics({ stats, onClose, blockType, userId, showGlob
         <div className="flex items-center justify-between mb-4 sm:mb-8">
           <div>
             <h2 className="text-xl sm:text-2xl font-bold">Your Statistics</h2>
-            {showGlobalStats ? (
-              <div className="flex gap-2 mt-2">
+            {userId ? (
+              <div className="flex gap-2 mt-2 flex-wrap">
                 {(['all', 'sales', 'trading', 'quant'] as const).map((track) => (
                   <button
                     key={track}

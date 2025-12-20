@@ -292,7 +292,13 @@ export default function TrainingPage() {
 
       {/* Statistics Modal */}
       {showStats && (
-        <Statistics stats={stats} onClose={() => setShowStats(false)} blockType={blockType || undefined} />
+        <Statistics 
+          stats={stats} 
+          onClose={() => setShowStats(false)} 
+          blockType={blockType || undefined}
+          userId={userId}
+          showGlobalStats={true}
+        />
       )}
     </div>
   )

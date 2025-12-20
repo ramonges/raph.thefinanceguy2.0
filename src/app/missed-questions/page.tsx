@@ -517,7 +517,13 @@ export default function MissedQuestionsPage() {
 
       {/* Statistics Modal */}
       {showStats && (
-        <Statistics stats={stats} onClose={() => setShowStats(false)} blockType={blockType || undefined} />
+        <Statistics 
+          stats={stats} 
+          onClose={() => setShowStats(false)} 
+          blockType={blockType || undefined}
+          userId={profile?.id || null}
+          showGlobalStats={true}
+        />
       )}
     </div>
   )

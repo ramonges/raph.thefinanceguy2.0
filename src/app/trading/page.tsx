@@ -174,7 +174,13 @@ export default function TradingPage() {
 
       {/* Statistics Modal */}
       {showStats && (
-        <Statistics stats={stats} onClose={() => setShowStats(false)} blockType="trading" />
+        <Statistics 
+          stats={stats} 
+          onClose={() => setShowStats(false)} 
+          blockType="trading"
+          userId={userId}
+          showGlobalStats={true}
+        />
       )}
     </div>
   )

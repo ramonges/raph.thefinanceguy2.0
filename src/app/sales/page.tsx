@@ -172,7 +172,13 @@ export default function SalesPage() {
 
       {/* Statistics Modal */}
       {showStats && (
-        <Statistics stats={stats} onClose={() => setShowStats(false)} blockType="sales" />
+        <Statistics 
+          stats={stats} 
+          onClose={() => setShowStats(false)} 
+          blockType="sales"
+          userId={userId}
+          showGlobalStats={true}
+        />
       )}
     </div>
   )
