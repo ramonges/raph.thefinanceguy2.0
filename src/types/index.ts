@@ -154,6 +154,6 @@ export interface CategoryStats {
 
 export interface UserStats {
   overall: CategoryStats
-  byCategory: Record<Category, CategoryStats>
+  byCategory: Record<string, CategoryStats> // Changed to string to support dynamic categories
 }
 

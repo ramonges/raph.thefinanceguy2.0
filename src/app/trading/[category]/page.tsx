@@ -92,23 +92,21 @@ export default function TradingCategoryTrainingPage() {
           setProfile(newProfile)
         }
 
-        // Fetch answered questions for this trading category
-        // Use a unique section identifier for this trading category
-        const sectionId = `trading-${categoryId}`
+        // Fetch ALL answered questions for the Trading track (not just this category)
         const { data: answeredQuestions } = await supabase
           .from('user_answered_questions')
           .select('*')
           .eq('user_id', user.id)
-          .eq('section', sectionId)
           .eq('block_type', 'trading')
 
         if (answeredQuestions) {
-          // Calculate stats
-          const newStats = calculateStats(answeredQuestions, blockType || undefined)
+          // Calculate stats for all Trading categories
+          const newStats = calculateStats(answeredQuestions, 'trading')
           setStats(newStats)
         }
 
         // Load user's last position in this section
+        const sectionId = `trading-${categoryId}`
         const lastQuestionIndex = await loadUserProgress(supabase, user.id, sectionId)
         const totalInCategory = questions.length
         
@@ -216,26 +214,17 @@ export default function TradingCategoryTrainingPage() {
           .eq('question_number', currentQuestionIndex + 1)
       }
 
-      // Update stats locally
-      setStats(prev => {
-        const newStats = { ...prev }
-        newStats.byCategory = { ...prev.byCategory }
-        newStats.byCategory[originalCategory] = { ...prev.byCategory[originalCategory] }
-        newStats.overall = { ...prev.overall }
+      // Reload stats from database to get accurate stats across all categories
+      const { data: answeredQuestions } = await supabase
+        .from('user_answered_questions')
+        .select('*')
+        .eq('user_id', userId)
+        .eq('block_type', 'trading')
 
-        newStats.byCategory[originalCategory].total++
-        newStats.overall.total++
-
-        if (correct) {
-          newStats.byCategory[originalCategory].correct++
-          newStats.overall.correct++
-        } else {
-          newStats.byCategory[originalCategory].wrong++
-          newStats.overall.wrong++
-        }
-
-        return newStats
-      })
+      if (answeredQuestions) {
+        const newStats = calculateStats(answeredQuestions, 'trading')
+        setStats(newStats)
+      }
 
       // Move to next question
       const nextIndex = currentQuestionIndex + 1

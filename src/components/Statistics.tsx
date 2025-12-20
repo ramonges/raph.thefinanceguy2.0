@@ -1,8 +1,8 @@
 'use client'
 
 import { X } from 'lucide-react'
-import { Category, CategoryStats, UserStats } from '@/types'
-import { categoryLabels } from '@/data/questions'
+import { CategoryStats, UserStats } from '@/types'
+import { salesCategoryLabels, tradingCategoryLabels, quantCategoryLabels } from '@/lib/stats'
 
 interface StatisticsProps {
   stats: UserStats
@@ -10,12 +10,20 @@ interface StatisticsProps {
   blockType?: 'sales' | 'trading' | 'quant' | null
 }
 
-const categoryColors: Record<Category, string> = {
-  'mental-maths': '#f97316',
-  'proba': '#6366f1',
-  'trading': '#f59e0b',
-  'behavioral': '#8b5cf6',
-  'ml-ai': '#ec4899',
+// Color palette for categories (reused cyclically if needed)
+const categoryColors = [
+  '#f97316', // orange
+  '#6366f1', // indigo
+  '#f59e0b', // amber
+  '#8b5cf6', // purple
+  '#ec4899', // pink
+  '#10b981', // green
+  '#06b6d4', // cyan
+  '#ef4444', // red
+]
+
+function getCategoryColor(categoryIndex: number): string {
+  return categoryColors[categoryIndex % categoryColors.length]
 }
 
 function StatBar({ label, stats, color }: { label: string; stats: CategoryStats; color: string }) {
@@ -53,6 +61,28 @@ export default function Statistics({ stats, onClose, blockType }: StatisticsProp
     trading: 'Trading',
     quant: 'Quant',
   }
+
+  // Get category labels based on block type
+  const getCategoryLabel = (category: string): string => {
+    if (blockType === 'sales' && salesCategoryLabels[category]) {
+      return salesCategoryLabels[category]
+    }
+    if (blockType === 'trading' && tradingCategoryLabels[category]) {
+      return tradingCategoryLabels[category]
+    }
+    if (blockType === 'quant' && quantCategoryLabels[category]) {
+      return quantCategoryLabels[category]
+    }
+    // Fallback: capitalize and format category name
+    return category.split('-').map(word => 
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ')
+  }
+
+  // Get categories sorted by total (most answered first)
+  const categories = Object.keys(stats.byCategory).sort((a, b) => 
+    stats.byCategory[b].total - stats.byCategory[a].total
+  )
 
   return (
     <div className="stats-overlay" onClick={onClose}>
@@ -93,16 +123,20 @@ export default function Statistics({ stats, onClose, blockType }: StatisticsProp
         </div>
 
         {/* Category Breakdown */}
-        <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">By Category</h3>
-        
-        {(Object.keys(categoryColors) as Category[]).map((category) => (
-          <StatBar
-            key={category}
-            label={categoryLabels[category]}
-            stats={stats.byCategory[category]}
-            color={categoryColors[category]}
-          />
-        ))}
+        {categories.length > 0 && (
+          <>
+            <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">By Category</h3>
+            
+            {categories.map((category, index) => (
+              <StatBar
+                key={category}
+                label={getCategoryLabel(category)}
+                stats={stats.byCategory[category]}
+                color={getCategoryColor(index)}
+              />
+            ))}
+          </>
+        )}
 
         {/* Summary */}
         <div className="mt-6 sm:mt-8 grid grid-cols-3 gap-2 sm:gap-4">

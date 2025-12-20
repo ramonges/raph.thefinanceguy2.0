@@ -93,22 +93,21 @@ export default function QuantCategoryTrainingPage() {
           setProfile(newProfile)
         }
 
-        // Fetch answered questions for this quant category
-        const sectionId = `quant-${categoryId}`
+        // Fetch ALL answered questions for the Quant track (not just this category)
         const { data: answeredQuestions } = await supabase
           .from('user_answered_questions')
           .select('*')
           .eq('user_id', user.id)
-          .eq('section', sectionId)
           .eq('block_type', 'quant')
 
         if (answeredQuestions) {
-          // Calculate stats
-          const newStats = calculateStats(answeredQuestions, blockType || undefined)
+          // Calculate stats for all Quant categories
+          const newStats = calculateStats(answeredQuestions, 'quant')
           setStats(newStats)
         }
 
         // Load user's last position in this section
+        const sectionId = `quant-${categoryId}`
         const lastQuestionIndex = await loadUserProgress(supabase, user.id, sectionId)
         const totalInCategory = questions.length
         
@@ -214,26 +213,17 @@ export default function QuantCategoryTrainingPage() {
           .eq('question_number', currentQuestionIndex + 1)
       }
 
-      // Update stats locally
-      setStats(prev => {
-        const newStats = { ...prev }
-        newStats.byCategory = { ...prev.byCategory }
-        newStats.byCategory[originalCategory] = { ...prev.byCategory[originalCategory] }
-        newStats.overall = { ...prev.overall }
+      // Reload stats from database to get accurate stats across all categories
+      const { data: answeredQuestions } = await supabase
+        .from('user_answered_questions')
+        .select('*')
+        .eq('user_id', userId)
+        .eq('block_type', 'quant')
 
-        newStats.byCategory[originalCategory].total++
-        newStats.overall.total++
-
-        if (correct) {
-          newStats.byCategory[originalCategory].correct++
-          newStats.overall.correct++
-        } else {
-          newStats.byCategory[originalCategory].wrong++
-          newStats.overall.wrong++
-        }
-
-        return newStats
-      })
+      if (answeredQuestions) {
+        const newStats = calculateStats(answeredQuestions, 'quant')
+        setStats(newStats)
+      }
 
       // Move to next question
       const nextIndex = currentQuestionIndex + 1

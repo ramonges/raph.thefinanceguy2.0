@@ -81,22 +81,21 @@ export default function SalesCategoryTrainingPage() {
           setProfile(newProfile)
         }
 
-        // Fetch answered questions for this sales category
-        const sectionId = `sales-${categoryId}`
+        // Fetch ALL answered questions for the Sales track (not just this category)
         const { data: answeredQuestions } = await supabase
           .from('user_answered_questions')
           .select('*')
           .eq('user_id', user.id)
-          .eq('section', sectionId)
           .eq('block_type', 'sales')
 
         if (answeredQuestions) {
-          // Calculate stats
-          const newStats = calculateStats(answeredQuestions, blockType || undefined)
+          // Calculate stats for all Sales categories
+          const newStats = calculateStats(answeredQuestions, 'sales')
           setStats(newStats)
         }
 
         // Load user's last position in this section
+        const sectionId = `sales-${categoryId}`
         const lastQuestionIndex = await loadUserProgress(supabase, user.id, sectionId)
         const totalInCategory = questions.length
         
@@ -201,26 +200,17 @@ export default function SalesCategoryTrainingPage() {
           .eq('question_number', currentQuestionIndex + 1)
       }
 
-      // Update stats locally (using 'behavioral' category for sales questions)
-      setStats(prev => {
-        const newStats = { ...prev }
-        newStats.byCategory = { ...prev.byCategory }
-        newStats.byCategory['behavioral'] = { ...prev.byCategory['behavioral'] }
-        newStats.overall = { ...prev.overall }
+      // Reload stats from database to get accurate stats across all categories
+      const { data: answeredQuestions } = await supabase
+        .from('user_answered_questions')
+        .select('*')
+        .eq('user_id', userId)
+        .eq('block_type', 'sales')
 
-        newStats.byCategory['behavioral'].total++
-        newStats.overall.total++
-
-        if (correct) {
-          newStats.byCategory['behavioral'].correct++
-          newStats.overall.correct++
-        } else {
-          newStats.byCategory['behavioral'].wrong++
-          newStats.overall.wrong++
-        }
-
-        return newStats
-      })
+      if (answeredQuestions) {
+        const newStats = calculateStats(answeredQuestions, 'sales')
+        setStats(newStats)
+      }
 
       // Move to next question
       const nextIndex = currentQuestionIndex + 1
