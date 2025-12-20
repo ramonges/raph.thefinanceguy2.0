@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
@@ -11,10 +11,31 @@ export default function SignupPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [checkingSession, setCheckingSession] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const router = useRouter()
   const supabase = createClient()
+
+  // Check if user is already logged in
+  useEffect(() => {
+    async function checkSession() {
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+          // User already has a session, redirect to select-block
+          router.push('/select-block')
+          router.refresh()
+        }
+      } catch (error) {
+        console.error('Error checking session:', error)
+      } finally {
+        setCheckingSession(false)
+      }
+    }
+
+    checkSession()
+  }, [router, supabase])
 
   const handleEmailSignup = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -67,6 +88,15 @@ export default function SignupPage() {
       setError(err instanceof Error ? err.message : 'An error occurred')
       setLoading(false)
     }
+  }
+
+  // Show loading while checking session
+  if (checkingSession) {
+    return (
+      <div className="min-h-screen gradient-bg flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-[#f97316]" />
+      </div>
+    )
   }
 
   if (success) {
