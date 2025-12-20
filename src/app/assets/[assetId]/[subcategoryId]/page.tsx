@@ -124,8 +124,23 @@ export default function AssetSubcategoryTrainingPage() {
 
   // Save progress whenever currentQuestionIndex changes (even if user doesn't answer)
   useEffect(() => {
-    if (userId && assetId && subcategoryId && currentQuestionIndex >= 0) {
-      const sectionId = `asset-${assetId}-${subcategoryId}`
+    if (!userId || !assetId || !subcategoryId || currentQuestionIndex < 0) return
+
+    const sectionId = `asset-${assetId}-${subcategoryId}`
+    
+    // Save immediately
+    saveUserProgress(
+      supabase,
+      userId,
+      sectionId,
+      currentQuestionIndex,
+      null,
+      assetId,
+      subcategoryId
+    ).catch(console.error)
+
+    // Also save when component unmounts (user leaves page)
+    return () => {
       saveUserProgress(
         supabase,
         userId,

@@ -134,8 +134,23 @@ export default function TradingCategoryTrainingPage() {
 
   // Save progress whenever currentQuestionIndex changes (even if user doesn't answer)
   useEffect(() => {
-    if (userId && categoryId && currentQuestionIndex >= 0) {
-      const sectionId = `trading-${categoryId}`
+    if (!userId || !categoryId || currentQuestionIndex < 0) return
+
+    const sectionId = `trading-${categoryId}`
+    
+    // Save immediately
+    saveUserProgress(
+      supabase,
+      userId,
+      sectionId,
+      currentQuestionIndex,
+      'trading',
+      null,
+      null
+    ).catch(console.error)
+
+    // Also save when component unmounts (user leaves page)
+    return () => {
       saveUserProgress(
         supabase,
         userId,

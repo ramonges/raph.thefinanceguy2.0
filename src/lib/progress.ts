@@ -13,7 +13,7 @@ export async function saveUserProgress(
   strategyCategory?: string | null
 ) {
   try {
-    await supabase
+    const { data, error } = await supabase
       .from('user_section_progress')
       .upsert({
         user_id: userId,
@@ -26,6 +26,16 @@ export async function saveUserProgress(
       }, {
         onConflict: 'user_id,section',
       })
+
+    if (error) {
+      console.error('Error saving user progress:', error)
+      // If table doesn't exist, log a helpful message
+      if (error.message?.includes('relation') || error.message?.includes('does not exist')) {
+        console.error('⚠️ user_section_progress table does not exist! Please run the SQL script in Supabase.')
+      }
+    } else {
+      console.log(`✅ Progress saved: ${section} -> question ${currentQuestionIndex + 1}`)
+    }
   } catch (error) {
     console.error('Error saving user progress:', error)
   }
@@ -48,16 +58,33 @@ export async function loadUserProgress(
       .eq('section', section)
       .single()
 
-    if (error || !data) {
+    if (error) {
+      // If table doesn't exist, log a helpful message
+      if (error.message?.includes('relation') || error.message?.includes('does not exist')) {
+        console.error('⚠️ user_section_progress table does not exist! Please run the SQL script in Supabase.')
+        console.log('📝 Falling back to answered_questions table...')
+      }
       // No progress found, check answered questions as fallback
-      return await loadProgressFromAnsweredQuestions(supabase, userId, section)
+      const fallbackIndex = await loadProgressFromAnsweredQuestions(supabase, userId, section)
+      console.log(`📊 Loaded progress from fallback: ${section} -> question ${fallbackIndex + 1}`)
+      return fallbackIndex
     }
 
+    if (!data) {
+      // No progress found, check answered questions as fallback
+      const fallbackIndex = await loadProgressFromAnsweredQuestions(supabase, userId, section)
+      console.log(`📊 Loaded progress from fallback: ${section} -> question ${fallbackIndex + 1}`)
+      return fallbackIndex
+    }
+
+    console.log(`✅ Loaded progress: ${section} -> question ${data.current_question_index + 1}`)
     return data.current_question_index
   } catch (error) {
     console.error('Error loading user progress:', error)
     // Fallback to answered questions
-    return await loadProgressFromAnsweredQuestions(supabase, userId, section)
+    const fallbackIndex = await loadProgressFromAnsweredQuestions(supabase, userId, section)
+    console.log(`📊 Loaded progress from fallback (error): ${section} -> question ${fallbackIndex + 1}`)
+    return fallbackIndex
   }
 }
 
@@ -81,7 +108,12 @@ async function loadProgressFromAnsweredQuestions(
 
     if (answeredQuestions && answeredQuestions.length > 0) {
       // Return the last answered question number (1-indexed) as 0-indexed
-      return answeredQuestions[0].question_number - 1
+      // This means if user answered question 10, they should resume at question 10 (index 9)
+      // But we want them to continue from where they left off, so return the index they were at
+      // If they answered question 10, they were at index 9, so next question is index 10
+      const lastAnswered = answeredQuestions[0].question_number
+      // Return the index of the last answered question (so they continue from next)
+      return lastAnswered - 1
     }
 
     return 0

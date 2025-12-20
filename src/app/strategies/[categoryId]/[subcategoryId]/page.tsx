@@ -171,8 +171,23 @@ export default function StrategySubcategoryTrainingPage() {
 
   // Save progress whenever currentQuestionIndex changes (even if user doesn't answer)
   useEffect(() => {
-    if (userId && categoryId && subcategoryId && currentQuestionIndex >= 0) {
-      const sectionId = `strategy-${categoryId}-${subcategoryId}`
+    if (!userId || !categoryId || !subcategoryId || currentQuestionIndex < 0) return
+
+    const sectionId = `strategy-${categoryId}-${subcategoryId}`
+    
+    // Save immediately
+    saveUserProgress(
+      supabase,
+      userId,
+      sectionId,
+      currentQuestionIndex,
+      null,
+      null,
+      categoryId
+    ).catch(console.error)
+
+    // Also save when component unmounts (user leaves page)
+    return () => {
       saveUserProgress(
         supabase,
         userId,
