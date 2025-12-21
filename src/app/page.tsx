@@ -60,8 +60,22 @@ export default function HomePage() {
   const supabase = createClient()
 
   // Redirect authenticated users to select-block page
+  // Also handle OAuth callback code if present in URL
   useEffect(() => {
     async function checkAuth() {
+      // Check if there's an OAuth code in the URL
+      const urlParams = new URLSearchParams(window.location.search)
+      const code = urlParams.get('code')
+      
+      if (code) {
+        // Redirect to callback route to handle the OAuth code
+        // Use window.location.href to maintain the current domain
+        const next = urlParams.get('next') || '/select-block'
+        window.location.href = `/auth/callback?code=${code}&next=${next}`
+        return
+      }
+
+      // Check if user is already authenticated
       const { data: { user } } = await supabase.auth.getUser()
       if (user) {
         router.push('/select-block')

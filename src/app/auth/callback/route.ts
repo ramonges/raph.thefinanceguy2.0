@@ -11,20 +11,45 @@ export async function GET(request: Request) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     
     if (!error) {
-      const forwardedHost = request.headers.get('x-forwarded-host')
+      // Determine the correct base URL for redirection
       const isLocalEnv = process.env.NODE_ENV === 'development'
+      const productionUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://raphthefinanceguy.com'
+      
+      // Get forwarded host to check if we should use production domain
+      const forwardedHost = request.headers.get('x-forwarded-host')
+      const forwardedProto = request.headers.get('x-forwarded-proto') || 'https'
+      
+      let redirectUrl: string
       
       if (isLocalEnv) {
-        return NextResponse.redirect(`${origin}${next}`)
-      } else if (forwardedHost) {
-        return NextResponse.redirect(`https://${forwardedHost}${next}`)
+        // Development: use origin
+        redirectUrl = `${origin}${next}`
+      } else if (forwardedHost && forwardedHost.includes('raphthefinanceguy.com')) {
+        // Production: use the custom domain if available
+        redirectUrl = `${forwardedProto}://${forwardedHost}${next}`
+      } else if (forwardedHost && !forwardedHost.includes('vercel.app')) {
+        // Use forwarded host if it's not Vercel (could be another custom domain)
+        redirectUrl = `${forwardedProto}://${forwardedHost}${next}`
       } else {
-        return NextResponse.redirect(`${origin}${next}`)
+        // Fallback: use production URL from env or default
+        redirectUrl = `${productionUrl}${next}`
       }
+      
+      return NextResponse.redirect(redirectUrl)
+    } else {
+      console.error('Error exchanging code for session:', error)
+      // Return the user to an error page with instructions
+      const productionUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://raphthefinanceguy.com'
+      const isLocalEnv = process.env.NODE_ENV === 'development'
+      const errorUrl = isLocalEnv ? `${origin}/login?error=Could not authenticate user` : `${productionUrl}/login?error=Could not authenticate user`
+      return NextResponse.redirect(errorUrl)
     }
   }
 
-  // Return the user to an error page with instructions
-  return NextResponse.redirect(`${origin}/login?error=Could not authenticate user`)
+  // No code provided, redirect to login
+  const productionUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://raphthefinanceguy.com'
+  const isLocalEnv = process.env.NODE_ENV === 'development'
+  const errorUrl = isLocalEnv ? `${origin}/login?error=No authentication code provided` : `${productionUrl}/login?error=No authentication code provided`
+  return NextResponse.redirect(errorUrl)
 }
 
