@@ -190,8 +190,8 @@ export default function SignupPage() {
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="John Doe"
-                  className="pl-12 pr-4"
-                  style={{ paddingLeft: '3rem' }}
+                  className="pr-4"
+                  style={{ paddingLeft: '3.5rem' }}
                   required
                 />
               </div>
@@ -206,8 +206,8 @@ export default function SignupPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="pl-12 pr-4"
-                  style={{ paddingLeft: '3rem' }}
+                  className="pr-4"
+                  style={{ paddingLeft: '3.5rem' }}
                   required
                 />
               </div>
@@ -222,8 +222,8 @@ export default function SignupPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="pl-12 pr-4"
-                  style={{ paddingLeft: '3rem' }}
+                  className="pr-4"
+                  style={{ paddingLeft: '3.5rem' }}
                   minLength={6}
                   required
                 />

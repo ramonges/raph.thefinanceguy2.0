@@ -150,8 +150,8 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="pl-12 pr-4"
-                  style={{ paddingLeft: '3rem' }}
+                  className="pr-4"
+                  style={{ paddingLeft: '3.5rem' }}
                   required
                 />
               </div>
@@ -166,8 +166,8 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="pl-12 pr-4"
-                  style={{ paddingLeft: '3rem' }}
+                  className="pr-4"
+                  style={{ paddingLeft: '3.5rem' }}
                   required
                 />
               </div>
