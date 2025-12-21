@@ -15,8 +15,17 @@ export default function LoginPage() {
   const router = useRouter()
   const supabase = createClient()
 
-  // Check if user is already logged in
+  // Check if user is already logged in and read error from URL
   useEffect(() => {
+    // Check for error in URL params
+    const urlParams = new URLSearchParams(window.location.search)
+    const errorParam = urlParams.get('error')
+    if (errorParam) {
+      setError(decodeURIComponent(errorParam))
+      // Clean up URL
+      window.history.replaceState({}, '', '/login')
+    }
+
     async function checkSession() {
       try {
         const { data: { user } } = await supabase.auth.getUser()
@@ -62,15 +71,28 @@ export default function LoginPage() {
     setError(null)
 
     try {
+      // Always use the production domain for OAuth redirect to match Supabase configuration
+      // This ensures consistency even if user is on Vercel preview domain
+      const siteUrl = typeof window !== 'undefined' 
+        ? (process.env.NEXT_PUBLIC_SITE_URL || 'https://raphthefinanceguy.com')
+        : 'https://raphthefinanceguy.com'
+      const redirectUrl = `${siteUrl}/auth/callback?next=/select-block`
+      
+      console.log('Initiating Google OAuth with redirectTo:', redirectUrl)
+      
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback?next=/select-block`,
+          redirectTo: redirectUrl,
         },
       })
 
-      if (error) throw error
+      if (error) {
+        console.error('OAuth error:', error)
+        throw error
+      }
     } catch (err) {
+      console.error('Error in handleGoogleLogin:', err)
       setError(err instanceof Error ? err.message : 'An error occurred')
       setLoading(false)
     }
