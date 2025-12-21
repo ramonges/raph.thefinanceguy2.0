@@ -184,13 +184,13 @@ export default function SignupPage() {
             <div>
               <label className="block text-sm font-medium mb-2">Full Name</label>
               <div className="relative">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6b7280]" />
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6b7280] pointer-events-none z-10" />
                 <input
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="John Doe"
-                  className="pl-12"
+                  className="pl-11 pr-4"
                   required
                 />
               </div>
@@ -199,13 +199,13 @@ export default function SignupPage() {
             <div>
               <label className="block text-sm font-medium mb-2">Email</label>
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6b7280]" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6b7280] pointer-events-none z-10" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="pl-12"
+                  className="pl-11 pr-4"
                   required
                 />
               </div>
@@ -214,13 +214,13 @@ export default function SignupPage() {
             <div>
               <label className="block text-sm font-medium mb-2">Password</label>
               <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6b7280]" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6b7280] pointer-events-none z-10" />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="pl-12"
+                  className="pl-11 pr-4"
                   minLength={6}
                   required
                 />
