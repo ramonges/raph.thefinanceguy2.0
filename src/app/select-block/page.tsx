@@ -23,7 +23,7 @@ const emptyStats: UserStats = {
   byCategory: {}
 }
 
-const blocks = [
+const mainBlocks = [
   {
     id: 'sales',
     title: 'Sales',
@@ -71,21 +71,15 @@ const blocks = [
     ],
     href: '/quant'
   },
+]
+
+const additionalBlocks = [
   {
     id: 'assets',
     title: 'Asset Classes',
     icon: Briefcase,
     color: '#8b5cf6',
     description: 'Master Equity, Fixed Income, Commodities, FX, Credit, Rates, and Structured Products',
-    categories: [
-      { id: 'equity', label: 'Equity' },
-      { id: 'fixed-income', label: 'Fixed Income' },
-      { id: 'commodities', label: 'Commodities' },
-      { id: 'fx', label: 'FX' },
-      { id: 'credit', label: 'Credit' },
-      { id: 'rates', label: 'Rates' },
-      { id: 'structured-products', label: 'Structured Products' },
-    ],
     href: '/assets'
   },
   {
@@ -94,15 +88,6 @@ const blocks = [
     icon: Target,
     color: '#ec4899',
     description: 'Master Equity, Fixed Income, Alternative, Macro, Quantitative, Income, and Multi-Asset strategies',
-    categories: [
-      { id: 'equity', label: 'Equity Strategies' },
-      { id: 'fixed-income', label: 'Fixed Income Strategies' },
-      { id: 'alternative', label: 'Alternative Strategies' },
-      { id: 'macro', label: 'Macro Strategies' },
-      { id: 'quantitative', label: 'Quantitative Strategies' },
-      { id: 'income', label: 'Income Strategies' },
-      { id: 'multi-asset', label: 'Multi-Asset Strategies' },
-    ],
     href: '/strategies'
   },
 ]
@@ -208,8 +193,9 @@ export default function SelectBlockPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8">
-            {blocks.map((block) => {
+          {/* Main Tracks: Sales, Trading, Quant */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-12">
+            {mainBlocks.map((block) => {
               const Icon = block.icon
               return (
                 <Link
@@ -246,6 +232,37 @@ export default function SelectBlockPage() {
 
                   <div className="flex items-center gap-2 text-sm sm:text-base font-medium group-hover:gap-3 transition-all" style={{ color: block.color }}>
                     <span>Start Practicing</span>
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </div>
+                </Link>
+              )
+            })}
+          </div>
+
+          {/* Additional Blocks: Assets and Strategies */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+            {additionalBlocks.map((block) => {
+              const Icon = block.icon
+              return (
+                <Link
+                  key={block.id}
+                  href={block.href}
+                  className="bg-[#111827] border border-[#1f2937] rounded-xl sm:rounded-2xl p-6 sm:p-8 hover:border-[#374151] transition-all duration-200 card-hover group"
+                >
+                  <div 
+                    className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center mb-4 sm:mb-6"
+                    style={{ backgroundColor: `${block.color}20` }}
+                  >
+                    <Icon className="w-6 h-6 sm:w-8 sm:h-8" style={{ color: block.color }} />
+                  </div>
+
+                  <h2 className="text-xl sm:text-2xl font-bold mb-2">{block.title}</h2>
+                  <p className="text-[#9ca3af] text-sm sm:text-base mb-4 sm:mb-6">
+                    {block.description}
+                  </p>
+
+                  <div className="flex items-center gap-2 text-sm sm:text-base font-medium group-hover:gap-3 transition-all" style={{ color: block.color }}>
+                    <span>Explore {block.title}</span>
                     <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                 </Link>
