@@ -16,7 +16,8 @@ import {
   DollarSign,
   Layers,
   Loader2,
-  ArrowRight
+  ArrowRight,
+  Activity
 } from 'lucide-react'
 
 const strategies: Array<{
@@ -123,6 +124,21 @@ const strategies: Array<{
       'Strategic Asset Allocation',
       'Target Date/Target Risk',
       'Balanced/60-40',
+    ]
+  },
+  {
+    id: 'volatility-strategies',
+    label: 'Volatility Strategies',
+    icon: Activity,
+    color: '#ef4444',
+    subcategories: [
+      'Carry vs convexity',
+      'Long vol vs short vol regimes',
+      'Dispersion trading',
+      'Skew trading',
+      'Gamma scalping',
+      'Relative value vol',
+      'Tail hedging',
     ]
   },
 ]

@@ -18,6 +18,7 @@ const categoryLabels: Record<StrategyCategory, string> = {
   'quantitative-strategies': 'Quantitative Strategies',
   'income-strategies': 'Income Strategies',
   'multi-asset-strategies': 'Multi-Asset Strategies',
+  'volatility-strategies': 'Volatility Strategies',
 }
 
 const subcategoryLabels: Record<string, string> = {
@@ -56,6 +57,13 @@ const subcategoryLabels: Record<string, string> = {
   'tactical-asset-allocation': 'Tactical Asset Allocation',
   'strategic-asset-allocation': 'Strategic Asset Allocation',
   'target-date-target-risk': 'Target Date / Target Risk',
+  'carry-vs-convexity': 'Carry vs Convexity',
+  'long-vol-vs-short-vol-regimes': 'Long Vol vs Short Vol Regimes',
+  'dispersion-trading': 'Dispersion Trading',
+  'skew-trading': 'Skew Trading',
+  'gamma-scalping': 'Gamma Scalping',
+  'relative-value-vol': 'Relative Value Vol',
+  'tail-hedging': 'Tail Hedging',
 }
 
 export default function StrategySubcategoriesPage() {

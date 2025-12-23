@@ -95,6 +95,7 @@ export type StrategyCategory =
   | 'quantitative-strategies'
   | 'income-strategies'
   | 'multi-asset-strategies'
+  | 'volatility-strategies'
 
 export interface UserProgress {
   id: string

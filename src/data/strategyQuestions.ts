@@ -1656,6 +1656,15 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
       { id: 10, prompt: "How do you explain simplicity vs flexibility?", tags: ["Target Date", "Simplicity", "Flexibility", "Client Communication"], starChecks: ["Trade-off explanation", "Benefits", "Limitations", "Client suitability"] },
     ],
   },
+  'volatility-strategies': {
+    'carry-vs-convexity': [],
+    'long-vol-vs-short-vol-regimes': [],
+    'dispersion-trading': [],
+    'skew-trading': [],
+    'gamma-scalping': [],
+    'relative-value-vol': [],
+    'tail-hedging': [],
+  },
 }
 
 // Helper to get all questions for a category
