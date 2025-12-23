@@ -13,7 +13,9 @@ import {
   TrendingUp, 
   Calculator,
   ArrowRight,
-  Loader2
+  Loader2,
+  Briefcase,
+  Target
 } from 'lucide-react'
 
 const emptyStats: UserStats = {
@@ -68,6 +70,40 @@ const blocks = [
       { id: 'research-discussion', label: 'Research Discussion' },
     ],
     href: '/quant'
+  },
+  {
+    id: 'assets',
+    title: 'Asset Classes',
+    icon: Briefcase,
+    color: '#8b5cf6',
+    description: 'Master Equity, Fixed Income, Commodities, FX, Credit, Rates, and Structured Products',
+    categories: [
+      { id: 'equity', label: 'Equity' },
+      { id: 'fixed-income', label: 'Fixed Income' },
+      { id: 'commodities', label: 'Commodities' },
+      { id: 'fx', label: 'FX' },
+      { id: 'credit', label: 'Credit' },
+      { id: 'rates', label: 'Rates' },
+      { id: 'structured-products', label: 'Structured Products' },
+    ],
+    href: '/assets'
+  },
+  {
+    id: 'strategies',
+    title: 'Trading Strategies',
+    icon: Target,
+    color: '#ec4899',
+    description: 'Master Equity, Fixed Income, Alternative, Macro, Quantitative, Income, and Multi-Asset strategies',
+    categories: [
+      { id: 'equity', label: 'Equity Strategies' },
+      { id: 'fixed-income', label: 'Fixed Income Strategies' },
+      { id: 'alternative', label: 'Alternative Strategies' },
+      { id: 'macro', label: 'Macro Strategies' },
+      { id: 'quantitative', label: 'Quantitative Strategies' },
+      { id: 'income', label: 'Income Strategies' },
+      { id: 'multi-asset', label: 'Multi-Asset Strategies' },
+    ],
+    href: '/strategies'
   },
 ]
 
@@ -172,7 +208,7 @@ export default function SelectBlockPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8">
             {blocks.map((block) => {
               const Icon = block.icon
               return (
@@ -217,36 +253,6 @@ export default function SelectBlockPage() {
             })}
           </div>
 
-          {/* Additional Links */}
-          <div className="mt-12 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-            <Link
-              href="/assets"
-              className="bg-[#111827] border border-[#1f2937] rounded-xl sm:rounded-2xl p-6 sm:p-8 hover:border-[#374151] transition-all card-hover"
-            >
-              <h3 className="text-lg sm:text-xl font-bold mb-2">Asset Classes</h3>
-              <p className="text-[#9ca3af] text-sm sm:text-base mb-4">
-                Practice questions specific to Equity, Fixed Income, Commodities, FX, Credit, Rates, and Structured Products
-              </p>
-              <div className="flex items-center gap-2 text-sm font-medium text-[#f97316]">
-                <span>Explore Assets</span>
-                <ArrowRight className="w-4 h-4" />
-              </div>
-            </Link>
-
-            <Link
-              href="/strategies"
-              className="bg-[#111827] border border-[#1f2937] rounded-xl sm:rounded-2xl p-6 sm:p-8 hover:border-[#374151] transition-all card-hover"
-            >
-              <h3 className="text-lg sm:text-xl font-bold mb-2">Trading Strategies</h3>
-              <p className="text-[#9ca3af] text-sm sm:text-base mb-4">
-                Master Equity, Fixed Income, Alternative, Macro, Quantitative, Income, and Multi-Asset strategies
-              </p>
-              <div className="flex items-center gap-2 text-sm font-medium text-[#f97316]">
-                <span>Explore Strategies</span>
-                <ArrowRight className="w-4 h-4" />
-              </div>
-            </Link>
-          </div>
         </div>
       </main>
 
