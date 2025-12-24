@@ -17,7 +17,8 @@ import {
   Layers,
   Loader2,
   ArrowRight,
-  Activity
+  Activity,
+  Trophy
 } from 'lucide-react'
 
 const strategies: Array<{
@@ -139,6 +140,21 @@ const strategies: Array<{
       'Gamma scalping',
       'Relative value vol',
       'Tail hedging',
+    ]
+  },
+  {
+    id: 'sport-trading-strategies',
+    label: 'Sport Trading Strategies',
+    icon: Trophy,
+    color: '#14b8a6',
+    subcategories: [
+      'Pre-Match Trading',
+      'In-Play Trading (Live Trading)',
+      'Market Making (Sports Exchanges)',
+      'Arbitrage & Cross-Market Trading',
+      'Volatility & Momentum in Sports',
+      'Statistical & Quantitative Sports Trading',
+      'Risk Management & Bankroll Allocation',
     ]
   },
 ]

@@ -19,6 +19,7 @@ const categoryLabels: Record<StrategyCategory, string> = {
   'income-strategies': 'Income Strategies',
   'multi-asset-strategies': 'Multi-Asset Strategies',
   'volatility-strategies': 'Volatility Strategies',
+  'sport-trading-strategies': 'Sport Trading Strategies',
 }
 
 const subcategoryLabels: Record<string, string> = {
@@ -64,6 +65,13 @@ const subcategoryLabels: Record<string, string> = {
   'gamma-scalping': 'Gamma Scalping',
   'relative-value-vol': 'Relative Value Vol',
   'tail-hedging': 'Tail Hedging',
+  'pre-match-trading': 'Pre-Match Trading',
+  'in-play-trading': 'In-Play Trading (Live Trading)',
+  'market-making-sports': 'Market Making (Sports Exchanges)',
+  'arbitrage-cross-market': 'Arbitrage & Cross-Market Trading',
+  'volatility-momentum-sports': 'Volatility & Momentum in Sports',
+  'statistical-quantitative-sports': 'Statistical & Quantitative Sports Trading',
+  'risk-management-bankroll': 'Risk Management & Bankroll Allocation',
 }
 
 export default function StrategySubcategoriesPage() {
