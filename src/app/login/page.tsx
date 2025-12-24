@@ -73,10 +73,7 @@ export default function LoginPage() {
     try {
       // Always use the production domain for OAuth redirect to match Supabase configuration
       // This ensures consistency even if user is on Vercel preview domain
-      const siteUrl = typeof window !== 'undefined' 
-        ? (process.env.NEXT_PUBLIC_SITE_URL || 'https://raphthefinanceguy.com')
-        : 'https://raphthefinanceguy.com'
-      const redirectUrl = `${siteUrl}/auth/callback?next=/select-block`
+      const redirectUrl = 'https://www.raphthefinanceguy.com/auth/callback?next=/select-block'
       
       console.log('Initiating Google OAuth with redirectTo:', redirectUrl)
       
@@ -120,18 +117,11 @@ export default function LoginPage() {
           <h1 className="text-2xl font-bold text-center mb-2">Welcome Back</h1>
           <p className="text-[#9ca3af] text-center mb-8">Sign in to continue your training</p>
 
-          {/* Notice about Google Login */}
-          <div className="bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 px-4 py-3 rounded-xl mb-6">
-            <p className="text-sm text-center">
-              <strong>Note:</strong> Gmail login is temporarily unavailable. Please use email/password login below. Sorry for the inconvenience.
-            </p>
-          </div>
-
           {/* Google Login */}
           <button
             onClick={handleGoogleLogin}
-            disabled={true}
-            className="w-full flex items-center justify-center gap-3 bg-gray-600 text-gray-300 font-medium py-3 px-4 rounded-xl cursor-not-allowed opacity-50 mb-6"
+            disabled={loading}
+            className="w-full flex items-center justify-center gap-3 bg-white text-gray-900 font-medium py-3 px-4 rounded-xl hover:bg-gray-100 transition-colors mb-6 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
