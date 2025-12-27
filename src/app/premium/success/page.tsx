@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
@@ -8,7 +8,7 @@ import DashboardNav from '@/components/DashboardNav'
 import { Profile } from '@/types'
 import { CheckCircle, Loader2, ArrowRight } from 'lucide-react'
 
-export default function PremiumSuccessPage() {
+function SuccessContent() {
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
   const [verifying, setVerifying] = useState(true)
@@ -119,6 +119,18 @@ export default function PremiumSuccessPage() {
         </div>
       </main>
     </div>
+  )
+}
+
+export default function PremiumSuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen gradient-bg flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-[#f97316]" />
+      </div>
+    }>
+      <SuccessContent />
+    </Suspense>
   )
 }
 
