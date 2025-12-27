@@ -43,11 +43,15 @@ export default function CustomInterviewPopup() {
           </div>
           
           <h2 className="text-2xl font-bold mb-3">
-            Custom finance interview questions for your next interview
+            Bespoke Finance Interview Questions
           </h2>
           
+          <p className="text-[#9ca3af] mb-4">
+            Get tailor-made interview questions designed specifically for your target role, trading desk, and firm type.
+          </p>
+          
           <p className="text-[#9ca3af] mb-6">
-            Get personalized questions tailored to your target role, trading desk, and company type. Perfect for your upcoming interview preparation.
+            Prepare with precision, confidence, and insider-level relevance for your upcoming finance interview.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3">
