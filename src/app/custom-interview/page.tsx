@@ -167,21 +167,21 @@ export default function CustomInterviewPage() {
           </div>
 
           {/* Progress Steps */}
-          <div className="flex items-center justify-center mb-8">
+          <div className="flex items-center justify-center mb-8 px-2">
             {[1, 2, 3, 4].map((s) => (
               <div key={s} className="flex items-center">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all ${
+                  className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-sm sm:text-base font-bold transition-all ${
                     step >= s
                       ? 'bg-[#f97316] text-white'
                       : 'bg-[#1f2937] text-[#6b7280]'
                   }`}
                 >
-                  {step > s ? <Check className="w-5 h-5" /> : s}
+                  {step > s ? <Check className="w-4 h-4 sm:w-5 sm:h-5" /> : s}
                 </div>
                 {s < 4 && (
                   <div
-                    className={`w-16 h-1 mx-2 transition-all ${
+                    className={`w-8 sm:w-12 md:w-16 h-1 mx-1 sm:mx-2 transition-all ${
                       step > s ? 'bg-[#f97316]' : 'bg-[#1f2937]'
                     }`}
                   />
