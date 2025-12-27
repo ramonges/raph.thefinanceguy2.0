@@ -15,7 +15,8 @@ import {
   ArrowRight,
   Loader2,
   Briefcase,
-  Target
+  Target,
+  Sparkles
 } from 'lucide-react'
 
 const emptyStats: UserStats = {
@@ -184,6 +185,27 @@ export default function SelectBlockPage() {
 
       <main className="pt-16 sm:pt-24 pb-12 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
+          {/* Premium Banner */}
+          <Link
+            href="/premium"
+            className="block mb-8 sm:mb-12 bg-gradient-to-r from-[#f97316] to-[#ea580c] rounded-2xl p-6 sm:p-8 hover:shadow-lg transition-all duration-200 group"
+          >
+            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+              </div>
+              <div className="flex-1 text-center sm:text-left">
+                <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
+                  Premium Mock Interview
+                </h2>
+                <p className="text-white/90 text-sm sm:text-base">
+                  Get customized questions tailored to your target role, desk, and company type
+                </p>
+              </div>
+              <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+
           <div className="text-center mb-8 sm:mb-12">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
               Choose Your Path
