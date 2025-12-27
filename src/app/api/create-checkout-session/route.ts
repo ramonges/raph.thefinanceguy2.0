@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: `Premium Mock Interview - ${blockType.charAt(0).toUpperCase() + blockType.slice(1)}${tradingDesk ? ` - ${tradingDesk}` : ''}`,
+              name: `Custom Interview - ${blockType.charAt(0).toUpperCase() + blockType.slice(1)}${tradingDesk ? ` - ${tradingDesk}` : ''}`,
               description: `Customized interview questions for ${blockType} role${tradingDesk ? ` at ${tradingDesk} desk` : ''} at ${companyType === 'bank' ? 'Bank' : 'Hedge Fund'}`,
             },
             unit_amount: 4900, // $49.00
