@@ -96,11 +96,11 @@ function SuccessContent() {
                 </div>
                 <h1 className="text-3xl font-bold mb-4">Payment Successful!</h1>
                 <p className="text-[#9ca3af] mb-8">
-                  Thank you for your purchase. Your premium mock interview questions are now available.
+                  Thank you for your purchase. Your custom interview questions are now available.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
-                    href="/premium"
+                    href="/custom-interview"
                     className="btn-secondary inline-flex items-center justify-center gap-2"
                   >
                     View Questions
@@ -122,7 +122,7 @@ function SuccessContent() {
   )
 }
 
-export default function PremiumSuccessPage() {
+export default function CustomInterviewSuccessPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen gradient-bg flex items-center justify-center">

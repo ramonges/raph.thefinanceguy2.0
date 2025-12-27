@@ -6,6 +6,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import DashboardNav from '@/components/DashboardNav'
 import Statistics from '@/components/Statistics'
+import CustomInterviewPopup from '@/components/CustomInterviewPopup'
 import { Profile, UserStats } from '@/types'
 import { detectBlockTypeFromPath, calculateStats } from '@/lib/stats'
 import { 
@@ -185,27 +186,6 @@ export default function SelectBlockPage() {
 
       <main className="pt-16 sm:pt-24 pb-12 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
-          {/* Premium Banner */}
-          <Link
-            href="/premium"
-            className="block mb-8 sm:mb-12 bg-gradient-to-r from-[#f97316] to-[#ea580c] rounded-2xl p-6 sm:p-8 hover:shadow-lg transition-all duration-200 group"
-          >
-            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-              </div>
-              <div className="flex-1 text-center sm:text-left">
-                <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
-                  Premium Mock Interview
-                </h2>
-                <p className="text-white/90 text-sm sm:text-base">
-                  Get customized questions tailored to your target role, desk, and company type
-                </p>
-              </div>
-              <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:translate-x-1 transition-transform" />
-            </div>
-          </Link>
-
           <div className="text-center mb-8 sm:mb-12">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
               Choose Your Path
@@ -261,6 +241,27 @@ export default function SelectBlockPage() {
             })}
           </div>
 
+          {/* Custom Interview Link - Subtle */}
+          <div className="mb-8 sm:mb-12">
+            <Link
+              href="/custom-interview"
+              className="block bg-[#111827] border border-[#374151] rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:border-[#f97316]/50 transition-all duration-200 group"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#f97316]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-[#f97316]" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg sm:text-xl font-semibold mb-1">Custom Interview</h3>
+                  <p className="text-sm text-[#9ca3af]">
+                    Get personalized questions for your target role and company
+                  </p>
+                </div>
+                <ArrowRight className="w-5 h-5 text-[#6b7280] group-hover:text-[#f97316] group-hover:translate-x-1 transition-all" />
+              </div>
+            </Link>
+          </div>
+
           {/* Additional Blocks: Assets and Strategies */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
             {additionalBlocks.map((block) => {
@@ -294,6 +295,9 @@ export default function SelectBlockPage() {
 
         </div>
       </main>
+
+      {/* Custom Interview Popup */}
+      <CustomInterviewPopup />
 
       {/* Statistics Modal - Global Stats with Track Switching */}
       {showStats && (

@@ -8,7 +8,7 @@ import DashboardNav from '@/components/DashboardNav'
 import { Profile } from '@/types'
 import { XCircle, Loader2, ArrowLeft } from 'lucide-react'
 
-export default function PremiumCancelPage() {
+export default function CustomInterviewCancelPage() {
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
   const router = useRouter()
@@ -67,7 +67,7 @@ export default function PremiumCancelPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/premium"
+                href="/custom-interview"
                 className="btn-primary inline-flex items-center justify-center gap-2"
               >
                 Try Again

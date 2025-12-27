@@ -47,8 +47,8 @@ export async function POST(request: NextRequest) {
         },
       ],
       mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.raphthefinanceguy.com'}/premium/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.raphthefinanceguy.com'}/premium/cancel`,
+      success_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.raphthefinanceguy.com'}/custom-interview/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.raphthefinanceguy.com'}/custom-interview/cancel`,
       metadata: {
         user_id: user.id,
         block_type: blockType,

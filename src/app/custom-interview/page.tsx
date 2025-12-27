@@ -21,7 +21,7 @@ import {
 
 type CompanyType = 'bank' | 'hedge-fund'
 
-interface PremiumQuestion {
+interface CustomQuestion {
   id: number
   question: string
   answer: string
@@ -30,12 +30,12 @@ interface PremiumQuestion {
   difficulty?: 'easy' | 'medium' | 'hard'
 }
 
-export default function PremiumPage() {
+export default function CustomInterviewPage() {
   const [step, setStep] = useState(1)
   const [blockType, setBlockType] = useState<BlockType | null>(null)
   const [tradingDesk, setTradingDesk] = useState<AssetCategory | null>(null)
   const [companyType, setCompanyType] = useState<CompanyType | null>(null)
-  const [questions, setQuestions] = useState<PremiumQuestion[]>([])
+  const [questions, setQuestions] = useState<CustomQuestion[]>([])
   const [loading, setLoading] = useState(false)
   const [profile, setProfile] = useState<Profile | null>(null)
   const [checkoutLoading, setCheckoutLoading] = useState(false)
@@ -79,7 +79,7 @@ export default function PremiumPage() {
     setLoading(true)
     // Simulate question generation - in production, this would fetch from your database
     // For now, we'll create sample questions based on selections
-    const sampleQuestions: PremiumQuestion[] = Array.from({ length: 20 }, (_, i) => ({
+    const sampleQuestions: CustomQuestion[] = Array.from({ length: 20 }, (_, i) => ({
       id: i + 1,
       question: `Customized ${blockType} question for ${tradingDesk} desk at ${companyType === 'bank' ? 'Bank' : 'Hedge Fund'} - Question ${i + 1}`,
       answer: `This is a detailed answer for question ${i + 1} tailored to ${blockType} role in ${tradingDesk} at a ${companyType === 'bank' ? 'bank' : 'hedge fund'}.`,
@@ -154,12 +154,12 @@ export default function PremiumPage() {
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#f97316] to-[#ea580c] text-white px-4 py-2 rounded-full mb-4">
+            <div className="inline-flex items-center gap-2 bg-[#1f2937] border border-[#374151] text-[#f97316] px-4 py-2 rounded-full mb-4">
               <Sparkles className="w-5 h-5" />
-              <span className="font-semibold">Premium Mock Interview</span>
+              <span className="font-semibold">Custom Interview</span>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-              Customized Interview Questions
+              Custom Interview Questions
             </h1>
             <p className="text-[#9ca3af] text-base sm:text-lg">
               Get personalized questions tailored to your target role and company
@@ -461,7 +461,7 @@ export default function PremiumPage() {
                       ) : (
                         <>
                           <Sparkles className="w-5 h-5" />
-                          Purchase Full Mock Interview - $49
+                          Purchase Full Custom Interview - $49
                         </>
                       )}
                     </button>
