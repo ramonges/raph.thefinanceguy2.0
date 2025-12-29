@@ -2021,6 +2021,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss market behavior",
           "Address false signals",
         ],
+        hint: "Think about what happens before volatility spikes. Consider VIX levels, realized vs implied vol, market breadth, and early warning signals.",
         answer: "Indicators that a short vol regime is ending include: VIX rising from low levels (VIX >15-20), realized vol exceeding implied vol, increasing correlation across assets, declining market breadth, defensive sector outperformance, credit spreads widening, and increased market stress. Early signals: vol-of-vol rising, term structure inverting (front vol > back vol), skew steepening, and increased put buying. However, these can be false signals - vol can spike temporarily then revert. The key is persistence: if these indicators persist for weeks/months, regime change is likely.",
         explanation: [
           "Vol indicators: VIX rising, RV > IV",
@@ -2040,6 +2041,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address risk management",
           "Explain portfolio impact",
         ],
+        hint: "Think about what happens to diversification during market stress. Consider how correlations change and why diversification fails in crises.",
         answer: "In long vol regimes, correlation spikes dramatically across assets - everything moves together. Diversification breaks down as correlations approach 1.0. Stocks, bonds, commodities, currencies all become highly correlated during stress. This is why portfolio diversification fails during crises - you can't hide. The correlation breakdown is asymmetric - correlations spike quickly during stress but decay slowly. This creates a 'correlation trap' where diversified portfolios all lose together. Risk management must account for this - stress test assuming correlations = 1.0.",
         explanation: [
           "Behavior: Correlations spike to near 1.0",
@@ -2059,6 +2061,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Explain when it fails",
           "Address regime persistence",
         ],
+        hint: "Volatility typically returns to lower levels after spikes. Think about when this assumption works and when it fails, especially during extended crises.",
         answer: "Volatility is considered mean-reverting because high vol typically returns to lower levels over time - vol spikes are temporary. This works in normal markets where vol clusters but eventually reverts. However, this assumption fails during regime changes when vol stays elevated for extended periods (months/years). Examples: 2008-2009 (vol stayed high for over a year), 2000-2002 tech crash. During these periods, mean reversion strategies lose money as they keep betting on vol declining. The assumption also fails during structural changes (market regime shifts) where the mean itself changes.",
         explanation: [
           "Concept: High vol returns to lower levels over time",
@@ -2078,6 +2081,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address forward guidance",
           "Explain transmission mechanisms",
         ],
+        hint: "Think about how central bank actions affect volatility. Consider QE vs tightening, liquidity provision, and how policy affects market uncertainty.",
         answer: "Central bank policy heavily influences volatility regimes. Accommodative policy (QE, low rates) suppresses volatility by providing liquidity, supporting asset prices, and reducing uncertainty. This creates short vol regimes. Tightening policy (rate hikes, QT) increases volatility by removing liquidity, pressuring asset prices, and increasing uncertainty. Forward guidance also matters - clear communication reduces vol, while uncertainty increases it. The transmission works through: liquidity provision/withdrawal, asset price support/pressure, and confidence effects. However, policy can't control vol forever - eventually fundamentals matter more.",
         explanation: [
           "Accommodative: QE/low rates suppress vol",
@@ -2097,6 +2101,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address risk limits",
           "Explain dynamic adjustment",
         ],
+        hint: "Think about how position sizing should change with volatility. Consider vol-adjusted sizing and maintaining consistent risk across different regimes.",
         answer: "Adapt position sizing by reducing exposure in high vol regimes and increasing in low vol regimes. Use volatility-adjusted sizing: size positions inversely to vol (smaller in high vol, larger in low vol). Implement regime detection: monitor VIX, realized vol, and correlation to identify regime shifts. Set risk limits: maximum position size, maximum portfolio vol, and maximum drawdown limits. Dynamically adjust: reduce size as vol rises, increase as vol normalizes. Use Kelly criterion or similar to optimize sizing. The goal: maintain consistent risk across regimes, not consistent position size.",
         explanation: [
           "Sizing: Inverse to vol - smaller in high vol",
@@ -2116,6 +2121,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address behavioral factors",
           "Explain structural reasons",
         ],
+        hint: "Think about how volatility behaves during crises vs recovery. Consider the speed of spikes vs the speed of decay, and behavioral factors.",
         answer: "Volatility spikes are asymmetric - they spike up quickly but decay slowly. This occurs because: fear is stronger than greed (investors panic faster than they calm), deleveraging is forced and rapid (margin calls force selling), while recovery is gradual (confidence rebuilds slowly). Structurally, vol spikes are driven by sudden information shocks (crises) but decay through gradual normalization. The asymmetry creates a 'volatility smile' in options pricing and makes short vol strategies riskier - you can lose quickly but earn slowly. This is why vol-selling requires careful risk management.",
         explanation: [
           "Asymmetry: Spike quickly, decay slowly",
@@ -2135,6 +2141,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address detection challenges",
           "Explain mitigation",
         ],
+        hint: "Think about what happens when you misidentify the volatility regime. Consider position sizing and the risks of being wrong about the regime.",
         answer: "Regime misclassification leads to catastrophic losses because you size positions for the wrong regime. If you think you're in a short vol regime but actually in long vol, you'll be over-leveraged short vol when vol spikes, causing massive losses. Similarly, being defensive in a short vol regime means missing returns. The challenge: regime changes are only clear in hindsight - signals can be ambiguous. False signals are common - vol can spike temporarily then revert. Mitigation: use multiple indicators, be humble about regime detection, size conservatively, and have exit strategies. Assume you'll misclassify and size accordingly.",
         explanation: [
           "Risk: Wrong sizing for actual regime",
@@ -2156,6 +2163,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Distinguish from other strategies",
           "Provide examples",
         ],
+        hint: "Think about trading the difference between index volatility and individual stock volatility. Consider how correlation affects this relationship.",
         answer: "Dispersion trading involves trading the difference between index volatility and single-stock volatility. The trade: sell index vol (cheaper) and buy single-stock vol (more expensive), or vice versa. The idea: index vol should equal the weighted average of single-stock vols adjusted for correlation, but often trades at a discount. When correlation is low, single-stock moves don't align, so index vol is lower than the average of stock vols. Dispersion traders profit when this relationship normalizes or when correlation changes. It's a relative value trade on volatility.",
         explanation: [
           "Definition: Trading index vol vs single-stock vol",
@@ -2175,6 +2183,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address market structure",
           "Explain supply/demand",
         ],
+        hint: "Think about diversification. When stocks don't move together, how does this affect index volatility? Consider correlation and market structure.",
         answer: "Index volatility trades cheaper than single-stock volatility due to diversification - when stocks don't move together (low correlation), their individual moves partially cancel out in the index, reducing index vol. Mathematically, index vol = sqrt(sum of weighted stock vols squared × correlation). When correlation < 1, index vol < average stock vol. Additionally, index options are more liquid and easier to hedge, reducing their price. There's also structural demand: investors buy index puts for protection, creating supply of vol, while single-stock vol is harder to source.",
         explanation: [
           "Diversification: Stock moves cancel out in index",
@@ -2194,6 +2203,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss liquidity risk",
           "Address model risk",
         ],
+        hint: "Think about what can go wrong with dispersion trades. Consider correlation, sudden moves, liquidity, and what happens during market stress.",
         answer: "Dispersion traders face correlation risk (biggest risk - if correlation spikes, index vol rises relative to stock vol), jump risk (sudden moves can bypass hedging), liquidity risk (single-stock options less liquid, wider spreads), model risk (correlation models can fail), basis risk (index vs stock vol relationship can break), and tail risk (during stress, correlations spike and dispersion trades fail). The main risk is correlation - dispersion assumes correlation stays low, but during crises correlation spikes to 1.0, causing losses.",
         explanation: [
           "Correlation risk: Biggest risk - correlation spikes hurt",
@@ -2213,6 +2223,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address P&L drivers",
           "Explain hedging",
         ],
+        hint: "Correlation is the key driver. Think about what happens to the vol spread when correlation is low vs high, and how this affects P&L.",
         answer: "Correlation directly drives dispersion P&L. Low correlation: single-stock moves don't align, index vol stays low relative to stock vol, dispersion trade profits. High correlation: stocks move together, index vol rises toward stock vol levels, dispersion trade loses. The trade profits when correlation is lower than implied by the vol spread, and loses when correlation spikes. During normal markets, correlation is low (0.3-0.5), dispersion works. During stress, correlation spikes to 0.8-1.0, dispersion fails. This is why dispersion is called a 'short correlation' trade.",
         explanation: [
           "Low correlation: Stocks don't align, trade profits",
@@ -2232,6 +2243,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address liquidity issues",
           "Explain structural reasons",
         ],
+        hint: "Think about what happens during market crises. Consider how correlation behaves, what happens to diversification, and why the trade structure breaks down.",
         answer: "Dispersion trades fail during market stress because correlation spikes dramatically - all stocks move together, eliminating the diversification benefit. When correlation → 1.0, index vol rises to match stock vol levels, wiping out the vol spread. Additionally, liquidity dries up in single-stock options, making hedging impossible. The structural reason: during crises, macro factors dominate, causing all stocks to move together regardless of fundamentals. This is why dispersion is profitable most of the time but fails catastrophically during stress - it's a 'picking up pennies in front of a steamroller' trade.",
         explanation: [
           "Correlation spike: All stocks move together",
@@ -2251,6 +2263,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address M&A impact",
           "Explain hedging challenges",
         ],
+        hint: "Think about events that affect individual stocks but not the index. Consider dividends, M&A, and other corporate actions that create single-stock volatility.",
         answer: "Dividends and corporate actions impact dispersion by creating single-stock volatility that doesn't affect the index. Dividends: ex-dividend dates cause single-stock vol spikes that don't affect index vol, creating noise. M&A: takeover announcements cause massive single-stock vol spikes (target vol spikes, acquirer vol may move), but index vol barely moves. Spin-offs, splits, and other actions create similar effects. These events can cause temporary P&L swings in dispersion trades. Hedging becomes difficult around these events. Traders must be aware of corporate action calendars and may need to reduce exposure around major events.",
         explanation: [
           "Dividends: Ex-dividend dates create stock vol spikes",
@@ -2270,6 +2283,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address index vs stock skew",
           "Explain hedging implications",
         ],
+        hint: "Think about the difference in skew between index and single-stock options. Consider how this affects pricing and P&L when trading dispersion.",
         answer: "Skew plays a crucial role because index options have more negative skew (puts more expensive) than single-stock options. This creates a skew differential that affects dispersion P&L. When trading dispersion via puts, you're buying expensive index puts and selling cheaper stock puts, creating a skew cost. The skew reflects crash risk - index crashes are more feared than individual stock crashes. Skew steepens during stress, making index puts even more expensive. Traders must account for skew when pricing dispersion trades - the vol spread may not fully compensate for skew differences.",
         explanation: [
           "Skew differential: Index has more negative skew",
@@ -2289,6 +2303,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address dynamic hedging",
           "Explain limitations",
         ],
+        hint: "Correlation risk is the main risk in dispersion. Think about ways to hedge it: correlation products, position sizing, and dynamic adjustments.",
         answer: "Hedge correlation risk by: buying correlation products (correlation swaps, variance swaps on index), reducing position size as correlation rises, using dynamic hedging (adjust as correlation changes), and diversifying across sectors (sector dispersion less correlated than stock dispersion). However, correlation hedging is imperfect - correlation products are illiquid and expensive. The best hedge is position sizing - reduce exposure when correlation is high or rising. Some traders use VIX as a proxy for correlation (VIX rises with correlation), but this is imperfect. Ultimately, correlation risk is hard to hedge perfectly.",
         explanation: [
           "Methods: Correlation products, position sizing, dynamic hedging",
@@ -2308,6 +2323,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address market inefficiency",
           "Explain sustainability",
         ],
+        hint: "Think about why the vol spread persists. Consider market structure, liquidity differences, and why this isn't just a temporary arbitrage opportunity.",
         answer: "Dispersion is considered structural because the vol spread persists due to market structure, not temporary mispricing. Structural reasons: index options are more liquid (easier to source), investors demand index protection (creating supply), single-stock vol is harder to source (creating premium), and diversification is real (low correlation is normal). Unlike arbitrage which closes quickly, dispersion persists because it's not risk-free - it has correlation risk. The edge exists because most investors can't or won't take the correlation risk. This makes it a sustainable trade, not a one-time arbitrage.",
         explanation: [
           "Structure: Persists due to market structure",
@@ -2327,6 +2343,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address position management",
           "Explain exit strategies",
         ],
+        hint: "Think about what to monitor for tail risk. Consider correlation levels, VIX, and when to reduce or exit positions before a crisis hits.",
         answer: "Monitor tail risk by tracking: correlation levels (rising = warning), VIX levels (spiking = danger), realized correlation (if high, reduce exposure), and portfolio stress tests (assume correlation = 1.0). Risk metrics: correlation exposure, max loss scenarios, VaR, and stress P&L. Manage by: reducing size as correlation rises, setting stop-losses on correlation, diversifying across sectors, and having exit plans. Exit strategies: reduce or close when correlation exceeds threshold (e.g., >0.7), when VIX spikes, or when realized correlation stays high. The key: be proactive, not reactive - reduce exposure before crisis hits.",
         explanation: [
           "Monitor: Correlation, VIX, realized correlation",
@@ -2348,6 +2365,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss supply/demand",
           "Address behavioral factors",
         ],
+        hint: "Think about the difference in implied volatility between puts and calls. Consider why investors might pay more for downside protection.",
         answer: "Volatility skew is the difference in implied volatility between out-of-the-money puts and calls (or between different strikes). In equity markets, OTM puts trade at higher vol than OTM calls, creating negative skew. This exists because: investors fear crashes more than rallies (demand for put protection), market makers require premium for tail risk, and the distribution of returns is negatively skewed (large down moves more common than large up moves). The skew reflects crash risk premium - investors pay extra for downside protection. This creates a persistent structural feature of equity options markets.",
         explanation: [
           "Definition: Vol difference between OTM puts and calls",
@@ -2367,6 +2385,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss reasons",
           "Address trading implications",
         ],
+        hint: "Think about the different risk profiles. Equity markets fear crashes, while FX markets are driven by carry and central bank policy. How does this affect skew?",
         answer: "Equity skew is negative (puts > calls) while FX skew can be positive or negative depending on the currency pair and market conditions. Equity skew reflects crash fear - investors pay premium for downside protection. FX skew reflects carry and central bank policy - high-yield currencies have positive skew (calls > puts) because carry trades unwind violently. Low-yield currencies have negative skew. FX skew is also more symmetric and less extreme than equity skew. The difference reflects different risk profiles: equity has crash risk, FX has carry risk. Trading implications: equity skew trades focus on crash protection, FX skew trades focus on carry and policy.",
         explanation: [
           "Equity: Negative skew (crash fear)",
@@ -2386,6 +2405,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address market fear",
           "Explain contrarian signals",
         ],
+        hint: "Think about what skew tells you about investor sentiment. Consider steep vs flat skew, and what steepening or flattening might signal.",
         answer: "Skew conveys market fear and sentiment. Steep skew (very negative) indicates high fear - investors paying high premium for protection, suggesting bearish sentiment. Flat skew indicates complacency - low fear, suggesting bullish sentiment. Skew steepening (becoming more negative) signals increasing fear, often preceding market declines. Skew flattening signals decreasing fear, often preceding rallies. However, extreme skew can be contrarian - when everyone is buying protection (very steep skew), it may signal a bottom. Skew is a sentiment indicator - it reflects what investors fear, not necessarily what will happen.",
         explanation: [
           "Steep skew: High fear, bearish sentiment",
@@ -2405,6 +2425,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address hedging",
           "Explain risk/return",
         ],
+        hint: "Think about option structures that isolate skew exposure. Consider butterflies, risk reversals, and how to balance puts and calls for delta neutrality.",
         answer: "Trade skew delta-neutrally using: butterfly spreads (buy OTM put, sell 2 ATM puts, buy OTM call - long skew, delta neutral), risk reversals (buy OTM put, sell OTM call, delta hedge - long skew), and calendar spreads on skew (trade skew term structure). The key is balancing puts and calls to achieve delta neutrality while maintaining skew exposure. These structures profit from skew changes (steepening/flattening) without directional exposure. However, they're not perfectly delta-neutral - delta changes as spot moves, requiring dynamic hedging. The trade-off: delta-neutral skew trades have limited profit potential but controlled risk.",
         explanation: [
           "Structures: Butterflies, risk reversals, calendars",
@@ -2424,6 +2445,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address supply constraints",
           "Explain feedback loops",
         ],
+        hint: "Think about what happens during market stress. Consider investor behavior, demand for protection, and how this affects put prices and skew.",
         answer: "Skew steepens during market stress because demand for put protection surges while supply is constrained. Investors panic and buy puts en masse, driving put vol higher. Market makers, facing increased risk, widen spreads and charge more for puts. The feedback loop: falling markets → fear → put buying → higher put vol → steeper skew → more fear. Additionally, during stress, the probability of large down moves increases, justifying higher put prices. The steepening is asymmetric - skew can steepen dramatically in days but takes weeks/months to flatten. This creates opportunities but also risks for skew traders.",
         explanation: [
           "Demand: Surge in put buying during stress",
