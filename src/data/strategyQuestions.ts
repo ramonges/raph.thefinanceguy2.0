@@ -308,6 +308,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Duration risk",
           "How to communicate these risks",
         ],
+        hint: "Think about the hidden risks in growth investing: what happens when valuations are too high, or when interest rates rise?",
+        answer: "Clients underestimate: (1) Valuation risk - growth stocks can trade at extreme valuations (P/E 50-100+), making them vulnerable to multiple compression, (2) Concentration risk - growth portfolios often concentrate in tech/healthcare, creating sector risk, (3) Duration risk - growth stocks are sensitive to rate changes (like long bonds), (4) Volatility - growth stocks are 2-3x more volatile than value, (5) Drawdown risk - can fall 50%+ in corrections. Communication: show historical drawdowns, explain duration risk explicitly, set realistic expectations, and emphasize diversification. The key: growth has higher returns but also higher risks that must be understood.",
       },
       {
         id: 8,
@@ -319,6 +321,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Sector hedging",
           "Cost-benefit of hedging",
         ],
+        hint: "Consider different hedging approaches: options for tail risk, factor hedging with value, or sector diversification.",
+        answer: "Hedge growth exposure by: (1) Options - buy puts on growth ETFs or indices to protect against tail risk, (2) Factor hedging - add value exposure to offset growth risk, (3) Sector hedging - diversify into defensive sectors (utilities, consumer staples), (4) Duration hedging - short long-duration assets when rates rise, (5) Volatility hedging - buy VIX calls during stress. Cost-benefit: options are expensive (1-3% annually), factor hedging reduces returns but lowers risk, sector hedging provides natural diversification. The key: hedging reduces upside but protects downside - choose based on risk tolerance and market conditions.",
       },
       {
         id: 9,
@@ -330,6 +334,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Market regime changes",
           "How to execute rotation",
         ],
+        hint: "Think about what signals indicate it's time to reduce growth exposure: valuation extremes, rate hikes, or market regime changes.",
+        answer: "Rotate out of growth when: (1) Valuation extremes - growth P/E ratios >50, extreme relative valuations vs value, (2) Rate hikes - Fed tightening cycle begins, (3) Market regime changes - leadership narrows, defensive sectors outperform, (4) Yield curve inverts - late-cycle signal, (5) Volatility spikes - VIX >30, market stress. Valuation indicators: growth/value ratio at extremes, P/E spreads wide, sentiment indicators (AAII, put/call ratios). Execution: gradual rotation (don't time perfectly), shift to value/cyclicals, maintain quality growth, use options for protection. The key: rotate before the peak, not after the crash.",
       },
       {
         id: 10,
@@ -341,6 +347,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Quality growth focus",
           "Risk-adjusted framing",
         ],
+        hint: "Focus on the long-term story. Frame volatility as an opportunity to buy quality growth at better prices.",
+        answer: "Pitch growth by: (1) Long-term narrative - emphasize 5-10 year horizon, not short-term volatility, (2) Volatility as opportunity - market selloffs create buying opportunities for quality growth, (3) Quality focus - distinguish quality growth (profitable, moats) from speculative, (4) Risk-adjusted framing - show Sharpe ratios, not just returns, (5) Historical context - show growth outperforms over long periods despite volatility. Key messages: volatility is normal, quality growth compounds over time, and market timing is difficult. The key: frame volatility as a feature (creates opportunities), not a bug (reason to exit).",
       },
     ],
     'value': [
@@ -354,6 +362,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Value vs growth distinction",
           "Time horizon and patience",
         ],
+        hint: "Think about buying stocks that are cheap relative to their fundamentals. Consider metrics like P/E, P/B ratios and how this differs from growth investing.",
         answer: "Value investing buys stocks trading below intrinsic value, based on current fundamentals rather than growth expectations. Key metrics: low P/E (<15), low P/B (<1.5), low EV/EBITDA (<8), high dividend yield. Value vs growth: value buys cheap current assets, growth pays premium for future. Value requires patience - can underperform for years before mean reversion. The strategy assumes markets overreact to bad news, creating mispricing. Time horizon: typically 2-5 years for value to work, but can take longer.",
         explanation: [
           "Definition: Buy stocks below intrinsic value based on current fundamentals",
@@ -373,6 +382,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Behavioral factors",
           "Historical examples",
         ],
+        hint: "Consider market regimes and behavioral factors. Think about when growth outperforms and why value can lag for extended periods.",
+        answer: "Value underperforms due to: (1) Market regimes - growth outperforms in low-rate, low-inflation environments (2010s), (2) Behavioral factors - investors prefer growth stories, momentum persists, (3) Structural changes - technology disruption hurts traditional value sectors, (4) Low rates - cheap money favors growth (distant cash flows), (5) Market structure - passive investing, factor crowding. Historical: value underperformed 2007-2020 (13 years), then outperformed 2021-2022. The key: value is cyclical - it works in certain regimes (inflation, rising rates) but can lag for years in others.",
       },
       {
         id: 3,
@@ -384,6 +395,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Fundamental analysis techniques",
           "Examples of value traps",
         ],
+        hint: "A value trap looks cheap but gets cheaper. Think about what fundamental problems prevent recovery and what red flags to watch for.",
+        answer: "Value traps are cheap stocks that stay cheap or get cheaper. Characteristics: (1) Declining fundamentals - earnings falling, revenue shrinking, (2) Structural issues - industry disruption, obsolete business models, (3) Management problems - poor capital allocation, high debt, (4) No catalysts - nothing to drive revaluation. Red flags: negative earnings trends, high debt, industry in decline, management issues, no competitive advantages. Analysis: look beyond valuation metrics - assess business quality, competitive position, and catalysts. Examples: retail stocks during e-commerce disruption, energy during transition. The key: cheap isn't enough - need quality and catalysts.",
       },
       {
         id: 4,
@@ -395,6 +408,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Economic recovery phases",
           "Historical performance patterns",
         ],
+        hint: "Think about when value outperforms: inflation, rising rates, and economic recoveries. Consider why these environments favor value stocks.",
+        answer: "Value outperforms in: (1) Inflationary environments - value stocks (cyclicals, commodities) benefit from pricing power, (2) Rising rate environments - value less rate-sensitive than growth, (3) Economic recovery phases - cyclicals outperform as economy strengthens, (4) Late-cycle periods - value sectors (financials, energy) perform well. Historical: value outperformed 1970s (inflation), 2000-2006 (recovery), 2021-2022 (inflation, rates). The relationship: value = cyclical, performs in expansion/inflation; growth = defensive, performs in low-rate/low-inflation. The key: value is pro-cyclical and benefits from inflation/rate normalization.",
       },
       {
         id: 5,
@@ -406,6 +421,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Cyclical nature of value",
           "Real-world examples",
         ],
+        hint: "Value stocks are typically less rate-sensitive than growth. Think about how inflation benefits cyclical value sectors.",
+        answer: "Interest rates: value is less rate-sensitive than growth (shorter duration cash flows), but still affected. Rising rates: value outperforms (2021-2022 example) as growth falls more. Inflation: value benefits because (1) Cyclical sectors (energy, materials) have pricing power, (2) Financials benefit from rate normalization, (3) Real assets (commodities) appreciate with inflation. Real-world: 2021-2022 - inflation + rate hikes → value outperformed, growth collapsed. 2010s - low inflation + low rates → growth outperformed, value lagged. The key: value is pro-inflation and less rate-sensitive, making it attractive when inflation/rates normalize.",
       },
       {
         id: 6,
@@ -417,6 +434,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Catalyst identification",
           "Examples of successful value catalysts",
         ],
+        hint: "Think about what events or changes can unlock value in cheap stocks. Consider earnings improvements, restructuring, or management changes.",
+        answer: "Catalysts that unlock value: (1) Earnings recovery - improving fundamentals drive revaluation, (2) Restructuring - spin-offs, divestitures, cost cuts, (3) Management changes - new leadership with better capital allocation, (4) Industry recovery - cyclical upturns, (5) Takeover potential - M&A activity. Timing: catalysts can take 1-3 years to materialize, requiring patience. Identification: look for companies with fixable problems, not structural decline. Examples: successful turnarounds (Ford 2009-2015), restructuring (GE spin-offs), industry recovery (energy 2020-2022). The key: catalysts are what make value work - without them, cheap can stay cheap.",
       },
       {
         id: 7,
@@ -428,6 +447,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "When to cut losses",
           "Client communication on timing",
         ],
+        hint: "Value investing requires patience, but you also need to know when to cut losses. Think about position sizing and exit criteria.",
+        answer: "Manage patience risk by: (1) Time horizon - set 3-5 year expectations upfront, not months, (2) Position sizing - don't over-concentrate in single positions, (3) Diversification - spread across multiple value opportunities, (4) Exit criteria - cut losses if fundamentals deteriorate (not just price), (5) Client communication - explain patience requirement, show historical patterns. When to cut: fundamentals worsen (not just price), thesis broken, better opportunities emerge, or time horizon exceeded (5+ years). The key: patience is required, but not infinite - need discipline to cut when thesis breaks.",
       },
       {
         id: 8,
@@ -439,6 +460,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Diversification considerations",
           "Managing concentration",
         ],
+        hint: "Value strategies often concentrate in certain sectors (financials, energy). Think about the risks this creates and how to manage it.",
+        answer: "Sector concentration risks: (1) Value often concentrates in financials, energy, materials - creating sector risk, (2) Sector cycles - entire sectors can underperform for years, (3) Correlation - value stocks in same sector move together, reducing diversification. Managing: (1) Diversify across sectors - don't over-concentrate, (2) Monitor sector exposure - limit to 20-30% per sector, (3) Understand cycles - know which sectors are in/out of favor, (4) Factor diversification - combine value with other factors. The key: value concentration is natural (cheap stocks cluster), but must be managed to avoid excessive risk.",
       },
       {
         id: 9,
@@ -450,6 +473,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Cyclical vs secular trends",
           "Historical performance patterns",
         ],
+        hint: "Think about market regimes. Value and momentum are often negatively correlated - when does one outperform the other?",
+        answer: "Value outperforms momentum when: (1) Regime changes - leadership rotates from growth to value (2021-2022), (2) Mean reversion - momentum overextended, value oversold, (3) Inflation/rate normalization - value benefits, momentum hurts, (4) Late-cycle - value sectors (financials, energy) outperform, momentum (tech) underperforms. Historical: value outperformed momentum 2000-2006, 2021-2022. Momentum outperformed 2010-2020. The relationship: value and momentum are often negatively correlated - value works in regime changes, momentum works in trending markets. The key: value outperforms when markets rotate, momentum outperforms when trends persist.",
       },
       {
         id: 10,
@@ -461,6 +486,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Valuation opportunity framing",
           "Patience and discipline messaging",
         ],
+        hint: "Focus on the long-term, cyclical nature, and valuation opportunity. Frame it as buying cheap when others are paying premiums.",
+        answer: "Pitch value by: (1) Long-term proposition - value outperforms over full cycles (decades), not just years, (2) Cyclical nature - explain that value underperformance is temporary, mean reversion will come, (3) Valuation opportunity - frame as buying cheap when others pay premiums, (4) Patience messaging - set 3-5 year expectations, not months, (5) Historical context - show value outperforms over long periods despite short-term underperformance. Key messages: value is contrarian (buy when unloved), requires patience (can lag for years), but works over cycles. The key: frame underperformance as opportunity, not failure.",
       },
     ],
     'quality': [
@@ -474,6 +501,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Quality vs growth distinction",
           "Defensive characteristics",
         ],
+        hint: "Think about companies with strong fundamentals: high profitability, strong balance sheets, and competitive advantages. Consider how this differs from just growth.",
+        answer: "Quality investing focuses on companies with superior fundamentals: high profitability (ROE >15%, ROIC >10%), strong balance sheets (low debt, high cash), consistent earnings, and competitive advantages (moats). Quality vs growth: quality = profitable growth with moats, growth = can be unprofitable. Quality is defensive - performs well in drawdowns, less volatile. Key metrics: ROE, ROIC, profit margins, debt/equity, earnings stability. The strategy: buy high-quality companies at reasonable prices, not just cheap stocks. Quality provides downside protection and consistent returns.",
       },
       {
         id: 2,
@@ -485,6 +514,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Earnings quality",
           "Management quality indicators",
         ],
+        hint: "Consider multiple dimensions: profitability, financial strength, earnings consistency, and management quality. Think about which metrics matter most.",
+        answer: "Quality metrics: (1) Profitability - ROE >15%, ROIC >10%, high profit margins, (2) Balance sheet - low debt/equity (<30%), high cash, strong credit ratings, (3) Earnings quality - consistent earnings, low earnings volatility, high cash conversion, (4) Management quality - good capital allocation, shareholder-friendly, experienced leadership. Best metrics: ROIC (measures capital efficiency), debt/equity (financial strength), earnings stability (consistency). The key: quality is multi-dimensional - need strong profitability, balance sheet, and management, not just one metric.",
       },
       {
         id: 3,
@@ -496,6 +527,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Relative performance in crises",
           "Limitations of quality defense",
         ],
+        hint: "Quality stocks are defensive. Think about how strong balance sheets and profitability help during market stress.",
+        answer: "Quality stocks perform better in drawdowns due to: (1) Strong balance sheets - less vulnerable to credit stress, (2) Consistent earnings - less earnings volatility, (3) Competitive advantages - moats protect during downturns, (4) Lower volatility - quality is 20-30% less volatile than market. Historical: quality outperformed in 2008 (-25% vs market -37%), 2020 Q1 (-15% vs market -34%). Limitations: quality still falls in severe crises (nothing is immune), and can underperform in strong bull markets (less upside). The key: quality provides downside protection but may lag in strong rallies.",
       },
       {
         id: 4,
@@ -507,6 +540,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "When quality becomes expensive",
           "Risk of overpaying",
         ],
+        hint: "Quality stocks can trade at high valuations. Think about when the quality premium becomes too expensive and creates risk.",
+        answer: "Clients overpay when: (1) Quality trades at extreme valuations - P/E >30, P/B >5, (2) Quality premium too high - paying 2-3x market multiple, (3) Flight to quality - quality becomes crowded during stress, (4) Low-rate environments - quality benefits from low rates, becomes expensive. Valuation metrics: compare quality P/E to market P/E, look for quality at reasonable prices (GARP). Risk: overpaying for quality can lead to poor returns even if fundamentals strong. Examples: quality was expensive 2019-2020, then corrected 2022. The key: quality is worth a premium, but not an infinite one - need reasonable valuation.",
       },
       {
         id: 5,
@@ -518,6 +553,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "GARP (Growth at Reasonable Price)",
           "Factor correlation",
         ],
+        hint: "Quality and growth often overlap - many quality companies are also growing. Think about GARP (Growth at Reasonable Price) and how to distinguish them.",
+        answer: "Quality and growth overlap because: (1) Quality companies often grow - strong fundamentals enable growth, (2) Many growth companies are quality - profitable growth with moats, (3) GARP strategy - combines quality (profitability) with growth (revenue growth). Distinguishing: quality = profitability + moats (can be slow growth), growth = revenue growth (can be unprofitable). Factor correlation: quality-growth correlation is 0.6-0.7 (moderate overlap). The key: best investments combine quality (strong fundamentals) with growth (revenue expansion) at reasonable prices - this is GARP.",
       },
       {
         id: 6,
@@ -529,6 +566,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Margin resilience",
           "Historical inflation performance",
         ],
+        hint: "Quality companies with pricing power can pass through inflation. Think about which quality stocks perform well during inflation.",
+        answer: "Inflation affects quality: (1) Pricing power - quality companies with moats can raise prices, protecting margins, (2) Margin resilience - strong companies maintain margins during inflation, (3) Performance - quality with pricing power outperforms, quality without pricing power underperforms. Historical: quality with pricing power (consumer staples, healthcare) outperformed 1970s inflation, quality without pricing power (tech) underperformed. The key: quality is not uniform - need quality WITH pricing power to perform in inflation. Quality without pricing power is vulnerable.",
       },
       {
         id: 7,
@@ -540,6 +579,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Valuation risk",
           "Sector concentration",
         ],
+        hint: "Quality screens can have biases. Think about look-back bias, quality deterioration, and valuation risks.",
+        answer: "Hidden risks: (1) Look-back bias - past quality doesn't guarantee future quality, (2) Quality deterioration - companies can lose competitive advantages, (3) Valuation risk - quality can become expensive, (4) Sector concentration - quality screens often concentrate in certain sectors (tech, healthcare), (5) Survivorship bias - only successful companies in data. To manage: forward-looking analysis (not just historical), monitor quality metrics continuously, avoid overpaying, diversify across sectors. The key: quality is not permanent - need to monitor and update screens regularly.",
       },
       {
         id: 8,
@@ -551,6 +592,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Downside protection",
           "Risk-adjusted returns",
         ],
+        hint: "Quality stocks are typically less volatile. Think about how this affects portfolio risk and risk-adjusted returns.",
+        answer: "Quality reduces volatility: (1) Lower volatility - quality stocks are 20-30% less volatile than market, (2) Defensive characteristics - strong balance sheets, consistent earnings reduce volatility, (3) Downside protection - quality falls less in drawdowns, (4) Risk-adjusted returns - quality has higher Sharpe ratios (better risk-adjusted returns). Impact: quality portfolios have lower volatility, smaller drawdowns, and better risk-adjusted returns. The key: quality provides both downside protection and better risk-adjusted returns, making it attractive for risk-averse investors.",
       },
       {
         id: 9,
@@ -562,6 +605,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Regime changes",
           "Limitations of quality defense",
         ],
+        hint: "Quality isn't always defensive. Think about when quality stocks can fall significantly despite strong fundamentals.",
+        answer: "Quality stops being defensive when: (1) Valuation extremes - quality becomes too expensive (P/E >40), (2) Regime changes - quality underperforms in strong bull markets (less upside), (3) Sector-specific stress - quality in stressed sectors falls (financials 2008), (4) Market crashes - quality still falls in severe crises (nothing is immune). Limitations: quality provides relative defense (falls less), not absolute defense (still falls). Examples: quality fell 25% in 2008 (vs market -37%), but still fell. The key: quality is relatively defensive, not absolutely defensive - it falls less, but still falls.",
       },
       {
         id: 10,
@@ -573,6 +618,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Realistic expectations",
           "Avoiding overpromising",
         ],
+        hint: "Balance the defensive benefits with realistic risk communication. Don't promise safety that doesn't exist.",
+        answer: "Sell quality by: (1) Balanced communication - quality is relatively defensive, not risk-free, (2) Realistic expectations - quality still falls in crises (just less), (3) Avoid overpromising - don't promise absolute safety, (4) Show historical drawdowns - quality fell 25% in 2008, not 0%, (5) Emphasize risk-adjusted returns - quality has better Sharpe, not zero risk. Key messages: quality reduces risk, doesn't eliminate it; quality provides relative defense, not absolute; quality is for risk management, not risk elimination. The key: be honest about limitations - quality helps, but doesn't eliminate risk.",
       },
     ],
     'dividend-income': [
@@ -586,6 +633,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Income generation focus",
           "Target investor profile",
         ],
+        hint: "Think about strategies focused on generating regular income. Consider the difference between yield and total return.",
+        answer: "Dividend/income strategies focus on generating regular income through dividend payments. Key characteristics: (1) Income focus - prioritize yield over capital appreciation, (2) Yield vs total return - target 3-5% yield, but total return (yield + capital) matters more, (3) Target investors - retirees, income-focused investors, (4) Sectors - utilities, REITs, financials, consumer staples. The strategy: buy stocks with high, sustainable dividends. Yield is important, but dividend growth and sustainability matter more. The key: income strategies balance yield with sustainability - high yield without sustainability is a trap.",
       },
       {
         id: 2,
@@ -597,6 +646,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Yield trap identification",
           "Credit risk in high yield",
         ],
+        hint: "Very high yields can be a red flag. Think about why a stock might have an unusually high dividend yield.",
+        answer: "High yield signals risk when: (1) Dividend unsustainable - yield >8-10% often indicates dividend cut risk, (2) Price decline - high yield from falling price, not rising dividend, (3) Business distress - company struggling, dividend at risk, (4) Sector stress - entire sector under pressure (energy 2020). Yield trap: high yield that gets cut, causing capital loss. Identification: check payout ratio (>80% is risky), earnings coverage, debt levels, sector health. The key: very high yield (>8%) is often a warning sign, not an opportunity - sustainable yield (3-5%) is better.",
       },
       {
         id: 3,
@@ -608,6 +659,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Rate impact on valuations",
           "Historical rate performance",
         ],
+        hint: "Dividend stocks compete with bonds for income. Think about what happens when rates rise and bonds become more attractive.",
+        answer: "Interest rates impact dividend strategies: (1) Competition with bonds - rising rates make bonds more attractive vs dividend stocks, (2) Rate sensitivity - dividend stocks (like bonds) are rate-sensitive, (3) Valuation impact - higher rates reduce present value of dividend streams, (4) Performance - dividend stocks underperform when rates rise (2022 example). Historical: dividend stocks outperformed 2010s (low rates), underperformed 2022 (rate hikes). The key: dividend stocks compete with bonds - when rates rise, bonds become more attractive, hurting dividend stocks.",
       },
       {
         id: 4,
@@ -619,6 +672,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Sector differences",
           "Quality of dividend payers",
         ],
+        hint: "Not all dividends survive recessions. Think about which companies can maintain dividends during downturns and which cannot.",
+        answer: "Dividend sustainability varies: (1) Quality payers - strong balance sheets, low payout ratios maintain dividends (utilities, consumer staples), (2) Cyclical payers - cut dividends in recessions (financials 2008, energy 2020), (3) Coverage ratios - payout ratio <60% is safe, >80% is risky, (4) Sector differences - defensive sectors (utilities) maintain, cyclical (energy) cut. Historical: 2008-2009 saw widespread dividend cuts (financials, REITs), quality payers maintained. The key: dividend sustainability depends on business quality and sector - quality companies maintain, cyclical companies cut.",
       },
       {
         id: 5,
@@ -630,6 +685,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "After-tax yield calculation",
           "Client tax considerations",
         ],
+        hint: "Dividends are typically taxed. Think about after-tax yield and how tax treatment affects attractiveness for different investors.",
+        answer: "Taxes reduce dividend attractiveness: (1) Tax treatment - qualified dividends taxed at 15-20% (vs ordinary income), (2) After-tax yield - 4% yield becomes 3.2% after 20% tax, (3) Tax-efficient structures - use tax-advantaged accounts (IRAs) for dividend stocks, (4) Client considerations - retirees in low brackets benefit more, high earners less. Impact: taxes reduce effective yield, making dividend strategies less attractive for high-tax investors. The key: after-tax yield matters more than pre-tax yield - taxes reduce attractiveness, especially for high-income investors.",
       },
       {
         id: 6,
@@ -641,6 +698,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Regulatory factors",
           "Sector concentration risks",
         ],
+        hint: "Think about which sectors typically pay high dividends: utilities, REITs, financials. Consider why they pay high dividends.",
+        answer: "High dividend sectors: (1) Utilities - regulated, stable cash flows, pay 3-5% yield, (2) REITs - required to pay 90% of income as dividends, yield 4-6%, (3) Financials - banks pay dividends, yield 2-4%, (4) Consumer staples - mature, pay dividends, yield 2-3%. Characteristics: mature businesses, stable cash flows, limited growth opportunities (reinvest less). Regulatory: REITs required to pay dividends, utilities regulated. Concentration risk: dividend strategies concentrate in these sectors, creating sector risk. The key: dividend strategies naturally concentrate in high-yield sectors, requiring diversification management.",
       },
       {
         id: 7,
@@ -652,6 +711,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Risk management",
           "Diversification importance",
         ],
+        hint: "Dividend cuts typically cause stock prices to fall. Think about the double impact: lost income and capital loss.",
+        answer: "Dividend cuts impact: (1) Price impact - stocks fall 10-20% on dividend cut announcements, (2) Income impact - portfolio income drops, affecting cash flow, (3) Sentiment - cuts signal distress, causing further selling, (4) Portfolio effect - concentrated portfolios hit harder. Risk management: (1) Diversify - don't concentrate in single stocks/sectors, (2) Quality focus - invest in sustainable dividend payers, (3) Monitor coverage - watch payout ratios, earnings trends, (4) Exit signals - cut positions if dividend sustainability at risk. The key: dividend cuts cause both income loss and capital loss - diversification and quality focus are essential.",
       },
       {
         id: 8,
@@ -663,6 +724,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Quality focus",
           "Income replacement strategies",
         ],
+        hint: "Think about ways to protect against dividend cuts: diversification, quality focus, and alternative income sources.",
+        answer: "Hedge dividend risk by: (1) Sector diversification - spread across utilities, REITs, financials, staples, (2) Quality focus - invest in companies with strong balance sheets, low payout ratios, (3) Geographic diversification - international dividend stocks, (4) Income replacement - bonds, preferreds, alternatives, (5) Options - buy puts on dividend stocks for protection. The key: best hedge is quality and diversification - invest in sustainable dividend payers across sectors, not just high yield. Income replacement (bonds) provides diversification but lower yield.",
       },
       {
         id: 9,
@@ -674,6 +737,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Defensive dividend payers",
           "Recovery patterns",
         ],
+        hint: "Recessions cause widespread dividend cuts. Think about which companies maintain dividends and which cut them.",
+        answer: "Dividends during recessions: (1) Widespread cuts - 2008-2009 saw 25% of S&P 500 cut dividends, (2) Sector patterns - cyclical sectors (financials, energy) cut, defensive (utilities, staples) maintain, (3) Quality matters - strong balance sheets maintain, weak cut, (4) Recovery - dividends recover as economy recovers, but slowly. Historical: 2008-2009 - financials cut 50%+, utilities maintained. 2020 - energy cut, utilities maintained. The key: recessions cause widespread dividend cuts, but quality payers maintain - focus on quality for recession resilience.",
       },
       {
         id: 10,
@@ -685,6 +750,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Risk tolerance",
           "Income needs vs growth",
         ],
+        hint: "Different clients need different approaches. Think about retirees needing income vs younger investors needing growth.",
+        answer: "Position by client type: (1) Retirees - focus on yield (3-5%), sustainability, tax efficiency, (2) Accumulation - focus on dividend growth (not just yield), total return, (3) High tax - use tax-advantaged accounts, focus on qualified dividends, (4) Low tax - can use taxable accounts, focus on yield. Risk tolerance: conservative = high-quality payers (utilities), moderate = mix of quality and growth, aggressive = dividend growth stocks. The key: retirees need income now, accumulators need income growth - different strategies for different needs.",
       },
     ],
     'event-driven': [
@@ -698,6 +765,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Catalyst-based investing",
           "Time horizon considerations",
         ],
+        hint: "Event-driven strategies profit from specific corporate events. Think about M&A, restructurings, and other catalysts that create opportunities.",
+        answer: "Event-driven strategies profit from specific corporate events that create mispricing. Types: (1) Merger arbitrage - trade deal spreads, (2) Restructurings - spin-offs, divestitures, (3) Activism - shareholder activism, proxy fights, (4) Distressed - bankruptcies, turnarounds. Catalyst-based: events create catalysts that drive stock prices. Time horizon: typically 3-12 months (event-driven), but can be longer (distressed). The key: event-driven is catalyst-focused - events create opportunities that can be exploited for profit.",
       },
       {
         id: 2,
@@ -709,6 +778,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Financing risk",
           "Timing risk",
         ],
+        hint: "Merger arbitrage has binary outcomes. Think about what can cause deals to break and the risks this creates.",
+        answer: "Main risks: (1) Deal break - deals can break, causing large losses (target falls to pre-deal price), (2) Regulatory risk - antitrust approval can block deals, (3) Financing risk - buyer can't secure financing, (4) Timing risk - deals can take longer than expected, (5) Market risk - market crashes can cause deal spreads to widen. Risk management: (1) Diversify across multiple deals, (2) Assess deal probability, (3) Monitor regulatory process, (4) Size positions based on break risk. The key: merger arb has binary outcomes - deals complete (profit) or break (loss) - need to assess probabilities and manage risk.",
       },
       {
         id: 3,
@@ -1392,28 +1463,28 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
       { id: 10, prompt: "How do you evaluate manager skill?", tags: ["Long/Short", "Manager Evaluation", "Performance"], starChecks: ["Skill vs luck", "Risk-adjusted returns", "Consistency", "Alpha persistence"], hint: "Skill is persistent alpha generation. Consider risk-adjusted metrics, consistency over time, and whether returns are due to luck or process.", answer: "Evaluate manager skill by: (1) Risk-adjusted returns - Sharpe ratio, information ratio (alpha/volatility), (2) Consistency - performance across different market regimes, not just bull markets, (3) Alpha persistence - ability to generate alpha over multiple periods, not just one lucky year, (4) Process quality - is there a repeatable, rigorous process?, (5) Attribution analysis - is alpha from stock-picking or factor exposure?, (6) Drawdown management - how did they handle stress periods?, (7) Long-term track record - 3-5+ years, not just recent performance. Red flags: inconsistent performance, high correlation to factors (not true alpha), or inability to explain returns. The key: skill is persistent and process-driven, not luck-driven." },
     ],
     'market-neutral': [
-      { id: 1, prompt: "Can you explain to me what a market neutral strategy is?", tags: ["Market Neutral", "Strategy"], starChecks: ["Clear definition", "Beta neutral", "Alpha focus", "Risk characteristics"] },
-      { id: 2, prompt: "What risks remain despite neutrality?", tags: ["Market Neutral", "Risk"], starChecks: ["Factor risk", "Sector risk", "Liquidity risk", "Model risk"] },
-      { id: 3, prompt: "How do factor correlations affect neutrality?", tags: ["Market Neutral", "Factor Correlation", "Risk"], starChecks: ["Correlation breakdown", "Factor exposure", "Risk monitoring", "Neutralization"] },
-      { id: 4, prompt: "How does leverage change outcomes?", tags: ["Market Neutral", "Leverage", "Risk"], starChecks: ["Leverage impact", "Return amplification", "Risk amplification", "Position sizing"] },
-      { id: 5, prompt: "When do neutral strategies break down?", tags: ["Market Neutral", "Risk", "Breakdown"], starChecks: ["Stress scenarios", "Correlation breakdown", "Liquidity crises", "Historical examples"] },
-      { id: 6, prompt: "How do funding markets impact returns?", tags: ["Market Neutral", "Funding", "Returns"], starChecks: ["Funding costs", "Market stress", "Leverage", "Net returns"] },
-      { id: 7, prompt: "How do volatility spikes affect performance?", tags: ["Market Neutral", "Volatility", "Performance"], starChecks: ["Volatility impact", "Correlation changes", "Risk management", "Position adjustments"] },
-      { id: 8, prompt: "How do you measure true neutrality?", tags: ["Market Neutral", "Measurement", "Risk"], starChecks: ["Beta analysis", "Factor analysis", "Stress testing", "Monitoring"] },
-      { id: 9, prompt: "Why are returns often low but volatile?", tags: ["Market Neutral", "Returns", "Volatility"], starChecks: ["Return characteristics", "Volatility sources", "Risk-return trade-off", "Client expectations"] },
-      { id: 10, prompt: "When is market neutral attractive?", tags: ["Market Neutral", "Strategy", "Timing"], starChecks: ["Market conditions", "Volatility environment", "Correlation environment", "Client needs"] },
+      { id: 1, prompt: "Can you explain to me what a market neutral strategy is?", tags: ["Market Neutral", "Strategy"], starChecks: ["Clear definition", "Beta neutral", "Alpha focus", "Risk characteristics"], hint: "Think about strategies that aim to eliminate market risk. Consider how long and short positions can offset each other.", answer: "Market neutral strategies aim to eliminate market risk (beta) while generating alpha from stock selection. Key characteristics: (1) Beta neutral - long and short positions offset market exposure, (2) Alpha focus - returns come from stock-picking, not market direction, (3) Risk characteristics - lower volatility, market-independent returns. The strategy: long undervalued stocks, short overvalued stocks, maintaining net market exposure near zero. Returns are typically lower but more consistent than directional strategies. The key: market neutral = alpha without beta - returns independent of market direction." },
+      { id: 2, prompt: "What risks remain despite neutrality?", tags: ["Market Neutral", "Risk"], starChecks: ["Factor risk", "Sector risk", "Liquidity risk", "Model risk"], hint: "Even market-neutral strategies have risks. Think about factor exposures, sector concentration, and other non-market risks.", answer: "Risks despite neutrality: (1) Factor risk - exposure to style factors (value, growth, momentum), (2) Sector risk - concentration in certain sectors, (3) Liquidity risk - positions may be illiquid, (4) Model risk - risk models may be wrong, (5) Correlation risk - correlations can break down in stress. These risks remain because neutrality only eliminates market risk (beta), not other risks. The key: market neutral eliminates market risk but not factor, sector, or liquidity risk - these must be managed separately." },
+      { id: 3, prompt: "How do factor correlations affect neutrality?", tags: ["Market Neutral", "Factor Correlation", "Risk"], starChecks: ["Correlation breakdown", "Factor exposure", "Risk monitoring", "Neutralization"], hint: "Factor correlations can break down during stress. Think about how this affects market-neutral strategies.", answer: "Factor correlations affect neutrality: (1) Correlation breakdown - factors that were uncorrelated become correlated in stress, (2) Factor exposure - long/short books may have different factor exposures, creating risk, (3) Risk monitoring - need to monitor factor exposures continuously, (4) Neutralization - neutralize factor exposures to maintain true neutrality. Impact: when correlations break, factor exposures can create directional risk even if market beta is neutral. The key: factor correlations are not stable - need to monitor and neutralize factor exposures to maintain neutrality." },
+      { id: 4, prompt: "How does leverage change outcomes?", tags: ["Market Neutral", "Leverage", "Risk"], starChecks: ["Leverage impact", "Return amplification", "Risk amplification", "Position sizing"], hint: "Leverage amplifies both returns and risks. Think about how this affects market-neutral strategies.", answer: "Leverage amplifies: (1) Returns - 2x leverage = 2x returns (if strategy works), (2) Risk - 2x leverage = 2x losses (if strategy fails), (3) Position sizing - leverage allows larger positions with same capital. Impact: market neutral strategies often use leverage (2-5x) to boost low returns, but this amplifies all risks (factor, sector, liquidity). Risk management: (1) Limit leverage - don't over-leverage, (2) Monitor risk - leverage amplifies all risks, not just returns, (3) Position sizing - size positions based on risk, not just expected return. The key: leverage is a double-edged sword - amplifies returns but also risks." },
+      { id: 5, prompt: "When do neutral strategies break down?", tags: ["Market Neutral", "Risk", "Breakdown"], starChecks: ["Stress scenarios", "Correlation breakdown", "Liquidity crises", "Historical examples"], hint: "Market-neutral strategies can fail during stress. Think about what causes breakdowns: correlation breakdown, liquidity crises, etc.", answer: "Neutral strategies break down when: (1) Correlation breakdown - correlations spike to 1, eliminating diversification, (2) Liquidity crises - can't exit positions, forced to hold losses, (3) Factor stress - factor exposures create losses, (4) Model failure - risk models fail to capture true risk. Historical: 2008 (correlation breakdown), 2020 Q1 (liquidity crisis), LTCM 1998 (model failure). The key: neutral strategies work until they don't - stress periods expose hidden risks and cause breakdowns." },
+      { id: 6, prompt: "How do funding markets impact returns?", tags: ["Market Neutral", "Funding", "Returns"], starChecks: ["Funding costs", "Market stress", "Leverage", "Net returns"], hint: "Funding costs reduce returns. Think about how leverage and funding costs affect net returns in market-neutral strategies.", answer: "Funding impacts: (1) Funding costs - borrowing costs reduce returns (1-3% annually), (2) Market stress - funding costs spike during stress, (3) Leverage - higher leverage = higher funding costs, (4) Net returns - funding costs reduce gross returns. Impact: funding costs can consume 20-50% of gross returns in market neutral strategies. During stress, funding costs spike, making strategies unprofitable. The key: funding costs are a drag on returns - need to generate enough alpha to cover funding costs and still profit." },
+      { id: 7, prompt: "How do volatility spikes affect performance?", tags: ["Market Neutral", "Volatility", "Performance"], starChecks: ["Volatility impact", "Correlation changes", "Risk management", "Position adjustments"], hint: "Volatility spikes can hurt market-neutral strategies. Think about how correlations change and what this means for performance.", answer: "Volatility spikes affect: (1) Correlation changes - correlations spike, reducing diversification, (2) Position adjustments - need to reduce size or exit positions, (3) Risk management - volatility increases risk, requiring position reductions, (4) Performance - volatility spikes often coincide with losses. Impact: volatility spikes cause correlation breakdown and force position reductions, hurting performance. The key: volatility spikes are dangerous for market neutral - they cause correlation breakdown and force risk reduction." },
+      { id: 8, prompt: "How do you measure true neutrality?", tags: ["Market Neutral", "Measurement", "Risk"], starChecks: ["Beta analysis", "Factor analysis", "Stress testing", "Monitoring"], hint: "Measuring neutrality requires more than just beta. Think about factor analysis, stress testing, and continuous monitoring.", answer: "Measure neutrality by: (1) Beta analysis - portfolio beta should be near 0, (2) Factor analysis - neutralize factor exposures (value, growth, momentum), (3) Stress testing - test how portfolio behaves in stress scenarios, (4) Monitoring - continuously monitor exposures and adjust. True neutrality: beta = 0, factor exposures = 0, sector neutral, style neutral. The key: true neutrality requires neutralizing all exposures, not just market beta - need comprehensive risk monitoring." },
+      { id: 9, prompt: "Why are returns often low but volatile?", tags: ["Market Neutral", "Returns", "Volatility"], starChecks: ["Return characteristics", "Volatility sources", "Risk-return trade-off", "Client expectations"], hint: "Market-neutral strategies often have low returns but can still be volatile. Think about why this happens.", answer: "Returns are low but volatile because: (1) Low returns - no market beta exposure, returns come only from alpha (typically 5-10% annually), (2) Volatility sources - factor risk, sector risk, correlation breakdown create volatility, (3) Risk-return trade-off - lower returns but also lower risk (than directional), (4) Client expectations - clients expect low volatility but often get volatility from factor/sector risk. The key: market neutral reduces market risk but not other risks - returns are lower but volatility can still be significant from non-market risks." },
+      { id: 10, prompt: "When is market neutral attractive?", tags: ["Market Neutral", "Strategy", "Timing"], starChecks: ["Market conditions", "Volatility environment", "Correlation environment", "Client needs"], hint: "Market-neutral strategies are attractive in certain conditions. Think about when they work best.", answer: "Market neutral is attractive when: (1) Market uncertainty - when market direction is unclear, (2) High volatility - when volatility is high, neutral strategies can provide stability, (3) Low correlations - when correlations are low, diversification works, (4) Client needs - clients who want market-independent returns. Conditions: works best in normal markets with low correlations. Less attractive in stress (correlations break) or strong trends (missing upside). The key: market neutral is attractive when you want returns independent of market direction, but requires favorable correlation environment." },
     ],
     'merger-arbitrage': [
-      { id: 1, prompt: "Can you explain to me what a merger arbitrage strategy is?", tags: ["Merger Arbitrage", "Event-Driven", "Strategy"], starChecks: ["Clear definition", "Deal spread", "Risk-return", "Time horizon"] },
-      { id: 2, prompt: "What determines deal spread volatility?", tags: ["Merger Arbitrage", "Volatility", "Risk"], starChecks: ["Deal characteristics", "Market conditions", "Regulatory risk", "Financing risk"] },
-      { id: 3, prompt: "How do regulatory risks evolve?", tags: ["Merger Arbitrage", "Regulatory", "Risk"], starChecks: ["Antitrust process", "Timeline", "Risk assessment", "Position management"] },
-      { id: 4, prompt: "How do financing conditions affect deals?", tags: ["Merger Arbitrage", "Financing", "Risk"], starChecks: ["Credit markets", "Financing risk", "Deal structure", "Market cycle"] },
-      { id: 5, prompt: "What happens to merger arb in market crashes?", tags: ["Merger Arbitrage", "Market Crashes", "Risk"], starChecks: ["Spread widening", "Correlation", "Liquidity", "Risk management"] },
-      { id: 6, prompt: "How do you diversify deal exposure?", tags: ["Merger Arbitrage", "Diversification", "Risk"], starChecks: ["Multiple deals", "Sector diversification", "Geographic diversification", "Deal type"] },
-      { id: 7, prompt: "How do you hedge market beta?", tags: ["Merger Arbitrage", "Hedging", "Beta"], starChecks: ["Beta calculation", "Hedging methods", "Cost", "Effectiveness"] },
-      { id: 8, prompt: "How do you manage binary outcomes?", tags: ["Merger Arbitrage", "Binary Outcomes", "Risk"], starChecks: ["Deal break risk", "Position sizing", "Risk management", "Portfolio construction"] },
-      { id: 9, prompt: "How do you size merger arb positions?", tags: ["Merger Arbitrage", "Position Sizing", "Risk"], starChecks: ["Risk-adjusted sizing", "Deal probability", "Portfolio constraints", "Kelly criterion"] },
-      { id: 10, prompt: "How do you set realistic return expectations?", tags: ["Merger Arbitrage", "Returns", "Client Communication"], starChecks: ["Historical returns", "Risk-adjusted", "Market conditions", "Realistic expectations"] },
+      { id: 1, prompt: "Can you explain to me what a merger arbitrage strategy is?", tags: ["Merger Arbitrage", "Event-Driven", "Strategy"], starChecks: ["Clear definition", "Deal spread", "Risk-return", "Time horizon"], hint: "Think about trading the spread between a target's current price and the deal price. Consider the risks and time horizon.", answer: "Merger arbitrage profits from the spread between a target's current price and the deal price. Strategy: buy target stock after deal announcement, hold until deal closes, profit from spread. Deal spread: difference between current price and deal price (typically 2-5%). Risk-return: low risk if deal completes, high risk if deal breaks. Time horizon: typically 3-6 months until deal closes. The key: merger arb is about trading deal spreads - profit if deal completes, lose if deal breaks." },
+      { id: 2, prompt: "What determines deal spread volatility?", tags: ["Merger Arbitrage", "Volatility", "Risk"], starChecks: ["Deal characteristics", "Market conditions", "Regulatory risk", "Financing risk"], hint: "Deal spreads can be volatile. Think about what causes spreads to widen or narrow: regulatory issues, financing problems, market conditions.", answer: "Deal spread volatility depends on: (1) Deal characteristics - cash deals are less volatile than stock deals, (2) Market conditions - spreads widen in market stress, (3) Regulatory risk - antitrust concerns widen spreads, (4) Financing risk - credit market stress widens spreads. Spreads widen when: regulatory issues arise, financing becomes difficult, market crashes. Spreads narrow when: regulatory approval likely, financing secured, deal near completion. The key: deal spreads are volatile - monitor continuously and adjust positions based on risk changes." },
+      { id: 3, prompt: "How do regulatory risks evolve?", tags: ["Merger Arbitrage", "Regulatory", "Risk"], starChecks: ["Antitrust process", "Timeline", "Risk assessment", "Position management"], hint: "Regulatory approval is a key risk. Think about the antitrust process and how to assess and manage regulatory risk.", answer: "Regulatory risks evolve: (1) Antitrust process - DOJ/FTC review can take 6-12 months, (2) Timeline - risk highest early, decreases as approval likely, (3) Risk assessment - analyze market concentration, competitive impact, (4) Position management - reduce size if regulatory risk high, increase if approval likely. Evolution: initial uncertainty → review period → approval/rejection decision. The key: regulatory risk is highest early, decreases over time - manage positions accordingly." },
+      { id: 4, prompt: "How do financing conditions affect deals?", tags: ["Merger Arbitrage", "Financing", "Risk"], starChecks: ["Credit markets", "Financing risk", "Deal structure", "Market cycle"], hint: "Deals require financing. Think about how credit market conditions affect deal completion and spread volatility.", answer: "Financing conditions affect: (1) Deal completion - tight credit markets can cause deals to break, (2) Spread volatility - financing uncertainty widens spreads, (3) Deal structure - cash deals less affected, leveraged deals more affected, (4) Market cycle - deals break more in credit crises. Impact: 2008 credit crisis caused many deals to break due to financing issues. The key: financing risk is critical - monitor credit markets and deal financing structure." },
+      { id: 5, prompt: "What happens to merger arb in market crashes?", tags: ["Merger Arbitrage", "Market Crashes", "Risk"], starChecks: ["Spread widening", "Correlation", "Liquidity", "Risk management"], hint: "Market crashes affect all deals. Think about how spreads widen, correlations increase, and liquidity dries up.", answer: "Market crashes impact: (1) Spread widening - all deal spreads widen (targets fall more than deal prices), (2) Correlation - all deals become correlated (correlation → 1), (3) Liquidity - can't exit positions, forced to hold, (4) Risk management - need to reduce size or exit. Historical: 2008, 2020 Q1 saw widespread spread widening and deal breaks. The key: market crashes are dangerous for merger arb - spreads widen, deals break, liquidity disappears." },
+      { id: 6, prompt: "How do you diversify deal exposure?", tags: ["Merger Arbitrage", "Diversification", "Risk"], starChecks: ["Multiple deals", "Sector diversification", "Geographic diversification", "Deal type"], hint: "Diversification is key. Think about spreading across multiple deals, sectors, and deal types to reduce risk.", answer: "Diversify by: (1) Multiple deals - hold 10-20 deals, not 1-2, (2) Sector diversification - spread across sectors (tech, healthcare, industrials), (3) Geographic diversification - US, Europe, Asia deals, (4) Deal type - mix cash and stock deals. Benefits: reduces impact of single deal break, reduces correlation risk. The key: diversification is essential - single deal breaks can cause large losses, multiple deals reduce risk." },
+      { id: 7, prompt: "How do you hedge market beta?", tags: ["Merger Arbitrage", "Hedging", "Beta"], starChecks: ["Beta calculation", "Hedging methods", "Cost", "Effectiveness"], hint: "Merger arb has market exposure. Think about how to hedge market beta using futures or ETFs.", answer: "Hedge market beta by: (1) Calculate portfolio beta - measure sensitivity to market, (2) Short futures - short S&P futures to offset beta, (3) Short ETFs - short market ETFs, (4) Cost - hedging costs 0.5-1% annually, (5) Effectiveness - hedging reduces market risk but not deal-specific risk. Trade-off: hedging reduces returns but also reduces risk. The key: hedging market beta reduces market risk but not deal break risk - need to assess cost-benefit." },
+      { id: 8, prompt: "How do you manage binary outcomes?", tags: ["Merger Arbitrage", "Binary Outcomes", "Risk"], starChecks: ["Deal break risk", "Position sizing", "Risk management", "Portfolio construction"], hint: "Merger arb has binary outcomes: deal completes or breaks. Think about position sizing and risk management.", answer: "Manage binary outcomes by: (1) Position sizing - size based on deal break probability, not just expected return, (2) Risk management - limit position size (5-10% per deal), (3) Portfolio construction - diversify across deals to reduce binary risk, (4) Deal probability - assess probability of completion, size accordingly. The key: binary outcomes require careful position sizing - one deal break can cause large loss, need diversification." },
+      { id: 9, prompt: "How do you size merger arb positions?", tags: ["Merger Arbitrage", "Position Sizing", "Risk"], starChecks: ["Risk-adjusted sizing", "Deal probability", "Portfolio constraints", "Kelly criterion"], hint: "Position sizing is critical. Think about deal probability, risk-adjusted sizing, and portfolio constraints.", answer: "Size positions by: (1) Deal probability - higher probability = larger size, (2) Risk-adjusted sizing - size based on risk, not just return, (3) Portfolio constraints - limit to 5-10% per deal, 20-30% total, (4) Kelly criterion - optimal sizing based on edge and probability. Formula: position size = (probability × edge) / risk. The key: position sizing is critical - too large = high risk, too small = low returns - need balance." },
+      { id: 10, prompt: "How do you set realistic return expectations?", tags: ["Merger Arbitrage", "Returns", "Client Communication"], starChecks: ["Historical returns", "Risk-adjusted", "Market conditions", "Realistic expectations"], hint: "Merger arb returns are typically modest. Think about historical returns, risk-adjusted metrics, and realistic expectations.", answer: "Set expectations: (1) Historical returns - 5-10% annually (gross), 3-7% (net after fees), (2) Risk-adjusted - Sharpe ratio 1-2 (good risk-adjusted), (3) Market conditions - returns vary with deal flow and market conditions, (4) Realistic expectations - not high-return strategy, but consistent. Communication: emphasize consistency and low correlation, not high returns. The key: merger arb is about consistent, low-correlation returns, not high returns - set realistic expectations." },
     ],
     'convertible-arbitrage': [
       { id: 1, prompt: "Can you explain to me what a convertible arbitrage strategy is?", tags: ["Convertible Arbitrage", "Strategy"], starChecks: ["Clear definition", "Delta hedging", "Volatility trading", "Credit component"] },
@@ -1688,6 +1759,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Distinguish from other income sources",
           "Provide examples",
         ],
+        hint: "Think about income earned from selling options. Consider how time decay (theta) generates regular income, similar to earning interest.",
         answer: "Carry in volatility trading refers to the income earned from selling options premium, primarily through time decay (theta). When you sell volatility, you receive premium upfront and earn carry as time passes and the option loses value, assuming other factors remain constant. Carry is the positive expected return from being short volatility, earned systematically over time. It's analogous to earning interest on a bond - you receive regular income. In practice, selling at-the-money straddles or strangles generates carry through theta decay.",
         explanation: [
           "Definition: Income from selling options premium via time decay",
@@ -1707,6 +1779,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss systematic nature",
           "Address the risk-return trade-off",
         ],
+        hint: "Compare selling volatility to other carry trades like currency carry. Think about the systematic income generation and the risk-return trade-off.",
         answer: "Selling volatility earns carry because it generates consistent income through time decay, similar to other carry trades like currency carry or bond carry. You receive premium upfront and earn income as time passes, assuming volatility doesn't spike. This creates a positive expected return profile - you're paid to take risk. However, unlike bond carry which is relatively safe, vol carry comes with significant tail risk. The carry is 'earned' systematically but can be wiped out instantly during volatility spikes, making it a risky carry trade.",
         explanation: [
           "Income generation: Premium received upfront, decays over time",
@@ -1726,6 +1799,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Describe P&L asymmetry",
           "Provide examples",
         ],
+        hint: "Think about gamma and how it creates non-linear payoffs. Consider the difference between long and short options in terms of convexity.",
         answer: "Convexity in options manifests through gamma - the rate of change of delta. Long options have positive convexity: small moves generate small P&L, but large moves generate disproportionately large gains. This creates asymmetric payoff profiles. For example, a long straddle loses money slowly in quiet markets (theta decay) but gains dramatically during volatility spikes. The convexity is most pronounced for at-the-money options and increases as expiration approaches. Short options have negative convexity - they profit from small moves but lose disproportionately on large moves.",
         explanation: [
           "Mechanism: Gamma creates non-linear P&L profiles",
