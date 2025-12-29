@@ -1819,6 +1819,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss volatility levels",
           "Provide market examples",
         ],
+        hint: "Think about when selling volatility is most profitable. Consider low volatility periods and stable market conditions.",
         answer: "Carry dominates convexity in low-volatility, stable market environments where realized volatility stays below implied volatility. In these regimes, time decay (carry) accumulates steadily while convexity events (vol spikes) are rare. This typically occurs during economic expansions, bull markets, and periods of central bank stability. Examples include 2017 (lowest vol year), mid-2000s, and 2019 pre-COVID. In these environments, selling volatility generates consistent income with minimal drawdowns, making carry strategies highly profitable.",
         explanation: [
           "Environment: Low vol, stable markets, economic expansions",
@@ -1838,6 +1839,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss correlation risk",
           "Address liquidity risk",
         ],
+        hint: "When you sell volatility, you're taking on significant risks. Think about tail events, sudden moves, and what happens during market stress.",
         answer: "When selling volatility, you're implicitly short tail risk, jump risk, correlation risk, and liquidity risk. Tail risk: large market moves can cause catastrophic losses. Jump risk: sudden price gaps bypass your hedging, causing immediate losses. Correlation risk: during stress, correlations spike to 1, eliminating diversification benefits. Liquidity risk: during vol spikes, bid-ask spreads widen and hedging becomes expensive or impossible. You're also short volatility-of-volatility - when vol itself becomes volatile, your positions become harder to manage.",
         explanation: [
           "Tail risk: Large moves cause disproportionate losses",
@@ -1857,6 +1859,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address vol risk premium",
           "Explain P&L drivers",
         ],
+        hint: "Think about the difference between what you're paid (implied vol) and what actually happens (realized vol). When is this difference profitable?",
         answer: "Realized volatility (actual price moves) and implied volatility (option prices) interact through the volatility risk premium. Carry trades profit when realized vol < implied vol - you sell expensive insurance (high IV) and actual moves are smaller (low RV). The difference (IV - RV) represents the carry you earn. If realized vol exceeds implied vol, you lose money despite earning carry. This is why selling vol works most of the time (vol risk premium exists) but fails catastrophically during vol spikes when realized vol far exceeds implied vol.",
         explanation: [
           "Relationship: IV - RV = volatility risk premium",
@@ -1876,6 +1879,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address transaction costs",
           "Explain Kelly criterion",
         ],
+        hint: "Even with positive expected returns, strategies can fail. Think about tail events, the order of returns, and survival risk.",
         answer: "A positive expected carry strategy can lose money long-term due to tail risk, path dependency, transaction costs, and over-leverage. Tail events (vol spikes) can wipe out years of accumulated carry in days. Path dependency means the order of returns matters - early losses force position reductions, preventing recovery. Transaction costs (bid-ask spreads, commissions) erode carry, especially with frequent hedging. Over-leverage amplifies losses during tail events, potentially causing total capital loss. This is why many vol-selling funds blow up despite positive expected returns - they don't survive to realize the long-term edge.",
         explanation: [
           "Tail risk: Single events can wipe out years of carry",
@@ -1895,6 +1899,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Explain trade-offs clearly",
           "Address risk appropriately",
         ],
+        hint: "Use simple analogies. Think about insurance companies vs insurance buyers. How does this relate to selling vs buying volatility?",
         answer: "Carry vs convexity is like insurance: selling volatility (carry) is like being an insurance company - you collect premiums regularly but face catastrophic losses during disasters. Buying volatility (convexity) is like buying insurance - you pay premiums regularly but get paid during disasters. Carry strategies earn steady income in normal times but lose big during crises. Convexity strategies lose money steadily but protect you during crises. Most investors want carry (steady income) but need convexity (protection). The challenge is balancing both - earning carry while maintaining some convexity protection.",
         explanation: [
           "Analogy: Insurance company (carry) vs insurance buyer (convexity)",
@@ -1914,6 +1919,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss time value erosion",
           "Address expiration effects",
         ],
+        hint: "Think about theta (time decay). How does it affect short options vs long options? Consider the cost/benefit of time passing.",
         answer: "Time decay (theta) affects carry and convexity oppositely. For carry (short options): theta is positive - time decay generates income as options lose value. This is the carry you earn daily. For convexity (long options): theta is negative - time decay erodes the option's value, costing you money daily. This is the cost of maintaining convexity protection. As expiration approaches, theta accelerates - carry strategies earn more income but convexity becomes more expensive. Near expiration, ATM options have maximum theta, making carry most profitable but convexity most costly.",
         explanation: [
           "Short options: Theta positive = income from decay",
@@ -1933,6 +1939,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss position sizing",
           "Address rebalancing",
         ],
+        hint: "Think about combining short vol positions (for carry) with long vol positions (for protection). Consider position sizing and risk management.",
         answer: "Design a strategy that sells volatility for carry but buys out-of-the-money puts for convexity protection. Structure: sell ATM straddles/strangles for carry, buy OTM puts for tail protection. Size positions so carry income covers put costs while maintaining protection. Use dynamic hedging - reduce short vol exposure as vol rises. Implement stop-losses to limit losses. Consider ratio structures: sell more vol than you buy (e.g., 2:1 ratio) to maintain net carry while having protection. Rebalance regularly based on vol levels and portfolio risk. The goal: earn carry in normal markets while limiting losses during vol spikes.",
         explanation: [
           "Structure: Sell ATM for carry, buy OTM for protection",
@@ -1954,6 +1961,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Explain market behavior",
           "Provide examples",
         ],
+        hint: "Think about periods of high market stress. Consider elevated volatility, high correlations, and what happens during crises like 2008 or March 2020.",
         answer: "A long volatility regime is characterized by elevated and persistent volatility, high correlation across assets, frequent large moves, and risk-off sentiment. Key features include: VIX above 20-25, realized vol exceeding implied vol, negative equity returns, flight to safety (bonds, gold), widening credit spreads, and increased market stress. Markets become choppy with frequent reversals, making trend-following difficult. Volatility clustering occurs - high vol days follow high vol days. Examples: 2008 financial crisis, March 2020 COVID crash, 2011 European debt crisis.",
         explanation: [
           "Characteristics: Elevated vol, high correlation, large moves",
@@ -1973,6 +1981,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss market signals",
           "Address timing",
         ],
+        hint: "Think about what happens before volatility spikes. Consider economic indicators, central bank policy, credit markets, and market exhaustion signals.",
         answer: "Signals preceding long vol regimes include: economic slowdown indicators (inverted yield curve, declining PMIs), central bank tightening (rate hikes, QT), geopolitical tensions, credit stress (widening spreads, defaults), equity market exhaustion (extended rallies, low vol), and liquidity withdrawal. Market signals: declining breadth, leadership rotation, defensive outperformance, commodity spikes. These signals often appear 3-6 months before vol spikes. However, timing is difficult - markets can remain complacent longer than expected before vol explodes.",
         explanation: [
           "Macro: Economic slowdown, central bank tightening, geopolitics",
@@ -1992,6 +2001,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address behavioral factors",
           "Explain statistical edge",
         ],
+        hint: "Think about the volatility risk premium. Why do investors pay more for options than what actually happens? Consider insurance premiums and behavioral factors.",
         answer: "Short volatility strategies perform well most of the time due to the volatility risk premium - implied volatility typically exceeds realized volatility. This exists because: investors pay premium for protection (demand for insurance), market makers require compensation for risk, and behavioral biases (fear of tail events) keep IV elevated. Additionally, markets trend more than they mean-revert, creating consistent carry. The statistical edge is real - selling vol has positive expected return - but comes with tail risk. Most of the time (80-90% of days), markets are calm and short vol earns carry.",
         explanation: [
           "Vol risk premium: IV > RV creates positive expected return",
@@ -3108,6 +3118,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address information flow",
           "Explain efficiency mechanisms",
         ],
+        hint: "Think about how prices are discovered in markets. Consider who sets initial odds, who bets, and how prices adjust based on information and betting activity.",
         answer: "Pre-match odds are formed through a price discovery process involving multiple participants: bookmakers set initial lines based on statistical models, team news, and historical data; professional bettors and syndicates identify value and bet accordingly; market makers on exchanges provide liquidity and adjust prices based on order flow; and public money flows in, often with biases. In liquid markets, odds converge toward efficient levels as informed money corrects mispricings. The process is iterative: initial lines → betting activity → price adjustment → new information → further adjustment. Liquidity ensures that large bets move prices, incorporating information quickly.",
         explanation: [
           "Participants: Bookmakers, professional bettors, market makers, public",
@@ -3127,6 +3138,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss information asymmetry",
           "Address market efficiency",
         ],
+        hint: "Think about what information moves markets first. Consider official sources vs public information, and who has access to information fastest.",
         answer: "The earliest information incorporated includes: team news (injuries, lineup changes) - especially from official sources, statistical models and data (expected goals, form metrics) - used by professionals, insider information (though illegal, it exists), and early betting patterns from sharp bettors. Public information (media reports, social media) is incorporated later. The speed depends on: information source (official > media > social), market participant type (professionals act faster than public), and liquidity (liquid markets incorporate faster). Information asymmetry exists - those with better data or faster access get an edge. This is why odds can move significantly before public awareness.",
         explanation: [
           "Early: Team news, statistical models, insider info, sharp betting patterns",
@@ -3146,6 +3158,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address timing patterns",
           "Explain confirmation methods",
         ],
+        hint: "Think about what makes a price move meaningful. Consider bet size, timing relative to news, volume, and whether moves happen across multiple markets.",
         answer: "Distinguish noise from informed moves by analyzing: bet size (large bets from known accounts = informed, small public bets = noise), timing (moves on news = informed, random moves = noise), volume (high volume moves = more likely informed), consistency (moves across multiple books = informed, isolated moves = noise), and source (moves from sharp accounts = informed, public money = often noise). Informed moves: happen on news, are large relative to typical volume, occur across markets, and persist. Noise: random fluctuations, small size, isolated to one book, and reverse quickly. The key: informed money moves markets systematically, noise creates temporary distortions.",
         explanation: [
           "Signals: Large bets, news timing, high volume, cross-market consistency",
