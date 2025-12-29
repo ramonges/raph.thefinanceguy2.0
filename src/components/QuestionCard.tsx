@@ -120,16 +120,41 @@ export default function QuestionCard({
               ))}
             </div>
             
-            {/* STAR Checklist */}
-            {showAnswer && (
-              <div className="mt-4 sm:mt-6 fade-in">
-                <h4 className="font-semibold mb-2 sm:mb-3 text-[#f97316] text-sm sm:text-base">STAR Method Checklist:</h4>
-                {question.starChecks.map((check, i) => (
-                  <div key={i} className="star-check text-xs sm:text-sm">
-                    <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-[#f97316] flex-shrink-0" />
-                    <span>{check}</span>
-                  </div>
-                ))}
+            {/* Hint Section */}
+            {question.hint && (
+              <div className="border-t border-[#1f2937] pt-3 sm:pt-4 mb-4 sm:mb-6">
+                <button
+                  onClick={() => setShowHint(!showHint)}
+                  className="flex items-center gap-2 text-[#9ca3af] hover:text-white transition-colors text-sm sm:text-base"
+                >
+                  {showHint ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                  <span>Hint</span>
+                </button>
+                <div className={`hint-content text-[#6b7280] text-sm sm:text-base ${showHint ? 'open' : ''}`}>
+                  {question.hint}
+                </div>
+              </div>
+            )}
+
+            {/* Answer Section */}
+            {showAnswer && question.answer && (
+              <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-[#0a0f1a] rounded-lg sm:rounded-xl border border-[#1f2937] fade-in">
+                <h4 className="font-semibold mb-1.5 sm:mb-2 text-[#f97316] text-sm sm:text-base">Answer:</h4>
+                <p className="text-base sm:text-lg mb-3 sm:mb-4">{question.answer}</p>
+                
+                {question.explanation && question.explanation.length > 0 && (
+                  <>
+                    <h4 className="font-semibold mb-1.5 sm:mb-2 text-[#f97316] mt-3 sm:mt-4 text-sm sm:text-base">Explanation:</h4>
+                    <ul className="space-y-1.5 sm:space-y-2">
+                      {question.explanation.map((point, i) => (
+                        <li key={i} className="text-[#9ca3af] flex items-start gap-2 text-xs sm:text-base">
+                          <span className="text-[#6366f1]">•</span>
+                          <span>{point}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
               </div>
             )}
           </>

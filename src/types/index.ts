@@ -34,6 +34,7 @@ export interface BehavioralQuestion {
   prompt: string
   tags: string[]
   starChecks: string[]
+  hint?: string
   answer?: string
   explanation?: string[]
 }

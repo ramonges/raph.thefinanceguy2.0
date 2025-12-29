@@ -14,6 +14,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Timeframe considerations (short vs long-term momentum)",
           "How momentum differs from trend-following",
         ],
+        hint: "Think about the basic principle: assets that have performed well recently tend to continue performing well. Consider what drives this behavior and how it differs from other strategies.",
         answer: "A momentum strategy buys assets that have performed well recently and sells those that have underperformed, based on the principle that trends tend to persist. It exploits behavioral biases like herding, anchoring, and delayed overreaction. Momentum works across different timeframes: short-term (1-3 months) captures earnings surprises, while long-term (6-12 months) captures fundamental trends. Unlike trend-following which uses technical indicators, momentum is fundamentally about relative performance and can be applied to any asset class.",
         explanation: [
           "Definition: Momentum = buying winners, selling losers based on recent performance",
@@ -33,6 +34,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss market regime considerations",
           "Provide examples of when momentum excels",
         ],
+        hint: "Consider when trends persist vs when they reverse. Think about volatility levels and market conditions that allow trends to continue uninterrupted.",
         answer: "Momentum excels in trending markets with low volatility, where information diffuses slowly and behavioral biases persist. It works best during economic expansions when fundamentals drive sustained moves, and in low-volatility regimes where trends aren't interrupted by sharp reversals. Momentum also performs well during market recoveries (2009-2010) and in sectors with strong earnings growth. It struggles in high-volatility, choppy markets (2008, 2020 Q1) where reversals are frequent, and during regime changes when past winners become future losers.",
         explanation: [
           "Favorable: Trending markets, low volatility, economic expansions",
@@ -52,6 +54,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss correlation with market stress",
           "Provide examples of momentum crashes",
         ],
+        hint: "Think about what happens when trends reverse. Consider market stress periods and what causes momentum positions to unwind suddenly.",
         answer: "Momentum breaks down during sharp market reversals, regime changes, and high-stress periods. Behavioral reasons: overextended positions lead to violent mean reversion when sentiment shifts. Momentum crashes occur when past winners become crowded trades that unwind simultaneously. Examples: March 2009 (momentum stocks crashed 40%+), March 2020 (growth momentum collapsed), and late-cycle reversals when leadership rotates. Momentum is highly correlated with market stress - during crises, all momentum strategies fail together as correlations spike to 1.",
         explanation: [
           "Breakdown scenarios: Sharp reversals, regime changes, late-cycle rotations",
@@ -71,6 +74,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Identify signals of overcrowding",
           "Explain how to manage crowded positions",
         ],
+        hint: "Consider what happens when too many investors hold the same positions. Think about signals that indicate a trade is crowded and the risks this creates.",
         answer: "Crowding occurs when too many investors hold the same momentum positions, creating vulnerability to sudden reversals. When momentum trades become crowded, they exhibit lower expected returns and higher tail risk. Signals of overcrowding include: high ownership concentration, low short interest, extreme valuations, and high correlation among momentum stocks. To manage: diversify across momentum factors, monitor positioning data, reduce size in crowded names, and use stop-losses. Crowded momentum trades can unwind violently when sentiment shifts, causing momentum crashes.",
         explanation: [
           "Crowding definition: Too many investors in same positions → vulnerability",
@@ -90,6 +94,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Impact on position sizing",
           "Volatility-adjusted momentum signals",
         ],
+        hint: "Think about how volatility affects trend persistence. Consider whether high or low volatility is better for momentum strategies and why.",
         answer: "Volatility and momentum have an inverse relationship: momentum works best in low-volatility environments where trends persist, and breaks down in high-volatility regimes where reversals are frequent. Low vol allows trends to develop and continue, while high vol creates noise that interrupts momentum. Position sizing should be volatility-adjusted: reduce size when vol spikes, increase when vol normalizes. Volatility-adjusted momentum signals (dividing returns by volatility) can improve risk-adjusted performance by filtering out noise.",
         explanation: [
           "Relationship: Inverse - momentum works in low vol, breaks in high vol",
@@ -109,6 +114,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Earnings surprises and momentum continuation",
           "Risk management during earnings",
         ],
+        hint: "Consider how earnings announcements can either accelerate or reverse momentum. Think about pre-earnings positioning and post-earnings drift effects.",
         answer: "Earnings seasons create both opportunities and risks for momentum. Pre-earnings: momentum can continue as expectations build, but risk increases as positions become crowded. Post-earnings: positive surprises can accelerate momentum (earnings momentum effect), while negative surprises cause sharp reversals. The post-earnings announcement drift (PEAD) shows momentum continues after positive surprises for 3-6 months. Risk management: reduce position sizes before earnings, use options for protection, or avoid earnings periods entirely. Earnings momentum (recent earnings growth) is a strong predictor of future returns.",
         explanation: [
           "Pre-earnings: Momentum continues, but risk increases with crowding",
@@ -128,6 +134,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss correlation risk",
           "How to communicate these risks to clients",
         ],
+        hint: "Think about the worst-case scenarios in momentum strategies. Consider what happens during market stress and how all momentum positions can fail together.",
         answer: "Clients underestimate: (1) Tail risk - momentum crashes can cause 30-50% drawdowns in weeks (March 2009, March 2020), (2) Correlation risk - all momentum strategies fail together in stress (correlation → 1), (3) Reversal risk - momentum can reverse violently without warning, (4) Crowding risk - popular momentum trades become vulnerable. Communication: show historical drawdowns, explain tail risk explicitly, set realistic expectations (high Sharpe but high kurtosis), and emphasize that momentum is not a buy-and-hold strategy.",
         explanation: [
           "Tail risk: 30-50% drawdowns possible in weeks (March 2009, 2020)",
@@ -147,6 +154,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Position sizing adjustments",
           "When to reduce vs maintain exposure",
         ],
+        hint: "Think about tools to limit losses: stop-losses, position sizing, and how to distinguish between normal volatility and a true regime change.",
         answer: "Drawdown management: (1) Stop-losses at 15-20% from peak to limit tail risk, (2) Volatility-adjusted position sizing - reduce size when vol spikes, (3) Diversification across momentum factors and timeframes, (4) Monitor correlation - reduce exposure when correlations spike, (5) Regime detection - exit momentum during regime changes. Reduce exposure when: volatility spikes, correlations increase, or regime shifts. Maintain exposure during normal drawdowns if fundamentals unchanged. The key is distinguishing normal volatility from regime change.",
         explanation: [
           "Stop-losses: 15-20% from peak to limit tail risk",
@@ -166,6 +174,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss risk-adjusted returns",
           "Frame as systematic strategy, not speculation",
         ],
+        hint: "Focus on the academic and systematic nature of momentum. Think about how to frame it as a legitimate factor strategy, not speculation.",
         answer: "Frame momentum as a systematic, academically-supported strategy based on behavioral finance, not speculation. Key points: (1) Academic foundation - Jegadeesh & Titman (1993) showed momentum works across markets, (2) Behavioral drivers - exploits documented biases (herding, anchoring), (3) Risk-adjusted returns - momentum has high Sharpe ratios historically, (4) Systematic approach - rules-based, not discretionary, (5) Long-term evidence - works across decades and markets. Emphasize it's a factor premium like value or quality, not market timing.",
         explanation: [
           "Academic support: Jegadeesh & Titman (1993), works across markets",
@@ -185,6 +194,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Risk management adjustments",
           "When to reduce momentum exposure",
         ],
+        hint: "Consider what happens to momentum strategies as the economic cycle matures. Think about leadership rotation and what signals indicate late-cycle conditions.",
         answer: "Late-cycle: Reduce momentum exposure as leadership rotates and reversals become frequent. Late-cycle signals: yield curve inverts, credit spreads widen, volatility increases, leadership narrows. Momentum behavior: past winners (growth, tech) underperform, value/cyclicals outperform, momentum crashes become more likely. Adjustments: (1) Reduce position sizes, (2) Shift to defensive momentum (low vol, quality), (3) Increase stop-losses, (4) Reduce leverage, (5) Consider exiting entirely. Reduce exposure when: yield curve inverts, credit spreads widen >100bps, or volatility spikes >30%.",
         explanation: [
           "Late-cycle signals: Yield curve inversion, credit spreads widen, vol increases",
@@ -206,6 +216,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "How growth differs from value",
           "Time horizon considerations",
         ],
+        hint: "Think about companies that are growing rapidly. Consider what metrics matter most and how this approach differs from buying cheap stocks.",
         answer: "A growth strategy invests in companies with above-average revenue and earnings growth, prioritizing future potential over current valuation. Key characteristics: high revenue growth (>15-20%), expanding margins, strong earnings growth, reinvestment in business. Growth differs from value: growth pays premium for future earnings, value buys cheap current assets. Growth requires longer time horizon (3-5+ years) to realize potential, while value can work faster. Growth stocks typically trade at high P/E ratios justified by growth expectations.",
         explanation: [
           "Definition: Companies with above-average revenue/earnings growth",
@@ -225,6 +236,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Rate sensitivity of growth vs value",
           "Real-world examples of rate impact",
         ],
+        hint: "Think about how discount rates affect the present value of future cash flows. Consider why growth stocks might be more sensitive to rate changes than value stocks.",
         answer: "Rising rates hurt growth stocks because most value comes from distant cash flows. In DCF: higher discount rate reduces present value of future earnings. Growth stocks have high duration (like long bonds) - their cash flows are far in future, so rate changes have large impact. Growth is 2-3x more rate-sensitive than value. Examples: 2022 rate hikes caused growth stocks (tech) to fall 30-50% while value outperformed. 2020 rate cuts boosted growth. The relationship: growth underperforms when rates rise, outperforms when rates fall.",
         explanation: [
           "DCF impact: Higher discount rate → lower PV of future cash flows",
@@ -244,6 +256,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Interest rate sensitivity",
           "How to identify duration risk",
         ],
+        hint: "Think about when growth stocks behave like long-duration bonds. Consider what makes a stock sensitive to interest rate changes.",
+        answer: "Growth becomes duration risk when most of the stock's value comes from cash flows far in the future. Like long bonds, these stocks are highly sensitive to interest rate changes. Growth stocks act like bonds when: (1) Most value is in distant cash flows (5-10+ years out), (2) Current earnings are low relative to future expectations, (3) High P/E ratios reflect future growth, not current earnings. Interest rate sensitivity: when rates rise, the present value of distant cash flows falls sharply. To identify: look for stocks with high P/E ratios, low current earnings, and most value from terminal value in DCF models. The key: growth stocks with long-duration cash flows are vulnerable to rate hikes.",
       },
       {
         id: 4,
@@ -255,6 +269,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Margin sustainability",
           "Examples of margin-driven outperformance",
         ],
+        hint: "Consider the difference between growing revenue and growing profits. Think about which companies create more value: those with expanding margins or just high revenue growth.",
+        answer: "Margins matter more because they determine profitability and cash flow generation. Revenue growth without margin expansion often destroys value (burning cash). Margin expansion importance: (1) Operating leverage - fixed costs spread over more revenue, (2) Pricing power - ability to raise prices, (3) Efficiency gains - cost reductions. Quality of growth: profitable growth (expanding margins) is sustainable, unprofitable growth (burning cash) is not. Margin sustainability: look for structural advantages (network effects, scale, moats), not temporary factors. Examples: companies with margin expansion (Amazon AWS, Microsoft) outperform those with just revenue growth (many unprofitable tech companies). The key: margin expansion is a sign of quality and sustainability.",
       },
       {
         id: 5,
@@ -266,6 +282,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Historical performance patterns",
           "Risk management in tightening",
         ],
+        hint: "Think about what happens to growth stocks when the Fed raises rates. Consider the 2022 example and why growth underperformed during tightening.",
+        answer: "Growth stocks underperform during tightening cycles because rising rates reduce the present value of future cash flows. Performance: growth typically falls 20-50% during tightening (2022 example), while value outperforms. Rate sensitivity: growth stocks have high duration (distant cash flows), so rate hikes hurt them more. Historical patterns: growth underperforms in 2018 (Fed tightening), 2022 (aggressive hikes), but outperforms during easing (2020). Risk management: (1) Reduce growth exposure before tightening, (2) Shift to value/cyclicals, (3) Focus on profitable growth (less rate-sensitive), (4) Use duration hedging. The key: growth is vulnerable to tightening, requiring active risk management.",
       },
       {
         id: 6,
@@ -277,6 +295,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Management quality assessment",
           "Red flags for speculative growth",
         ],
+        hint: "Think about what makes growth sustainable vs speculative. Consider profitability, competitive advantages, and management quality.",
+        answer: "Differentiate by: (1) Profitability - quality growth is profitable or on path to profitability, speculative growth burns cash indefinitely, (2) Competitive advantages - quality has moats (network effects, scale, IP), speculative has none, (3) Management quality - quality has experienced, capital-allocation-focused management, speculative has inexperienced or promotional management, (4) Business model - quality has proven unit economics, speculative is unproven. Red flags: negative margins with no path to profitability, excessive dilution, promotional management, no competitive advantages. The key: quality growth creates value, speculative growth destroys it.",
       },
       {
         id: 7,
@@ -1360,16 +1380,16 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
   },
   'alternative-strategies': {
     'long-short-equity': [
-      { id: 1, prompt: "Can you explain to me what a long/short equity strategy is?", tags: ["Long/Short", "Equity", "Strategy"], starChecks: ["Clear definition", "Alpha generation on both sides", "Market neutral concept", "Risk characteristics"] },
-      { id: 2, prompt: "How do managers generate alpha on both sides?", tags: ["Long/Short", "Alpha", "Strategy"], starChecks: ["Stock selection", "Shorting techniques", "Pair trading", "Relative value"] },
-      { id: 3, prompt: "How do factor exposures creep into portfolios?", tags: ["Long/Short", "Factor Exposure", "Risk"], starChecks: ["Unintended exposures", "Factor analysis", "Risk monitoring", "Neutralization"] },
-      { id: 4, prompt: "How do net and gross exposure differ?", tags: ["Long/Short", "Exposure", "Risk"], starChecks: ["Net vs gross definition", "Risk implications", "Market sensitivity", "Position sizing"] },
-      { id: 5, prompt: "How do short squeezes affect performance?", tags: ["Long/Short", "Short Squeeze", "Risk"], starChecks: ["Squeeze mechanics", "Risk management", "Position sizing", "Liquidity considerations"] },
-      { id: 6, prompt: "How does liquidity impact short books?", tags: ["Long/Short", "Liquidity", "Risk"], starChecks: ["Short liquidity", "Borrow costs", "Market impact", "Risk management"] },
-      { id: 7, prompt: "How do you hedge market beta?", tags: ["Long/Short", "Hedging", "Beta"], starChecks: ["Beta calculation", "Hedging methods", "Cost considerations", "Effectiveness"] },
-      { id: 8, prompt: "When does long/short become directional?", tags: ["Long/Short", "Directional", "Risk"], starChecks: ["Net exposure", "Factor drift", "Risk identification", "Position adjustments"] },
-      { id: 9, prompt: "How do you explain drawdowns to clients?", tags: ["Long/Short", "Drawdowns", "Client Communication"], starChecks: ["Drawdown explanation", "Risk communication", "Expectations", "Recovery patterns"] },
-      { id: 10, prompt: "How do you evaluate manager skill?", tags: ["Long/Short", "Manager Evaluation", "Performance"], starChecks: ["Skill vs luck", "Risk-adjusted returns", "Consistency", "Alpha persistence"] },
+      { id: 1, prompt: "Can you explain to me what a long/short equity strategy is?", tags: ["Long/Short", "Equity", "Strategy"], starChecks: ["Clear definition", "Alpha generation on both sides", "Market neutral concept", "Risk characteristics"], hint: "Think about buying undervalued stocks while simultaneously shorting overvalued ones. Consider how this differs from a long-only approach.", answer: "A long/short equity strategy involves taking long positions in stocks expected to outperform and short positions in stocks expected to underperform. The goal is to generate alpha on both sides of the portfolio while potentially maintaining market neutrality. Unlike long-only strategies, long/short can profit from both rising and falling markets. Key characteristics include: the ability to generate returns independent of market direction, potential for higher risk-adjusted returns, and the ability to express negative views through shorting. However, it also involves short-selling risks, higher costs (borrow fees), and the complexity of managing both long and short books simultaneously." },
+      { id: 2, prompt: "How do managers generate alpha on both sides?", tags: ["Long/Short", "Alpha", "Strategy"], starChecks: ["Stock selection", "Shorting techniques", "Pair trading", "Relative value"], hint: "Consider different approaches: fundamental analysis, quantitative models, and relative value opportunities. Think about pair trading and sector rotation.", answer: "Managers generate alpha on both sides through: (1) Stock selection - fundamental analysis to identify undervalued longs and overvalued shorts, (2) Shorting techniques - identifying overvalued stocks, weak fundamentals, or deteriorating business models, (3) Pair trading - long one stock and short a correlated stock when their relative value diverges, and (4) Relative value - exploiting mispricings between similar companies or sectors. The key is having a consistent process for both sides: the same analytical rigor for shorts as for longs, understanding catalysts for both directions, and managing risk across the entire portfolio." },
+      { id: 3, prompt: "How do factor exposures creep into portfolios?", tags: ["Long/Short", "Factor Exposure", "Risk"], starChecks: ["Unintended exposures", "Factor analysis", "Risk monitoring", "Neutralization"], hint: "Think about how sector, style, or market cap biases can emerge unintentionally. Consider what happens when long and short books have different characteristics.", answer: "Factor exposures creep in when the long and short books have different characteristics: sector tilts (longs in tech, shorts in energy), style biases (longs are growth, shorts are value), market cap differences (longs are large-cap, shorts are small-cap), or geographic tilts. This happens because stock selection processes may naturally favor certain factors. To manage: regularly analyze factor exposures using risk models, neutralize unintended exposures by adjusting positions, monitor correlations between longs and shorts, and ensure the portfolio truly reflects stock-picking skill rather than factor bets." },
+      { id: 4, prompt: "How do net and gross exposure differ?", tags: ["Long/Short", "Exposure", "Risk"], starChecks: ["Net vs gross definition", "Risk implications", "Market sensitivity", "Position sizing"], hint: "Net exposure is long minus short. Gross exposure is long plus short. Think about how each affects market sensitivity and risk.", answer: "Net exposure = Long exposure - Short exposure. It measures directional market sensitivity. A net exposure of 50% means the portfolio behaves like 50% long the market. Gross exposure = Long exposure + Short exposure. It measures total capital at risk. A gross exposure of 150% (100% long, 50% short) means 150% of capital is invested. Key differences: net exposure drives market sensitivity (high net = directional), gross exposure drives total risk (high gross = more positions, more risk). Market neutral strategies target net exposure near 0%, but can have high gross exposure (e.g., 100% long, 100% short = 0% net, 200% gross)." },
+      { id: 5, prompt: "How do short squeezes affect performance?", tags: ["Long/Short", "Short Squeeze", "Risk"], starChecks: ["Squeeze mechanics", "Risk management", "Position sizing", "Liquidity considerations"], hint: "A short squeeze occurs when shorted stocks rise rapidly, forcing short sellers to cover. Think about what causes this and how to manage the risk.", answer: "Short squeezes occur when heavily shorted stocks rise rapidly, forcing short sellers to buy back shares, which drives prices even higher. Impact: can cause significant losses on short positions, especially if positions are large relative to float. Causes: positive news, low float (few shares available), high short interest, or coordinated buying. Risk management: (1) Position sizing - limit short size relative to float, (2) Monitor short interest - avoid stocks with very high short interest, (3) Use stop-losses - exit shorts if they move against you, (4) Diversify shorts - don't concentrate in squeeze-prone stocks, (5) Understand catalysts - know what could trigger a squeeze. The key: short squeezes are a tail risk that can cause outsized losses if not managed properly." },
+      { id: 6, prompt: "How does liquidity impact short books?", tags: ["Long/Short", "Liquidity", "Risk"], starChecks: ["Short liquidity", "Borrow costs", "Market impact", "Risk management"], hint: "Consider the challenges of shorting: finding borrowable shares, borrow costs, and what happens during market stress.", answer: "Liquidity impacts short books in several ways: (1) Borrow availability - not all stocks are borrowable, and availability can dry up during stress, (2) Borrow costs - can range from 0.5% to 10%+ annually, eating into returns, (3) Market impact - shorting illiquid stocks can move prices against you, (4) Recall risk - lenders can recall shares, forcing you to cover at unfavorable prices, (5) Hard-to-borrow periods - during market stress, borrow costs spike and availability disappears. Risk management: focus on liquid, easily borrowable stocks for shorts, monitor borrow costs, maintain relationships with prime brokers, and have exit plans for hard-to-borrow situations. The key: short book liquidity is often worse than long book liquidity, requiring more careful management." },
+      { id: 7, prompt: "How do you hedge market beta?", tags: ["Long/Short", "Hedging", "Beta"], starChecks: ["Beta calculation", "Hedging methods", "Cost considerations", "Effectiveness"], hint: "Beta measures sensitivity to market moves. Think about using index futures, ETFs, or adjusting net exposure to hedge market risk.", answer: "Hedge market beta by: (1) Calculate portfolio beta - measure sensitivity to market (S&P 500, etc.), (2) Use index futures - short futures to offset long beta exposure, (3) Use ETFs - short market ETFs to hedge, (4) Adjust net exposure - reduce long exposure or increase short exposure to lower net beta, (5) Sector hedging - hedge sector exposures using sector ETFs. Considerations: cost (futures are cheaper than ETFs), effectiveness (futures track better), and basis risk (hedge may not perfectly match portfolio). The goal: reduce market sensitivity while maintaining stock-picking alpha. A market-neutral strategy targets beta near 0, but perfect hedging is difficult due to tracking error." },
+      { id: 8, prompt: "When does long/short become directional?", tags: ["Long/Short", "Directional", "Risk"], starChecks: ["Net exposure", "Factor drift", "Risk identification", "Position adjustments"], hint: "Long/short becomes directional when net exposure is meaningfully different from zero. Think about what causes this and why it matters.", answer: "Long/short becomes directional when: (1) Net exposure is high - e.g., 80% long, 20% short = 60% net exposure (directional long), (2) Factor drift - longs and shorts have different factor exposures (e.g., longs are growth, shorts are value), (3) Unintended market sensitivity - portfolio moves with market despite appearing neutral, (4) Concentrated positions - large positions on one side create directional risk. This matters because: it changes risk profile (becomes market-dependent), reduces diversification benefits, and may not match client expectations (they may want market-neutral). To manage: regularly monitor net and factor exposures, rebalance to maintain neutrality, and clearly communicate when strategy becomes directional." },
+      { id: 9, prompt: "How do you explain drawdowns to clients?", tags: ["Long/Short", "Drawdowns", "Client Communication"], starChecks: ["Drawdown explanation", "Risk communication", "Expectations", "Recovery patterns"], hint: "Drawdowns are inevitable. Focus on explaining them in context: why they happen, how long they typically last, and recovery patterns.", answer: "Explain drawdowns by: (1) Setting expectations upfront - drawdowns are normal, not failures, (2) Providing context - show historical drawdowns and recovery times, (3) Explaining causes - market stress, factor headwinds, or stock-specific issues, (4) Showing recovery patterns - most strategies recover, but timing varies, (5) Comparing to benchmarks - drawdowns may be smaller than market drawdowns. Key messages: drawdowns are part of the strategy (not bugs, but features), risk management is active (not passive), and long-term track record matters more than short-term performance. Be transparent: show worst drawdowns, explain what happened, and demonstrate how you managed risk during the period." },
+      { id: 10, prompt: "How do you evaluate manager skill?", tags: ["Long/Short", "Manager Evaluation", "Performance"], starChecks: ["Skill vs luck", "Risk-adjusted returns", "Consistency", "Alpha persistence"], hint: "Skill is persistent alpha generation. Consider risk-adjusted metrics, consistency over time, and whether returns are due to luck or process.", answer: "Evaluate manager skill by: (1) Risk-adjusted returns - Sharpe ratio, information ratio (alpha/volatility), (2) Consistency - performance across different market regimes, not just bull markets, (3) Alpha persistence - ability to generate alpha over multiple periods, not just one lucky year, (4) Process quality - is there a repeatable, rigorous process?, (5) Attribution analysis - is alpha from stock-picking or factor exposure?, (6) Drawdown management - how did they handle stress periods?, (7) Long-term track record - 3-5+ years, not just recent performance. Red flags: inconsistent performance, high correlation to factors (not true alpha), or inability to explain returns. The key: skill is persistent and process-driven, not luck-driven." },
     ],
     'market-neutral': [
       { id: 1, prompt: "Can you explain to me what a market neutral strategy is?", tags: ["Market Neutral", "Strategy"], starChecks: ["Clear definition", "Beta neutral", "Alpha focus", "Risk characteristics"] },
