@@ -2465,6 +2465,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address pricing",
           "Explain trading implications",
         ],
+        hint: "Think about what skew represents. Consider how the market prices crash risk and what steep vs flat skew tells you about perceived crash probability.",
         answer: "Crash risk and skew are directly related - skew reflects the market's assessment of crash probability. Steep skew indicates high perceived crash risk (investors paying premium for protection). The relationship: steeper skew = higher implied crash probability. Skew embeds crash risk premium - the extra cost of OTM puts reflects the fear of large down moves. However, skew can be wrong - markets can overprice or underprice crash risk. Trading opportunity: if you think crash risk is mispriced, trade skew. But be careful - markets are usually right about crash risk in the short term, wrong in the long term.",
         explanation: [
           "Relationship: Skew reflects crash probability",
@@ -2484,6 +2485,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss pros/cons",
           "Address liquidity",
         ],
+        hint: "Think about different ways to get exposure to skew. Consider direct options, spreads, and other structures, and their trade-offs.",
         answer: "Common instruments for trading skew: OTM puts and calls (direct exposure), butterfly spreads (delta-neutral skew exposure), risk reversals (skew + some delta), variance swaps (skew exposure via vol surface), and skew indices (direct skew exposure). Each has pros/cons: OTM options are liquid but have delta exposure, butterflies are delta-neutral but expensive, risk reversals are simple but have delta, variance swaps are pure vol but illiquid, skew indices are direct but limited availability. Most traders use combinations of OTM options with delta hedging to create delta-neutral skew exposure.",
         explanation: [
           "Instruments: OTM options, butterflies, risk reversals, variance swaps",
@@ -2503,6 +2505,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address investor flows",
           "Explain price discovery",
         ],
+        hint: "Think about how supply and demand for puts vs calls affects skew. Consider investor flows, market makers, and how this creates feedback loops.",
         answer: "Supply and demand directly drive skew. High demand for puts (protection buying) increases put prices, steepening skew. Low demand flattens skew. Market makers provide supply but require compensation for risk - when risk increases, they charge more, steepening skew. Investor flows matter: pension funds buying protection, retail buying puts, hedge funds selling vol - all affect skew. The dynamics: demand surge → higher put prices → steeper skew → more demand (feedback). Supply constraints (market makers reducing risk) also steepen skew. Skew is a price discovery mechanism - it reflects supply/demand balance for protection.",
         explanation: [
           "Demand: Put buying steepens skew",
@@ -2522,6 +2525,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address structural issues",
           "Explain opportunities",
         ],
+        hint: "Think about why skew might not reflect true crash risk. Consider behavioral biases, structural constraints, and temporary market imbalances.",
         answer: "Skew can be mispriced due to: behavioral biases (investors overpay for protection due to fear), structural constraints (pension funds must buy protection, creating persistent demand), model errors (models underestimate tail risk), and temporary imbalances (sudden demand/supply shifts). Mispricing opportunities: when skew is too steep (protection too expensive, sell skew), when skew is too flat (protection too cheap, buy skew), and when skew term structure is misaligned. However, mispricing is hard to identify - what looks mispriced may reflect real risk. The key: understand why skew exists before trading it.",
         explanation: [
           "Behavioral: Investors overpay due to fear",
@@ -2541,6 +2545,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss hedging",
           "Address risk management",
         ],
+        hint: "Think about comparing skew across different dimensions: time, strikes, or assets. Consider delta-neutral structures and how to identify relative mispricing.",
         answer: "Design a relative value skew trade by comparing skew across: different expirations (term structure - trade steep vs flat), different strikes (butterfly - trade skew shape), different underlyings (cross-asset - trade skew differences), or different times (mean reversion - trade skew cycles). Structure: identify mispricing (e.g., front skew too steep vs back skew), construct delta-neutral position (butterfly or risk reversal), hedge delta dynamically, and manage risk (correlation, vol changes). Example: if front-month skew is steeper than back-month skew, sell front skew (butterfly) and buy back skew, betting on convergence. The key: find relative mispricing, not absolute.",
         explanation: [
           "Compare: Across expirations, strikes, underlyings, times",
@@ -2562,6 +2567,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss hedging",
           "Address risk/return",
         ],
+        hint: "Think about how your delta changes when you own options. Consider the convex P&L profile and what it means to profit from volatility.",
         answer: "Being long gamma means owning options where your delta increases as the underlying moves in your favor and decreases as it moves against you. This creates a convex P&L profile - you profit from large moves in either direction. Long gamma positions benefit from realized volatility exceeding implied volatility. The key characteristic: you make more on large moves than you lose on small moves. However, long gamma costs money (theta decay) - you pay for the convexity. Long gamma is profitable when the underlying moves enough to overcome theta decay. It's the opposite of short gamma (selling options).",
         explanation: [
           "Definition: Delta increases with favorable moves",
@@ -2581,6 +2587,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address realized vol",
           "Explain profit source",
         ],
+        hint: "Think about the process of delta hedging. Consider how buying low and selling high through hedging generates profit from volatility.",
         answer: "Gamma scalping generates P&L by buying low and selling high as the underlying moves, while maintaining delta neutrality through hedging. Process: you're long gamma (long options), underlying moves up → delta increases → you sell stock to hedge → underlying moves down → delta decreases → you buy stock to hedge. If you buy low and sell high repeatedly, you profit from the volatility. The profit comes from realized volatility exceeding the cost of carry (theta). Each hedge round-trip captures the move. The key: you must hedge frequently to capture gamma - the more you hedge, the more you capture. Profit = realized vol - implied vol - transaction costs.",
         explanation: [
           "Mechanism: Buy low, sell high via delta hedging",
@@ -2600,6 +2607,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address profit mechanism",
           "Explain alternatives",
         ],
+        hint: "Think about why you need to hedge delta when you're long gamma. Consider how hedging helps you capture volatility while staying market-neutral.",
         answer: "Gamma scalping requires delta hedging because gamma creates delta exposure that must be managed. When you're long gamma, your delta changes as the underlying moves - you become long delta when price rises, short delta when price falls. To maintain market neutrality and capture gamma, you must hedge delta by trading the underlying. The hedging is what generates the scalping profit - you're buying and selling the underlying to stay delta-neutral, capturing the moves. Without delta hedging, you'd have directional exposure, not pure gamma exposure. Delta hedging transforms gamma into realized volatility capture.",
         explanation: [
           "Necessity: Gamma creates delta that must be hedged",
@@ -2619,6 +2627,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address measurement",
           "Explain optimization",
         ],
+        hint: "Think about the profit condition for gamma scalping. Consider what realized volatility needs to exceed and why this matters.",
         answer: "Realized volatility is critical - gamma scalping is only profitable if realized volatility exceeds implied volatility (and transaction costs). The profit formula: P&L = (realized vol - implied vol) × gamma exposure - transaction costs. If realized vol < implied vol, you lose money despite having long gamma. Realized vol must be high enough to overcome theta decay and transaction costs. This is why gamma scalping works in volatile markets but loses in quiet markets. Traders measure realized vol vs implied vol to assess profitability. The key: you need actual price movement to profit - quiet markets kill gamma scalping.",
         explanation: [
           "Critical: Realized vol must > implied vol",
@@ -2638,6 +2647,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address optimization",
           "Explain break-even",
         ],
+        hint: "Think about the trade-off between hedging frequency and costs. Consider how transaction costs affect profitability and when gamma scalping becomes unprofitable.",
         answer: "Transaction costs significantly impact gamma scalping because you trade frequently to hedge delta. Each hedge round-trip incurs costs (bid-ask spreads, commissions), which erode profits. High-frequency hedging captures more gamma but incurs more costs. Low-frequency hedging reduces costs but misses gamma. The trade-off: optimize hedging frequency to maximize (gamma capture - transaction costs). Break-even: realized vol must exceed implied vol by enough to cover transaction costs. In illiquid markets or wide spreads, transaction costs can make gamma scalping unprofitable even with high realized vol. This is why gamma scalping works best in liquid markets with tight spreads.",
         explanation: [
           "Impact: Costs erode profits from frequent trading",
@@ -2657,6 +2667,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address timing",
           "Explain costs",
         ],
+        hint: "Think about what can go wrong even when volatility is high. Consider jump risk, timing issues, and the assumption of continuous price movement.",
         answer: "Gamma scalping can lose money in high vol because: jump risk (large gaps bypass hedging, causing immediate losses), wrong timing (you hedge at wrong prices during choppy markets), transaction costs (high vol = more trading = more costs), and vol-of-vol (volatility itself is volatile, making hedging harder). Additionally, if realized vol is high but implied vol is even higher, you still lose. The key issue: gamma scalping assumes continuous price movement, but jumps violate this assumption. During vol spikes, markets gap, making delta hedging ineffective. This is why gamma scalping can fail during the highest vol periods.",
         explanation: [
           "Jumps: Large gaps bypass hedging",
@@ -2676,6 +2687,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address expiration",
           "Explain trade-offs",
         ],
+        hint: "Think about how gamma and theta change as expiration approaches. Consider the trade-off between opportunity (gamma) and cost (theta).",
         answer: "Time decay (theta) and gamma interact inversely - as expiration approaches, gamma increases (more convexity) but theta also increases (higher cost). Near expiration, ATM options have maximum gamma but maximum theta. This creates a race: you need enough realized vol to overcome theta before expiration. The interaction: long gamma costs money daily (theta), but gamma increases near expiration, creating more opportunity but higher cost. The trade-off: longer-dated options have lower theta (cheaper) but lower gamma (less convexity), while shorter-dated have higher theta (expensive) but higher gamma (more convexity). Optimal: balance time to expiration with gamma/theta ratio.",
         explanation: [
           "Relationship: Inverse - gamma ↑, theta ↑ near expiration",
@@ -2695,6 +2707,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss trade-offs",
           "Address optimization",
         ],
+        hint: "Think about what conditions make gamma scalping profitable. Consider realized vs implied vol, liquidity, and market characteristics.",
         answer: "Ideal conditions for gamma scalping: high realized volatility (need moves to profit), low implied volatility (cheaper to buy options), liquid markets (low transaction costs), trending or mean-reverting markets (predictable patterns help hedging), and stable volatility (vol-of-vol low, making hedging easier). The perfect scenario: buy cheap options (low IV), market moves a lot (high RV), hedge frequently in liquid markets. However, these conditions rarely align - usually high RV comes with high IV. The key: find markets where RV > IV consistently, with good liquidity. Avoid: quiet markets (no moves), jumpy markets (can't hedge), illiquid markets (high costs).",
         explanation: [
           "Ideal: High RV, low IV, liquid, stable vol",
@@ -2714,6 +2727,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address execution risk",
           "Explain optimization",
         ],
+        hint: "Think about why liquidity matters when you trade frequently. Consider bid-ask spreads, execution quality, and how this affects profitability.",
         answer: "Liquidity critically impacts gamma scalping because you trade frequently to hedge. In liquid markets: tight bid-ask spreads minimize costs, easy execution at fair prices, and ability to hedge quickly. In illiquid markets: wide spreads erode profits, execution at poor prices (slippage), and difficulty hedging quickly. The impact: wide spreads can turn a profitable gamma trade into a losing one. Execution timing matters - you need to hedge at good prices, not just any price. In illiquid markets, you may be forced to hedge at poor prices, destroying profitability. This is why gamma scalping works best in highly liquid markets (major indices, large-cap stocks).",
         explanation: [
           "Importance: Frequent trading requires liquidity",
@@ -2733,6 +2747,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address backtesting",
           "Explain risk assessment",
         ],
+        hint: "Think about what you need to assess: realized vs implied vol, costs, liquidity, and what could go wrong. Consider backtesting and stress testing.",
         answer: "Evaluate gamma scalping viability by: comparing realized vol vs implied vol (need RV > IV), estimating transaction costs (spreads, commissions), assessing liquidity (can you hedge efficiently?), backtesting the strategy (historical P&L), and stress testing (what happens during jumps/stress?). Key metrics: expected P&L = (RV - IV) × gamma - costs, Sharpe ratio, max drawdown, and win rate. The strategy is viable if: RV consistently exceeds IV by enough to cover costs, liquidity is sufficient, and you can manage jump risk. However, past performance doesn't guarantee future - vol regimes change. Be conservative in assumptions.",
         explanation: [
           "Compare: RV vs IV, estimate costs, assess liquidity",
@@ -2754,6 +2769,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Explain market-neutral concept",
           "Provide examples",
         ],
+        hint: "Think about trading relationships between volatility instruments, not direction. Consider market-neutral trades that profit from vol relationships normalizing.",
         answer: "Relative value in volatility trading means trading the difference between two volatility-related instruments, betting that their relationship will normalize or change, without taking directional market exposure. It's market-neutral - you're not betting on market direction but on vol relationships. Examples: trading vol term structure (front vs back), vol across strikes (skew trades), vol across underlyings (dispersion), or vol across time (mean reversion). The idea: find mispriced relationships in the vol surface, trade the spread, profit when relationship normalizes. RV vol trades are typically delta-neutral and focus on vol-specific risks.",
         explanation: [
           "Definition: Trading vol relationships, not direction",
@@ -2773,6 +2789,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address hedging",
           "Explain profit sources",
         ],
+        hint: "Think about different ways to trade vol relationships: across time, strikes, underlyings, or assets. Consider delta-neutral structures.",
         answer: "Trade volatility on a relative value basis by: term structure trades (front vol vs back vol - trade steepness), skew trades (OTM puts vs OTM calls - trade skew), dispersion trades (index vol vs stock vol - trade correlation), calendar spreads (different expirations - trade time), and cross-asset vol (equity vol vs FX vol - trade relationships). Structure: identify mispricing (e.g., front vol too high vs back vol), construct delta-neutral position, hedge other risks, profit when relationship normalizes. The profit comes from vol relationships converging, not from market direction. RV trades are typically more capital-efficient than directional vol trades.",
         explanation: [
           "Structures: Term structure, skew, dispersion, calendars, cross-asset",
@@ -2792,6 +2809,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss profit mechanism",
           "Address risks",
         ],
+        hint: "Think about specific option structures that trade vol relationships. Consider calendars, butterflies, risk reversals, and how they profit from vol surface normalization.",
         answer: "Examples of RV trades on the vol surface: calendar spread (sell front-month vol, buy back-month vol - profit if term structure flattens), butterfly (buy wings, sell body - profit from skew changes), risk reversal (buy OTM put, sell OTM call - profit from skew steepening), vol swap spread (buy index vol, sell stock vol - dispersion trade), and vol-of-vol trade (trade volatility of volatility). Each trade profits from vol surface relationships normalizing. The key: identify where the vol surface is mispriced relative to historical relationships or models, then trade the spread. These are sophisticated trades requiring deep vol market knowledge.",
         explanation: [
           "Examples: Calendars, butterflies, risk reversals, dispersion, vol-of-vol",
@@ -2811,6 +2829,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address profit sources",
           "Explain risks",
         ],
+        hint: "Think about trading the relationship between short-dated and long-dated volatility. Consider when term structure normalizes and what risks exist.",
         answer: "Term structure trades are core RV vol strategies - they trade the relationship between short-dated and long-dated volatility. Structure: sell front-month vol (if expensive), buy back-month vol (if cheap), or vice versa. Profit when: term structure normalizes (steep structure flattens, or flat structure steepens), or when realized vol differs from term structure expectations. The trade is typically delta-neutral and profits from vol time decay or vol mean reversion. Risks: term structure can stay mispriced longer than expected, or can move against you if vol regime changes. These trades require understanding of vol dynamics across time.",
         explanation: [
           "Core: Fundamental RV vol strategy",
@@ -2830,6 +2849,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address residual risks",
           "Explain benefits",
         ],
+        hint: "Think about how RV trades eliminate market direction risk. Consider delta hedging and what risks remain despite being 'neutral'.",
         answer: "Relative value trading is considered market-neutral because it hedges out directional market exposure (delta) while maintaining exposure to vol-specific factors. By trading vol relationships rather than vol levels, and hedging delta, you eliminate market direction risk. However, 'neutral' is relative - you still have vol risk, correlation risk, and other vol-specific risks. The benefit: you can profit from vol mispricings without betting on market direction. This makes RV trades attractive to investors who want vol exposure without market risk. However, during stress, correlations spike and 'neutral' positions can become directional.",
         explanation: [
           "Neutrality: Hedged delta, vol-specific exposure",
@@ -2849,6 +2869,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss correlation risk",
           "Address model risk",
         ],
+        hint: "Even 'neutral' strategies have risks. Think about what can go wrong: correlation, jumps, liquidity, and what happens during stress.",
         answer: "Even market-neutral vol strategies face: correlation risk (correlations spike during stress, breaking neutrality), jump risk (sudden moves bypass hedging), liquidity risk (can't hedge during stress), model risk (models fail during stress), basis risk (relationships break down), vol-of-vol risk (volatility itself becomes volatile), and tail risk (extreme events). The biggest risk: correlation - during stress, all vol relationships break down, and 'neutral' positions become directional. Additionally, liquidity dries up, making hedging impossible. This is why RV vol strategies can fail catastrophically during crises despite being 'market-neutral'.",
         explanation: [
           "Risks: Correlation, jumps, liquidity, model, basis, vol-of-vol, tail",
@@ -2868,6 +2889,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address historical analysis",
           "Explain signals",
         ],
+        hint: "Think about different ways to identify mispricing: historical comparisons, models, supply/demand analysis. Consider what makes a relationship mispriced vs reflecting real risk.",
         answer: "Identify vol mispricings by: comparing to historical relationships (is current relationship unusual?), using models (theoretical vs actual - is there a gap?), analyzing supply/demand (structural imbalances?), and looking for anomalies (extreme levels?). Methods: statistical analysis (z-scores, percentiles), model-based (Black-Scholes vs market), relative analysis (cross-asset, cross-time), and flow analysis (who's buying/selling?). However, mispricing is hard to identify - what looks mispriced may reflect real risk. The key: understand why the relationship exists before assuming it's mispriced. Be humble - markets are usually efficient.",
         explanation: [
           "Methods: Historical, models, supply/demand, anomalies",
@@ -2887,6 +2909,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address calibration",
           "Explain mitigation",
         ],
+        hint: "RV vol trades depend on models. Think about what happens when models are wrong: wrong assumptions, wrong parameters, and what happens during stress.",
         answer: "Model risk and parameter uncertainty significantly affect RV vol trades because these trades rely on models to identify mispricings and hedge risks. Model risk: wrong model assumptions (e.g., assuming normal distributions when tails are fat) can cause losses. Parameter uncertainty: wrong parameter estimates (correlation, vol-of-vol) lead to wrong hedges. Calibration risk: models calibrated to historical data may not work in new regimes. During stress, models fail - assumptions break down, parameters become unstable. Mitigation: use multiple models, stress test assumptions, be conservative in sizing, and have exit strategies. However, model risk can't be eliminated - it's inherent in vol trading.",
         explanation: [
           "Risk: Models identify mispricings and hedge risks",
@@ -2906,6 +2929,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address execution",
           "Explain filtering",
         ],
+        hint: "Think about how wide bid-ask spreads can make instruments appear mispriced. Consider the difference between true mispricing and liquidity effects.",
         answer: "Liquidity differences distort RV signals because illiquid instruments trade at wider spreads, making them appear mispriced when they're just illiquid. Example: illiquid stock options have wide bid-ask spreads, making vol appear high, but you can't trade at that vol. The distortion: you see a mispricing but can't trade it, or you trade at worse prices than signals suggest. This makes RV signals unreliable in illiquid markets. To filter: only trade liquid instruments, adjust for bid-ask spreads, and be realistic about execution prices. The key: distinguish between true mispricing and liquidity effects.",
         explanation: [
           "Distortion: Illiquid = wide spreads = false signals",
@@ -2925,6 +2949,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address monitoring",
           "Explain exit strategies",
         ],
+        hint: "Think about position sizing based on mispricing size and risk limits. Consider what to monitor and when to exit positions.",
         answer: "Size and risk-manage RV vol trades by: sizing based on expected mispricing (bigger mispricing = larger size, but cap at risk limits), setting risk limits (max position size, max portfolio vol, max correlation exposure), monitoring key risks (correlation, liquidity, model parameters), and having exit strategies (reduce/close if mispricing widens, if correlation spikes, or if liquidity dries up). Use position limits: max % of capital, max vol exposure, max correlation exposure. Monitor: track mispricing (is it converging or diverging?), correlation levels, and liquidity. Exit: if trade moves against you beyond threshold, or if risks increase beyond tolerance.",
         explanation: [
           "Sizing: Based on mispricing, capped by risk limits",
@@ -2946,6 +2971,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss probability",
           "Address impact",
         ],
+        hint: "Think about extreme, rare events that cause large losses. Consider market crashes and what makes tail risk different from normal risk.",
         answer: "Tail risk is the risk of extreme, low-probability events that cause large losses - events in the 'tail' of the return distribution. These are rare but catastrophic events like market crashes, flash crashes, or black swans. Tail risk is characterized by: low probability (rare events), high impact (large losses when they occur), and non-normal distributions (fat tails). Examples: 2008 financial crisis, March 2020 COVID crash, 1987 Black Monday. Tail risk is often underestimated because it's rare - investors become complacent. However, when tail events occur, they can wipe out years of gains instantly.",
         explanation: [
           "Definition: Extreme, low-probability, high-impact events",
@@ -2965,6 +2991,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address pricing",
           "Explain trade-offs",
         ],
+        hint: "Think about why insurance is expensive. Consider supply and demand, the value of protection, and what drives the pricing of OTM puts.",
         answer: "Tail hedges are expensive because: they provide valuable protection (investors pay premium for insurance), they're in high demand (everyone wants protection), supply is limited (market makers require compensation for tail risk), and they embed crash risk premium (the extra cost reflects fear of crashes). The pricing: OTM puts are expensive because they protect against the worst outcomes. The cost reflects: time value (options decay), volatility premium (fear premium), and skew (crash risk premium). This makes tail hedges expensive to maintain - you pay regularly for protection you may never use. The trade-off: protection vs cost.",
         explanation: [
           "Drivers: Valuable protection, high demand, limited supply",
@@ -2984,6 +3011,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss pros/cons",
           "Address selection",
         ],
+        hint: "Think about different instruments that provide tail protection. Consider OTM puts, VIX calls, put spreads, and their trade-offs.",
         answer: "Common tail hedging instruments: OTM puts (direct protection, liquid, but expensive), VIX calls (volatility protection, liquid, but expensive), put spreads (cheaper than puts, but limited protection), variance swaps (pure vol exposure, but illiquid), and tail risk funds (managed solutions, but fees). Each has pros/cons: OTM puts are simple but expensive, VIX calls protect against vol spikes but have basis risk, put spreads are cheaper but cap protection, variance swaps are pure but illiquid. Selection depends on: objectives, budget, liquidity needs, and risk profile. Most investors use OTM puts or VIX calls for simplicity and liquidity.",
         explanation: [
           "Instruments: OTM puts, VIX calls, put spreads, variance swaps, funds",
@@ -3003,6 +3031,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address correlation",
           "Explain complementarity",
         ],
+        hint: "Think about how diversification and tail hedging work differently. Consider when each is effective and what happens during tail events.",
         answer: "Tail hedging differs fundamentally: diversification spreads risk across assets (reduces normal risk) but fails during tail events (correlations spike to 1.0). Tail hedging provides explicit protection against tail events (works when diversification fails). Diversification: reduces volatility in normal times but doesn't protect during crises. Tail hedging: costs money in normal times but protects during crises. They're complementary - diversification for normal risk, hedging for tail risk. However, diversification is 'free' (no ongoing cost) while hedging is expensive. The key: diversification reduces normal vol, hedging protects against tail vol.",
         explanation: [
           "Diversification: Reduces normal risk, fails during tail events",
@@ -3022,6 +3051,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss timing",
           "Address cost-benefit",
         ],
+        hint: "Think about when tail hedges are most valuable. Consider actual tail events, when risk is underpriced, and the challenge of timing.",
         answer: "Tail hedging provides most value: during actual tail events (obviously - when crashes occur), when tail risk is underpriced (buy protection when cheap), before regime changes (hedge before vol spikes), and for leveraged portfolios (leverage amplifies tail risk). The value is highest when: you have large exposure to tail risk, tail events are likely but underpriced, and you can't afford the loss. However, timing is difficult - hedges are most valuable right before crashes, but crashes are unpredictable. The key: maintain hedges consistently rather than trying to time them. Value = protection when needed - cost when not needed.",
         explanation: [
           "Value: During tail events, when underpriced, before regime changes",
@@ -3041,6 +3071,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address performance drag",
           "Explain consequences",
         ],
+        hint: "Think about why investors might stop paying for protection. Consider cost drag, complacency, and behavioral biases.",
         answer: "Investors abandon tail hedges because: cost drag (hedges cost money regularly, hurting performance), complacency (no crashes for years, hedges seem unnecessary), performance pressure (clients question why they're paying for unused protection), and behavioral bias (recency bias - 'crashes won't happen again'). The cost feels like wasted money when markets are calm. However, abandoning hedges right before crashes is common - investors give up just when protection is needed most. This is why tail hedging requires discipline and long-term thinking. The cost is insurance premium - you pay hoping you never need it.",
         explanation: [
           "Reasons: Cost drag, complacency, performance pressure, recency bias",
@@ -3060,6 +3091,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address backtesting",
           "Explain limitations",
         ],
+        hint: "Think about how to measure if a tail hedge is working. Consider payoff ratios, stress testing, and the challenge of measuring rare events.",
         answer: "Measure tail hedge effectiveness by: payoff ratio (how much protection vs cost - e.g., 10:1 payoff), stress testing (simulate crashes, measure protection), backtesting (historical performance during crashes), and risk reduction (how much tail risk is reduced). Key metrics: max drawdown reduction, tail VaR reduction, and Sharpe ratio improvement. However, measurement is difficult - tail events are rare, so historical data is limited. Also, past performance doesn't guarantee future - each crash is different. The key: measure not just returns but risk-adjusted returns and tail risk reduction. Effectiveness = protection provided / cost paid.",
         explanation: [
           "Metrics: Payoff ratio, stress tests, backtests, risk reduction",
@@ -3079,6 +3111,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address structure design",
           "Explain trade-offs",
         ],
+        hint: "Think about how to maximize convexity while minimizing cost. Consider strike selection, put spreads, and the trade-off between protection and cost.",
         answer: "Optimize convexity in tail hedges by: selecting OTM strikes (more convex, cheaper), using put spreads (buy OTM, sell further OTM - maintain convexity, reduce cost), laddering strikes (multiple strikes for different crash levels), and using VIX calls (high convexity on vol). The trade-off: more convexity = more expensive. Optimization: balance convexity (protection) with cost. Very OTM puts have high convexity but may be too far OTM. ATM puts have less convexity but more certain protection. The key: design hedges that provide protection where you need it (your pain point) while minimizing cost. Structure matters - small changes can significantly impact convexity.",
         explanation: [
           "Methods: OTM strikes, put spreads, ladders, VIX calls",
@@ -3098,6 +3131,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address budget constraints",
           "Explain decision framework",
         ],
+        hint: "Think about the fundamental trade-off: more protection costs more. Consider how to optimize within a budget and what decision framework to use.",
         answer: "The trade-off: more protection = higher cost. You can't have maximum protection with minimal cost. Trade-offs: OTM puts (more protection, higher cost) vs put spreads (less protection, lower cost), frequent rebalancing (better protection, higher cost) vs static hedges (less protection, lower cost), and comprehensive hedging (all assets, high cost) vs selective (key assets, lower cost). Optimization: determine your tail risk tolerance, set a hedging budget, and design hedges that maximize protection within budget. The framework: what's your max acceptable loss? How much can you spend on hedging? Design hedges that protect against losses beyond your tolerance while staying within budget.",
         explanation: [
           "Trade-off: More protection = higher cost",
@@ -3117,6 +3151,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss rebalancing",
           "Address monitoring",
         ],
+        hint: "Think about ways to reduce cost while maintaining protection. Consider put spreads, selective hedging, dynamic rebalancing, and timing purchases.",
         answer: "Design cost-efficient tail hedging by: using put spreads instead of puts (reduce cost, maintain protection), laddering strikes (diversify protection levels), selective hedging (hedge key exposures, not everything), dynamic rebalancing (adjust as vol changes - buy when cheap, reduce when expensive), and using alternative structures (VIX calls, variance swaps if cheaper). Cost reduction: buy protection when vol is low (cheaper), use spreads to reduce cost, hedge selectively (focus on biggest risks), and rebalance dynamically. Monitoring: track hedge cost vs portfolio risk, adjust as needed. The goal: maximum protection per dollar spent.",
         explanation: [
           "Structures: Put spreads, ladders, selective, dynamic",
