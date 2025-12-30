@@ -4,6 +4,22 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Raph The Finance Guy | Trading Interview Prep",
   description: "Master Trading Interviews with Confidence. Practice mental math, probability puzzles, trading intuition, Greeks, behavioral questions, and ML concepts.",
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
+  openGraph: {
+    title: "Raph The Finance Guy | Trading Interview Prep",
+    description: "Master Trading Interviews with Confidence. Practice mental math, probability puzzles, trading intuition, Greeks, behavioral questions, and ML concepts.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Raph The Finance Guy | Trading Interview Prep",
+    description: "Master Trading Interviews with Confidence. Practice mental math, probability puzzles, trading intuition, Greeks, behavioral questions, and ML concepts.",
+  },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://raphthefinanceguy.com'),
 };
 
 export default function RootLayout({
