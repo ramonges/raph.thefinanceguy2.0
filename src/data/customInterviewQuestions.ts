@@ -86,14 +86,14 @@ export const salesBankFlow: InterviewFlow = {
       questions: [
         {
           id: 'sb-brain-1',
-          question: 'Why are manhole covers round?',
-          answer: 'Round covers cannot fall through the hole (unlike square ones which can be rotated diagonally). Also easier to roll and manufacture. Shows practical thinking and problem-solving approach.',
+          question: 'You have 3 switches in one room and 3 light bulbs in another. You can only go to the bulb room once. How do you determine which switch controls which bulb?',
+          answer: 'Turn on switch 1, wait 5 minutes, then turn it off. Turn on switch 2. Go to bulb room: the bulb that is on = switch 2, the bulb that is warm but off = switch 1, the bulb that is cold and off = switch 3.',
           category: 'brainteaser'
         },
         {
           id: 'sb-brain-2',
-          question: 'How many tennis balls fit in a bus?',
-          answer: 'Estimate: Bus volume ≈ 10m × 2.5m × 3m = 75 m³ = 75,000 L. Tennis ball volume ≈ 0.15 L. Account for packing efficiency (~60%): 75,000 × 0.6 / 0.15 ≈ 300,000 balls. Show estimation methodology.',
+          question: 'You have two ropes that each take exactly 60 minutes to burn, but they burn at non-uniform rates. How do you measure exactly 45 minutes?',
+          answer: 'Light rope 1 at both ends and rope 2 at one end. When rope 1 finishes (30 min), light the other end of rope 2. When rope 2 finishes (15 min later), exactly 45 minutes have passed.',
           category: 'brainteaser'
         }
       ]
@@ -119,6 +119,24 @@ export const salesBankFlow: InterviewFlow = {
           question: 'What is a call spread in simple terms?',
           answer: 'Buy a call at lower strike, sell a call at higher strike. Limits both upside (capped profit) and downside (limited loss). Cheaper than buying a call outright. Used when expecting moderate price increase.',
           category: 'technical'
+        },
+        {
+          id: 'sb-tech-4',
+          question: 'What is a protective put and when would a client use it?',
+          answer: 'Buying a put option to protect a long stock position. Limits downside while retaining upside. Client uses it when: wants to protect gains, uncertain about direction, or needs insurance without selling stock. Cost is the put premium.',
+          category: 'technical'
+        },
+        {
+          id: 'sb-tech-5',
+          question: 'What is volatility skew and what does it tell you?',
+          answer: 'Skew is when implied volatility differs by strike. Typically, OTM puts have higher IV than OTM calls (negative skew). Indicates demand for downside protection and fear of crashes. Shows market sentiment and risk perception.',
+          category: 'technical'
+        },
+        {
+          id: 'sb-tech-6',
+          question: 'What is a covered call strategy?',
+          answer: 'Own the stock and sell a call option. Generates income (premium) but caps upside if stock rises above strike. Used when: expecting moderate gains, want income, or willing to sell at strike. Risk: unlimited downside if stock falls.',
+          category: 'technical'
         }
       ]
     },
@@ -130,6 +148,18 @@ export const salesBankFlow: InterviewFlow = {
           id: 'sb-prac-1',
           question: 'Explain to a client why volatility increased after a central bank announcement.',
           answer: 'Central bank announcements create uncertainty about future policy and economic conditions. Markets react to unexpected information, causing larger price swings. Options become more expensive as demand for protection increases. Use simple language, avoid jargon.',
+          category: 'practical'
+        },
+        {
+          id: 'sb-prac-2',
+          question: 'A client wants to protect a $1M stock position but doesn\'t want to sell. What would you recommend?',
+          answer: 'Buy protective puts: purchase put options with strike below current price. Explain cost (premium), protection level (strike), and trade-off (cost vs protection). Alternative: collar (buy put, sell call) to reduce cost. Show understanding of client needs and product solutions.',
+          category: 'practical'
+        },
+        {
+          id: 'sb-prac-3',
+          question: 'Client asks: "Why are my options losing value even though the stock hasn\'t moved?"',
+          answer: 'Time decay (theta): options lose value as expiry approaches, all else equal. Explain that options are "wasting assets" - they decay over time. Show understanding of Greeks and ability to explain complex concepts simply.',
           category: 'practical'
         }
       ]
@@ -217,14 +247,14 @@ export const salesHedgeFundFlow: InterviewFlow = {
       questions: [
         {
           id: 'sh-brain-1',
-          question: 'Why diversification reduces risk but not expected return?',
-          answer: 'Diversification reduces unsystematic risk (idiosyncratic) through correlation benefits. Expected return is weighted average, unchanged. But portfolio variance decreases due to correlation < 1. Shows understanding of portfolio theory.',
+          question: 'You have 12 coins. One is counterfeit (either heavier or lighter). Using a balance scale only 3 times, find the counterfeit coin and determine if it\'s heavier or lighter.',
+          answer: 'First weighing: weigh 4 vs 4. If equal, counterfeit is in remaining 4. If unequal, heavier/lighter group contains it. Second weighing: narrow to 2 coins. Third weighing: identify counterfeit and whether heavier/lighter. Systematic elimination approach.',
           category: 'brainteaser'
         },
         {
           id: 'sh-brain-2',
-          question: 'Why do markets overreact?',
-          answer: 'Behavioral biases: herding, anchoring, availability heuristic. Information cascades amplify moves. Fear/greed drive extremes. Markets correct over time as information diffuses. Shows understanding of market psychology.',
+          question: 'You have a 3-liter jug and a 5-liter jug. How do you measure exactly 4 liters?',
+          answer: 'Fill 5L jug, pour into 3L jug (leaves 2L in 5L). Empty 3L jug. Pour remaining 2L from 5L into 3L. Fill 5L jug again. Pour from 5L into 3L until 3L is full (pours 1L, leaving 4L in 5L jug).',
           category: 'brainteaser'
         }
       ]
@@ -244,6 +274,30 @@ export const salesHedgeFundFlow: InterviewFlow = {
           question: 'Why options are useful even if you don\'t know direction.',
           answer: 'Volatility trading (straddles, strangles), relative value (spreads), income generation (covered calls), or hedging. Options provide asymmetric payoffs and flexibility. Shows understanding beyond simple directional bets.',
           category: 'technical'
+        },
+        {
+          id: 'sh-tech-3',
+          question: 'What is a volatility smile and what does it indicate?',
+          answer: 'Volatility smile: IV varies by strike, forming a smile/skew pattern. Indicates market expects larger moves in one direction (usually downside). Shows demand for protection and market sentiment. Critical for pricing and risk management.',
+          category: 'technical'
+        },
+        {
+          id: 'sh-tech-4',
+          question: 'What is a straddle and when would you use it?',
+          answer: 'Buy call and put at same strike. Profits from large moves either direction. Used when: expecting high volatility but uncertain direction, earnings announcements, or major events. Risk: time decay if market stays flat.',
+          category: 'technical'
+        },
+        {
+          id: 'sh-tech-5',
+          question: 'How does correlation affect portfolio risk?',
+          answer: 'Lower correlation = lower portfolio risk (diversification benefit). Higher correlation = higher risk (all assets move together). Correlation of 1 = no diversification. Shows understanding of portfolio construction and risk management.',
+          category: 'technical'
+        },
+        {
+          id: 'sh-tech-6',
+          question: 'What is a strangle vs a straddle?',
+          answer: 'Straddle: call and put at same strike. Strangle: call and put at different strikes (OTM). Strangle is cheaper but needs larger move to profit. Straddle profits from smaller moves but costs more. Trade-off between cost and profit threshold.',
+          category: 'technical'
         }
       ]
     },
@@ -255,6 +309,18 @@ export const salesHedgeFundFlow: InterviewFlow = {
           id: 'sh-prac-1',
           question: 'Pitch a volatility trade in 2 minutes (no math).',
           answer: 'Example: "Volatility is low but we expect earnings season to create uncertainty. Buy straddles to profit from large moves either direction. Risk is time decay if market stays flat." Clear, concise, shows intuition.',
+          category: 'practical'
+        },
+        {
+          id: 'sh-prac-2',
+          question: 'Explain a relative value trade idea between two correlated stocks.',
+          answer: 'Example: "Stock A and B typically trade together, but A is now 5% cheaper. Buy A, short B to profit from convergence. Risk: correlation breaks down or spread widens further." Show understanding of pairs trading and risk.',
+          category: 'practical'
+        },
+        {
+          id: 'sh-prac-3',
+          question: 'How would you structure a trade to profit from an expected market move without taking directional risk?',
+          answer: 'Use options: buy straddle (volatility trade), or use spreads to limit cost. Alternatively, relative value trades (pairs, spreads). Show understanding of market-neutral strategies and risk management.',
           category: 'practical'
         }
       ]
@@ -342,14 +408,14 @@ export const tradingBankFlow: InterviewFlow = {
       questions: [
         {
           id: 'tb-brain-1',
-          question: 'Why do traders care more about variance than mean?',
-          answer: 'Variance (volatility) affects risk management, position sizing, and tail risk. Mean can be managed through leverage, but variance determines drawdowns and survival. Shows understanding of risk management.',
+          question: 'You have 25 horses and can race 5 at a time. What\'s the minimum number of races to find the top 3 fastest?',
+          answer: '7 races. Race all 25 in 5 races (5 winners). Race the 5 winners to find fastest (race 6). For race 7: race 2nd/3rd from fastest\'s race, 2nd from overall 2nd place\'s race, and 3rd from fastest\'s race if needed. Systematic elimination.',
           category: 'brainteaser'
         },
         {
           id: 'tb-brain-2',
-          question: 'Why does high gamma increase hedging costs?',
-          answer: 'High gamma means delta changes rapidly with price moves. Requires frequent rebalancing (buy high, sell low), creating transaction costs. Shows understanding of Greeks and practical trading.',
+          question: 'A cube is painted red on all sides, then cut into 27 smaller cubes (3×3×3). How many small cubes have exactly 2 red faces?',
+          answer: '12 cubes. Cubes with 2 faces painted are on edges but not corners. A cube has 12 edges, and each edge has 1 middle cube with exactly 2 painted faces. Total: 12 cubes.',
           category: 'brainteaser'
         }
       ]
@@ -375,6 +441,24 @@ export const tradingBankFlow: InterviewFlow = {
           question: 'What is DV01?',
           answer: 'Dollar Value of 01: price change for 1bp yield move. DV01 = Duration × Price × 0.0001. Used for hedging and risk management. Shows understanding of fixed income risk.',
           category: 'technical'
+        },
+        {
+          id: 'tb-tech-4',
+          question: 'What is vega and how does it affect option pricing?',
+          answer: 'Vega measures sensitivity to volatility changes. Higher vega = more sensitive to vol moves. Long options have positive vega (benefit from vol increase). Vega is highest for ATM options. Critical for volatility trading.',
+          category: 'technical'
+        },
+        {
+          id: 'tb-tech-5',
+          question: 'How do you calculate the price impact of a yield move on a bond portfolio?',
+          answer: 'ΔPrice ≈ -Modified Duration × ΔYield × Price. For convexity adjustment: add 0.5 × Convexity × (ΔYield)². Shows understanding of fixed income risk and pricing.',
+          category: 'technical'
+        },
+        {
+          id: 'tb-tech-6',
+          question: 'What is put-call parity and why is it important?',
+          answer: 'C - P = S - K×e^(-rT). Links call, put, stock, and bond prices. Used to: spot arbitrage opportunities, construct synthetic positions, and verify option pricing. Fundamental relationship in options.',
+          category: 'technical'
         }
       ]
     },
@@ -386,6 +470,18 @@ export const tradingBankFlow: InterviewFlow = {
           id: 'tb-prac-1',
           question: 'You are long a call option — market drops 2%. What happens to delta and PnL?',
           answer: 'Delta decreases (call becomes less in-the-money). PnL negative (intrinsic value decreases, time value may also decrease). Need to adjust hedge (buy back shares). Shows understanding of dynamic hedging.',
+          category: 'practical'
+        },
+        {
+          id: 'tb-prac-2',
+          question: 'You\'re market making options. Volatility spikes 20%. How do you adjust your quotes?',
+          answer: 'Widen spreads significantly, increase prices (higher IV = higher option prices), reduce position limits, monitor gamma exposure more closely. May need to hedge vega exposure. Shows understanding of market making and risk management.',
+          category: 'practical'
+        },
+        {
+          id: 'tb-prac-3',
+          question: 'A bond portfolio has duration 5 and you need to hedge 100bp rate risk. How many futures contracts?',
+          answer: 'Calculate portfolio DV01 = Duration × Portfolio Value × 0.0001. Calculate futures DV01. Number of contracts = Portfolio DV01 / Futures DV01. Show understanding of hedging mechanics and calculations.',
           category: 'practical'
         }
       ]
@@ -473,14 +569,14 @@ export const tradingHedgeFundFlow: InterviewFlow = {
       questions: [
         {
           id: 'th-brain-1',
-          question: 'Why does a negatively skewed strategy look good until it fails?',
-          answer: 'Negative skew = small frequent wins, rare large losses. Strategy looks profitable (high win rate) until tail event occurs. Shows understanding of tail risk and strategy evaluation.',
+          question: 'You have 9 balls, 8 identical and 1 heavier. Using a balance scale only twice, find the heavy ball.',
+          answer: 'First weighing: weigh 3 vs 3. If equal, heavy ball is in remaining 3. If unequal, heavy ball is in heavier group. Second weighing: weigh 1 vs 1 from the group of 3. If equal, the remaining one is heavy. If unequal, the heavier one is the heavy ball.',
           category: 'brainteaser'
         },
         {
           id: 'th-brain-2',
-          question: 'Why volatility clustering matters for trading.',
-          answer: 'High volatility periods cluster together (autocorrelation). Affects position sizing, risk management, and strategy performance. Need to adjust for changing volatility regimes.',
+          question: 'You have 100 coins. 10 are heads up, 90 are tails up. You\'re blindfolded and can\'t feel which side is up. How do you divide them into two piles with equal number of heads?',
+          answer: 'Flip all coins in one pile. Create two piles: one with 10 coins, one with 90. Flip all coins in the 10-coin pile. If original 10-coin pile had X heads, it now has (10-X) heads. The 90-coin pile has (10-X) heads. Both piles now have equal heads.',
           category: 'brainteaser'
         }
       ]
@@ -500,6 +596,30 @@ export const tradingHedgeFundFlow: InterviewFlow = {
           question: 'Why delta-neutral strategies still lose money.',
           answer: 'Gamma risk (convexity), theta decay, vega exposure, correlation breakdown, or transaction costs. Delta-neutral doesn\'t mean risk-free. Shows understanding of Greeks and strategy risks.',
           category: 'technical'
+        },
+        {
+          id: 'th-tech-3',
+          question: 'What is the Kelly Criterion and how is it used in position sizing?',
+          answer: 'Kelly = (p×b - q) / b, where p=win prob, q=loss prob, b=win/loss ratio. Optimal bet size for long-term growth. Fractional Kelly (e.g., 0.5×Kelly) is often used to reduce volatility. Shows understanding of optimal position sizing.',
+          category: 'technical'
+        },
+        {
+          id: 'th-tech-4',
+          question: 'What is Sharpe ratio and how do you interpret it?',
+          answer: 'Sharpe = (Return - Risk-free) / Volatility. Measures risk-adjusted return. >1 is good, >2 is excellent. Higher = better risk-adjusted performance. Critical metric for strategy evaluation.',
+          category: 'technical'
+        },
+        {
+          id: 'th-tech-5',
+          question: 'How does correlation breakdown affect portfolio risk?',
+          answer: 'When correlations spike (especially to 1), diversification disappears. All positions move together, amplifying losses. Common during market stress. Need to monitor correlations and adjust positions. Shows understanding of tail risk.',
+          category: 'technical'
+        },
+        {
+          id: 'th-tech-6',
+          question: 'What is maximum drawdown and why does it matter?',
+          answer: 'Maximum peak-to-trough decline. Measures worst-case loss. Critical for: risk management, capital requirements, and client communication. High drawdowns can force liquidation. Shows understanding of tail risk and risk management.',
+          category: 'technical'
         }
       ]
     },
@@ -511,6 +631,18 @@ export const tradingHedgeFundFlow: InterviewFlow = {
           id: 'th-prac-1',
           question: 'Build a simple volatility trading strategy (conceptually).',
           answer: 'Example: If IV > RV, sell options (volatility overpriced). If IV < RV, buy options (volatility underpriced). Hedge delta, manage gamma/theta. Shows understanding of volatility trading.',
+          category: 'practical'
+        },
+        {
+          id: 'th-prac-2',
+          question: 'You have a strategy with 60% win rate, average win +2%, average loss -1.5%. What\'s the expected return per trade?',
+          answer: 'EV = 0.6 × 2% - 0.4 × 1.5% = 1.2% - 0.6% = 0.6% per trade. Positive EV indicates profitable strategy. Show understanding of expected value and strategy evaluation.',
+          category: 'practical'
+        },
+        {
+          id: 'th-prac-3',
+          question: 'How would you size positions for a mean-reversion strategy with high win rate but occasional large losses?',
+          answer: 'Use smaller position sizes due to negative skew. Consider Kelly criterion but use fractional Kelly (e.g., 0.25-0.5×) to reduce tail risk. Set stop-losses. Monitor drawdowns closely. Shows understanding of risk management for skewed strategies.',
           category: 'practical'
         }
       ]
@@ -598,14 +730,14 @@ export const quantBankFlow: InterviewFlow = {
       questions: [
         {
           id: 'qb-brain-1',
-          question: 'Why use log returns instead of price returns?',
-          answer: 'Log returns are time-additive, symmetric, and approximately normal for small moves. Price returns are not additive. Log returns better for modeling and statistical analysis.',
+          question: 'You have a biased coin (probability of heads = p, unknown). How many flips do you need to estimate p within 0.01 with 95% confidence?',
+          answer: 'Using CLT: need n such that 1.96 × √(p(1-p)/n) ≤ 0.01. Worst case p=0.5 gives maximum variance. n ≥ (1.96/0.01)² × 0.25 ≈ 9,604 flips. Shows understanding of confidence intervals and sample size.',
           category: 'brainteaser'
         },
         {
           id: 'qb-brain-2',
-          question: 'Why risk-neutral pricing works.',
-          answer: 'Arbitrage-free pricing doesn\'t depend on risk preferences. Can use risk-neutral measure where all assets earn risk-free rate. Simplifies pricing via expectation. Shows understanding of fundamental pricing theory.',
+          question: 'You have a deck of 52 cards. What\'s the expected number of cards you need to draw to see all 4 aces?',
+          answer: 'Coupon collector problem variant. E = 52 × (1 + 1/2 + 1/3 + 1/4) ≈ 52 × 2.08 ≈ 108 cards. More generally: E = n × H_n where H_n is harmonic number. Shows understanding of expected value and probability.',
           category: 'brainteaser'
         }
       ]
@@ -631,6 +763,24 @@ export const quantBankFlow: InterviewFlow = {
           question: 'Difference between local and stochastic volatility.',
           answer: 'Local vol: function of price and time σ(S,t). Stochastic vol: random process dV = ... . Local vol fits smile but wrong dynamics. Stochastic vol captures volatility clustering. Shows understanding of advanced models.',
           category: 'technical'
+        },
+        {
+          id: 'qb-tech-4',
+          question: 'What is Itô\'s lemma and why is it important?',
+          answer: 'Itô\'s lemma: dF = (∂F/∂t + μS∂F/∂S + 0.5σ²S²∂²F/∂S²)dt + σS∂F/∂S dW. Allows differentiation of stochastic processes. Fundamental for deriving Black-Scholes and other pricing models. Shows understanding of stochastic calculus.',
+          category: 'technical'
+        },
+        {
+          id: 'qb-tech-5',
+          question: 'How do you calibrate a volatility surface?',
+          answer: 'Fit model parameters to market prices across strikes and maturities. Minimize pricing errors (least squares, etc.). Adjust local vol or stochastic vol parameters. Must fit smile/skew and term structure. Shows understanding of model calibration.',
+          category: 'technical'
+        },
+        {
+          id: 'qb-tech-6',
+          question: 'What is a martingale and why is it important in pricing?',
+          answer: 'Martingale: E[X(t+1)|X(t)] = X(t). In risk-neutral measure, discounted asset prices are martingales. Allows pricing via expectation: Price = E[Payoff]. Fundamental to no-arbitrage pricing theory.',
+          category: 'technical'
         }
       ]
     },
@@ -642,6 +792,18 @@ export const quantBankFlow: InterviewFlow = {
           id: 'qb-prac-1',
           question: 'Price a European option using Black-Scholes and explain limitations.',
           answer: 'Use formula: C = S×N(d1) - K×e^(-rT)×N(d2). Calculate d1, d2. Explain limitations: constant vol (wrong), no jumps, European only, no transaction costs. Shows practical application and critical thinking.',
+          category: 'practical'
+        },
+        {
+          id: 'qb-prac-2',
+          question: 'A trader asks why your model price differs from market. How do you investigate?',
+          answer: 'Check: model inputs (vol, rates), calibration quality, model assumptions vs reality, market microstructure effects. Compare to similar instruments. Show systematic debugging approach and communication skills.',
+          category: 'practical'
+        },
+        {
+          id: 'qb-prac-3',
+          question: 'How would you implement dynamic delta hedging for an option portfolio?',
+          answer: 'Calculate portfolio delta. Hedge by taking offsetting position (short shares if long delta). Rebalance when delta changes beyond threshold (e.g., 0.1) or periodically. Consider transaction costs. Show understanding of practical implementation.',
           category: 'practical'
         }
       ]
@@ -729,14 +891,14 @@ export const quantHedgeFundFlow: InterviewFlow = {
       questions: [
         {
           id: 'qh-brain-1',
-          question: 'Why most signals decay after discovery?',
-          answer: 'Arbitrage eliminates edge, market adapts, or signal was spurious (overfitting). Shows understanding of market efficiency and signal lifecycle. Demonstrates realistic expectations.',
+          question: 'You have N coins. One is fake (lighter). Using a balance scale, what\'s the minimum number of weighings to find it?',
+          answer: '⌈log₃(N)⌉ weighings. Divide into 3 groups, weigh 2 groups. If equal, fake is in third group. If unequal, fake is in lighter group. Recursively apply. For 27 coins: 3 weighings. Shows understanding of information theory and divide-and-conquer.',
           category: 'brainteaser'
         },
         {
           id: 'qh-brain-2',
-          question: 'Why backtests lie.',
-          answer: 'Overfitting, look-ahead bias, survivorship bias, transaction costs ignored, unrealistic execution. Shows understanding of backtest pitfalls. Demonstrates skepticism and rigor.',
+          question: 'You have 100 prisoners and 100 boxes. Each box contains a number 1-100. Each prisoner opens 50 boxes. What strategy ensures all prisoners survive if they can coordinate beforehand?',
+          answer: 'Follow-the-number strategy: prisoner i opens box i, then box with number found, repeating. This creates cycles. All survive if longest cycle ≤ 50. Probability ≈ 31%. Shows understanding of permutations and probability.',
           category: 'brainteaser'
         }
       ]
@@ -762,6 +924,24 @@ export const quantHedgeFundFlow: InterviewFlow = {
           question: 'Stationarity and regime changes.',
           answer: 'Stationary: statistical properties constant over time. Regime changes: structural breaks. Need to detect and adapt. Shows understanding of time-series properties and model robustness.',
           category: 'technical'
+        },
+        {
+          id: 'qh-tech-4',
+          question: 'What is the Feynman-Kac formula and how is it used?',
+          answer: 'Links PDEs to expectations: u(t,x) = E[g(X_T) | X_t = x] where u solves PDE. Allows pricing via simulation (Monte Carlo) or solving PDEs. Fundamental connection between probability and analysis.',
+          category: 'technical'
+        },
+        {
+          id: 'qh-tech-5',
+          question: 'How do you implement variance reduction in Monte Carlo?',
+          answer: 'Techniques: antithetic variates, control variates, importance sampling, stratified sampling. Reduces variance of estimator, improving accuracy with fewer simulations. Critical for efficient pricing.',
+          category: 'technical'
+        },
+        {
+          id: 'qh-tech-6',
+          question: 'What is copula and how is it used in multi-asset modeling?',
+          answer: 'Copula models dependence structure separately from marginals. Allows flexible correlation modeling. Used for: basket options, credit risk, portfolio risk. Shows understanding of multivariate modeling.',
+          category: 'technical'
         }
       ]
     },
@@ -773,6 +953,18 @@ export const quantHedgeFundFlow: InterviewFlow = {
           id: 'qh-prac-1',
           question: 'Design a backtesting framework and explain key pitfalls.',
           answer: 'Components: data (clean, realistic), execution (slippage, costs), risk management (position sizing, stops), validation (out-of-sample). Pitfalls: overfitting, look-ahead bias, unrealistic assumptions. Shows comprehensive understanding.',
+          category: 'practical'
+        },
+        {
+          id: 'qh-prac-2',
+          question: 'You have a signal with Sharpe 2.0 in-sample but 0.5 out-of-sample. What\'s wrong?',
+          answer: 'Likely overfitting: model learned noise, not signal. Solutions: simpler model, more data, better validation, reduce parameters. May need to abandon if can\'t improve. Shows understanding of overfitting and model validation.',
+          category: 'practical'
+        },
+        {
+          id: 'qh-prac-3',
+          question: 'How would you detect if a time series is non-stationary?',
+          answer: 'Tests: ADF (Augmented Dickey-Fuller), KPSS, visual inspection (trends, changing variance). If non-stationary: difference, detrend, or use cointegration. Critical for model validity. Shows understanding of time-series analysis.',
           category: 'practical'
         }
       ]
@@ -810,4 +1002,5 @@ export function getInterviewFlow(track: 'sales' | 'trading' | 'quant', companyTy
   // Default fallback
   return salesBankFlow
 }
+
 
