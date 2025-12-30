@@ -883,6 +883,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Duration as risk measure",
           "Duration positioning strategies",
         ],
+        hint: "Think about how bond prices change when interest rates move. Duration measures this sensitivity - higher duration means more price movement for a given rate change.",
         answer: "A duration strategy positions for interest rate movements by adjusting portfolio duration. Duration measures interest rate sensitivity: % price change ≈ -duration × % rate change. Higher duration = more rate sensitivity. Duration strategies: (1) Long duration when rates expected to fall (bullish), (2) Short duration when rates expected to rise (bearish), (3) Duration-neutral for rate-agnostic strategies. Duration is the primary risk measure for fixed income - managing duration is managing rate risk. Strategies can use futures, swaps, or cash bonds to express duration views.",
         explanation: [
           "Definition: Positioning for rate movements via duration adjustment",
@@ -1003,6 +1004,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Credit risk components",
           "Credit positioning strategies",
         ],
+        hint: "Credit strategies focus on corporate bonds and credit spreads (the extra yield over Treasuries). Think about betting on spread changes rather than interest rate changes.",
         answer: "A credit strategy invests in corporate bonds, focusing on credit spreads (yield vs Treasuries) rather than interest rates. Credit risk components: default risk, downgrade risk, liquidity risk, spread volatility. Spread vs duration: credit strategies are spread-driven (betting on spread changes), while duration strategies are rate-driven. Credit positioning: (1) Overweight credit when spreads wide (value), (2) Underweight when spreads tight (expensive), (3) Sector rotation (cyclical vs defensive), (4) Quality selection (IG vs HY). Credit strategies generate alpha through security selection and timing spread movements.",
         explanation: [
           "Definition: Investing in corporate bonds, focusing on credit spreads",
@@ -4406,6 +4408,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss diversification",
           "Address management",
         ],
+        hint: "Think about when multiple bets can lose together. Consider bets on the same match, same team, or same league, and how this reduces diversification.",
         answer: "Correlation risks: same match (multiple bets on same match - correlated outcomes), same team (bets on same team across matches - team performance correlated), same league (bets in same league - shared factors, correlated), and same time (bets on matches at same time - shared conditions, correlated). Impact: correlated bets don't diversify risk (all lose together), increase variance (correlated losses amplify drawdowns), and create concentration risk (too much exposure to correlated outcomes). Diversification: bet across different matches (uncorrelated outcomes), different sports (different factors), and different times (spread risk over time). Management: identify correlations (understand what's correlated), limit correlated exposure (don't overbet correlated outcomes), and adjust sizing (reduce size for correlated bets). The key: correlation reduces diversification - need to account for it in sizing and risk management.",
         explanation: [
           "Sources: Same match, same team, same league, same time",
@@ -4425,6 +4428,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address position limits",
           "Explain hedging",
         ],
+        hint: "Tail risk in sports is binary - once a match ends, you can't hedge. Think about position limits and stop-losses to cap potential losses before events happen.",
         answer: "Cap tail risk by: position limits (max exposure per bet/match - limit potential loss), stop-losses (exit if loss exceeds threshold - cut losses), diversification (don't concentrate in one outcome - spread risk), and hedging (offset positions - reduce exposure). Methods: set max bet size (e.g., 5% of bankroll max - limits single bet loss), set max match exposure (e.g., 10% of bankroll per match - limits match-specific risk), and use correlated hedges (bet opposite outcomes - reduce tail risk). Event-driven: tail risk is high (events cause large moves - goals, cards), so limits are crucial. The key: tail risk in sports is binary (match ends, outcome determined - can't hedge after), so must cap before events. Strategy: identify tail scenarios (what can go wrong?), size positions to limit tail loss, and accept that some tail risk is unavoidable.",
         explanation: [
           "Methods: Position limits, stop-losses, diversification, hedging",
@@ -4444,6 +4448,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address execution",
           "Explain adaptation",
         ],
+        hint: "Market depth limits how much you can bet. Think about how this affects optimal sizing and what happens when you try to bet more than the market allows.",
         answer: "Liquidity constraints affect sizing by: limiting bet size (can't bet as much as you want - market depth limits you), affecting execution (large bets move prices - worse execution, slippage), and creating risk (can't exit positions when needed - stuck in positions). Impact: ideal sizing may be unachievable (Kelly suggests 20% but market only allows 5%), execution costs reduce edge (slippage eats into profits), and risk management is harder (can't reduce positions quickly). Adaptation: size based on available liquidity (don't bet more than market allows), use multiple markets (spread bets across markets - increase capacity), and accept constraints (work within limits, don't force sizing). The key: liquidity constraints force smaller sizing than optimal - need to adapt strategy to available liquidity. This is especially important in less liquid markets (smaller leagues, in-play).",
         explanation: [
           "Impact: Limits bet size, affects execution, creates risk",
@@ -4463,6 +4468,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address metrics",
           "Explain interpretation",
         ],
+        hint: "Think about worst-case scenarios: losing streaks, market closures, account restrictions. Consider what metrics matter: max drawdown, ruin probability.",
         answer: "Stress-test by: historical scenarios (test on worst historical periods - 2008 financial crisis equivalent for sports), extreme outcomes (assume worst-case - all bets lose, calculate impact), correlation shocks (assume all correlated bets lose together), and liquidity crises (assume can't exit positions, calculate stuck exposure). Scenarios: losing streak (10, 20, 30 losses in a row - what happens?), market closure (can't bet for period - impact on strategy?), and account restrictions (lose access to bookmakers - can you continue?). Metrics: max drawdown (largest peak-to-trough loss), ruin probability (probability of losing entire bankroll), and recovery time (how long to recover from drawdown). Interpretation: if stress test shows high ruin probability or large drawdowns, reduce sizing or change strategy. The key: stress testing reveals vulnerabilities - fix them before they cause real losses.",
         explanation: [
           "Methods: Historical scenarios, extreme outcomes, correlation shocks, liquidity crises",
@@ -4482,6 +4488,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address consequences",
           "Explain correction",
         ],
+        hint: "Think about behavioral biases: recency bias, small sample sizes, overconfidence. Consider how these lead traders to underestimate how much variance exists even with an edge.",
         answer: "Variance is underestimated because: recency bias (recent results seem predictive - if winning, assume will continue), small sample illusion (small samples are noisy - traders extrapolate from small samples), and overconfidence (traders overestimate skill, underestimate luck). Consequences: overbetting (bet more than bankroll can handle - assume low variance), poor risk management (don't prepare for drawdowns - assume they won't happen), and emotional shock (when variance hits, traders are surprised - cause tilt). Correction: understand variance (even with edge, variance is high - losing streaks are normal), use proper sizing (Kelly accounts for variance - don't overbet), and prepare mentally (expect drawdowns, don't be surprised). The key: variance is higher than most traders think - need to account for it in sizing and expectations. Example: 55% win rate still has 30% chance of 10-loss streak in 20 bets.",
         explanation: [
           "Causes: Recency bias, small sample illusion, overconfidence",
@@ -4501,6 +4508,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address common mistakes",
           "Explain practical rules",
         ],
+        hint: "Keep it simple: don't bet more than you can afford, size bets appropriately, and accept that losses happen. Think about bankroll management and common mistakes like chasing losses.",
         answer: "Explain risk management simply: don't bet more than you can afford to lose (basic rule - never risk money you need), size bets based on confidence (more confident = larger bet, but still limit size), and accept that losses happen (even good strategies lose sometimes - don't chase). Key concepts: bankroll (money set aside for trading - never bet more), position sizing (how much to bet - typically 1-5% of bankroll per bet), and drawdowns (losing streaks - normal, prepare for them). Common mistakes: betting too much (greed - bet more than bankroll allows), chasing losses (tilt - bet more after losses to recover), and ignoring variance (assume wins will continue - don't prepare for losses). Practical rules: never bet more than 5% of bankroll on single bet, have stop-losses (exit if down X%), and take breaks if stressed. The key: risk management is about survival - protect bankroll so you can continue trading.",
         explanation: [
           "Simple: Don't bet more than you can afford, size by confidence, accept losses",
