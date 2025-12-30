@@ -3681,6 +3681,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss resolution",
           "Address management",
         ],
+        hint: "Sports markets have binary, time-limited resolution - you can't hedge after the match ends. Financial markets allow continuous hedging. Think about how this makes sports inventory risk more dangerous.",
         answer: "Inventory risk differs fundamentally: financial markets allow continuous hedging (you can hedge anytime, markets are always open), while sports markets have binary resolution (match ends, outcome is determined - can't hedge after). Sports: inventory resolves to win/loss (binary outcome, no partial), time-limited (match ends, positions resolve), and can't be hedged after event (once match starts, limited hedging options). Financial: positions can be held indefinitely, hedged continuously, and adjusted over time. Sports inventory risk: if you're long a team and they lose, you lose - no recovery. Financial: you can adjust, hedge, or wait. Management: sports requires pre-position limits (set before match), financial allows dynamic adjustment. The key: sports inventory is more dangerous because resolution is binary and time-limited.",
         explanation: [
           "Sports: Binary resolution, time-limited, can't hedge after event",
@@ -3700,6 +3701,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address information",
           "Explain risk management",
         ],
+        hint: "Near the end of a match, time decay accelerates, late events have huge impact, and inventory risk peaks. Think about why this makes market making very difficult.",
         answer: "Market making is harder near resolution because: time decay accelerates (less time = probabilities compress, harder to price), information impact increases (late goals/cards have huge impact), liquidity decreases (fewer participants, wider spreads), and inventory risk peaks (positions resolve soon, can't hedge). Near end: one goal changes everything (late goals = massive probability shifts), spreads widen (uncertainty, low liquidity), and mistakes are costly (wrong quote = immediate loss). Additionally: market makers reduce exposure (don't want to be caught), making markets less liquid. The challenge: quote accurately when probabilities are changing rapidly and time is running out. Strategy: reduce quotes, widen spreads, or stop quoting near end.",
         explanation: [
           "Factors: Time decay, information impact, low liquidity, inventory risk",
@@ -3719,6 +3721,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address portfolio approach",
           "Explain risk reduction",
         ],
+        hint: "Correlated markets (like match result and over/under) should be managed as a portfolio. Think about netting exposure and hedging at the portfolio level, not individually.",
         answer: "Manage inventory across correlated markets by: identifying correlations (match result, over/under, both teams to score - correlated outcomes), netting exposure (if long team A and short team B in same match, net the exposure), hedging with correlated markets (use one market to hedge another), and portfolio limits (total exposure across correlated markets). Approach: treat correlated markets as portfolio (not individual positions), monitor net exposure (not gross), and hedge at portfolio level. Example: if making markets on match result and over/under, they're correlated (winning team likely scores more) - manage net exposure. The key: understand correlations, manage portfolio risk, not individual market risk. This reduces overall risk while maintaining market-making activity.",
         explanation: [
           "Method: Identify correlations, net exposure, hedge with correlated markets",
@@ -3738,6 +3741,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss benchmarks",
           "Address analysis",
         ],
+        hint: "Key metrics include P&L, spread capture, fill rate, and inventory turnover. Think about what each tells you and how to analyze performance over time.",
         answer: "Key performance metrics: P&L (profit/loss - ultimate measure, but needs context), spread capture (how much of quoted spread you capture - should be >50%), fill rate (percentage of quotes that get filled - higher = more activity), inventory turnover (how quickly you turn inventory - faster = less risk), and Sharpe ratio (risk-adjusted returns). Additional: adverse selection (losses from informed traders - should be low), rebate capture (exchange rebates earned - adds to profit), and win rate (percentage of profitable markets - but less important than P&L). Analysis: track over time (daily, weekly, monthly), compare to benchmarks (other market makers, theoretical), and identify patterns (what markets/types are profitable). The key: P&L is ultimate metric, but understand drivers (spread, volume, adverse selection).",
         explanation: [
           "Metrics: P&L, spread capture, fill rate, inventory turnover, Sharpe",
@@ -3757,6 +3761,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address impact",
           "Explain optimization",
         ],
+        hint: "Rebates for providing liquidity can be crucial for profitability - they can be 50-100% of your spread. Think about how maker vs taker fees affect your strategy.",
         answer: "Exchange fees and rebates significantly affect profitability: fees reduce profit (you pay on trades, reduces net P&L), rebates increase profit (exchanges pay you for providing liquidity - adds to P&L). Structure: makers typically pay lower fees or get rebates (for providing liquidity), takers pay higher fees (for taking liquidity). Impact: if you're a market maker providing liquidity, rebates can be 50-100% of your spread - crucial for profitability. Without rebates: market making may be unprofitable (spread too small to cover fees). Optimization: focus on markets with good rebates, maximize maker volume (provide liquidity, don't take), and understand fee structure (maker vs taker matters). The key: rebates can make the difference between profitable and unprofitable market making.",
         explanation: [
           "Fees: Reduce profit, paid on trades",
@@ -3778,6 +3783,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss rarity",
           "Address exploitation",
         ],
+        hint: "A surebet is when you can bet all outcomes across different bookmakers and guarantee profit. Think about why bookmakers price differently and why these opportunities are rare.",
         answer: "A surebet (arbitrage bet) is a situation where you can bet on all possible outcomes of an event across different bookmakers and guarantee a profit regardless of the result. It exists when: bookmakers price the same event differently (one offers better odds on team A, another on team B), the combined implied probability is less than 100% (creating guaranteed profit), and you can place all bets simultaneously. Why it exists: bookmakers have different models/opinions, want to balance books differently, or make pricing errors. However, surebets are rare and short-lived because: bookmakers adjust quickly (odds change when money comes in), competition is fierce (other arbitrageurs spot them), and execution is difficult (need multiple accounts, fast execution). The key: surebets exist due to market inefficiency, but are quickly eliminated.",
         explanation: [
           "Definition: Bet all outcomes, guarantee profit regardless of result",
@@ -3797,6 +3803,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address competition",
           "Explain speed",
         ],
+        hint: "Arbitrage is a race - fastest wins. Think about intense competition, quick bookmaker adjustment, and why opportunities last only seconds or minutes.",
         answer: "Pure arbitrage is rare and short-lived because: competition is intense (many arbitrageurs scanning markets, fastest wins), bookmakers adjust quickly (odds change when money comes in, closing the opportunity), execution is difficult (need multiple accounts, fast execution, capital), and markets are mostly efficient (bookmakers are sophisticated, pricing errors are rare). Speed matters: opportunities last seconds/minutes, not hours. Competition: when one arbitrageur spots it, others follow, odds adjust, opportunity closes. Additionally: bookmakers limit winning accounts (restrict or ban arbitrageurs), making it harder to exploit. The reality: pure arbitrage exists but is a race - fastest and most efficient win, others lose. Most opportunities are small (1-3% profit) and require significant capital to be meaningful.",
         explanation: [
           "Rarity: Intense competition, quick bookmaker adjustment, execution difficulty",
@@ -3816,6 +3823,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss mitigation",
           "Address reality",
         ],
+        hint: "Even 'risk-free' arbitrage has execution risks: odds can change, partial fills, account restrictions, and timing issues. Think about why it's only risk-free in theory.",
         answer: "Even 'risk-free' arbitrage has execution risks: odds change (you bet one side, odds move before you bet the other - opportunity disappears), partial fills (you get part of your bet, rest at worse price - breaks arbitrage), account restrictions (bookmaker limits your bet size - can't complete arbitrage), and timing (one bookmaker processes faster, you're exposed until other processes). Additionally: connection issues (internet problems during execution), bookmaker errors (they void bets, change odds), and settlement risk (one bookmaker doesn't pay). The reality: arbitrage is only risk-free if all bets execute simultaneously at quoted prices - which rarely happens. Mitigation: fast execution, multiple accounts, accept that some arbitrages fail. The key: 'risk-free' is theoretical - execution creates risk.",
         explanation: [
           "Risks: Odds change, partial fills, restrictions, timing, connection, errors",
@@ -3835,6 +3843,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address scaling",
           "Explain workarounds",
         ],
+        hint: "Bookmakers limit winning accounts and cap bet sizes. Think about how this prevents scaling and what workarounds exist (multiple accounts, accepting limits).",
         answer: "Limits and restrictions severely impact arbitrage: bet limits (bookmakers cap bet sizes - you can't bet enough to make arbitrage meaningful), account restrictions (winning accounts get limited or banned - can't continue arbitraging), and withdrawal limits (can't withdraw profits quickly - capital tied up). Impact: prevents scaling (can't increase size as you find more opportunities), reduces profitability (small bets = small profits), and creates operational risk (lose accounts, can't execute). Workarounds: multiple accounts (spread risk, but expensive to maintain), family/friends accounts (use others' accounts, but risky), and accept limits (work within constraints). The reality: limits make arbitrage difficult to scale - you find opportunities but can't bet enough. This is why arbitrage is often small-scale or requires significant account management.",
         explanation: [
           "Impact: Prevents scaling, reduces profitability, creates operational risk",
@@ -3854,6 +3863,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address persistence",
           "Explain exploitation",
         ],
+        hint: "Different bookmakers use different models and want to balance books differently. Think about why discrepancies persist longer on less popular events.",
         answer: "Odds discrepancies arise from: different models (bookmakers use different statistical models, leading to different opinions), book balancing (bookmakers want balanced books, may shade odds differently), market structure (some bookmakers focus on different markets/regions), and pricing errors (mistakes happen, especially on less popular events). Persistence: discrepancies persist longer on: less popular events (less attention, slower adjustment), smaller bookmakers (less sophisticated, slower to adjust), and regional differences (different markets, different pricing). Exploitation: scan multiple bookmakers, identify discrepancies, calculate if arbitrage exists, execute quickly. However: popular events adjust quickly (many eyes, fast correction), making arbitrage rare. The key: discrepancies exist due to market fragmentation and different opinions, but are quickly eliminated on popular events.",
         explanation: [
           "Sources: Different models, book balancing, market structure, errors",
@@ -3873,6 +3883,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address mitigation",
           "Explain competition",
         ],
+        hint: "Latency is the delay between seeing an opportunity and executing. Think about how milliseconds matter and why fastest wins in arbitrage.",
         answer: "Latency risk is the delay between identifying an arbitrage opportunity and executing bets - during this delay, odds can change, closing the opportunity. Impact: high latency = miss opportunities (odds move before you bet), get worse prices (odds change against you), or partial execution (only part of arbitrage completes). Competition: fastest arbitrageurs win (low latency = first to execute), others lose (high latency = opportunity gone). Mitigation: fast internet (low latency connection), co-location (servers near bookmakers), automation (systems execute faster than humans), and pre-positioning (have accounts ready, funds deposited). The reality: latency differences create winner-take-all dynamics - milliseconds matter. Without low latency: you see opportunities but can't execute in time, making arbitrage unprofitable.",
         explanation: [
           "Definition: Delay between identification and execution",
@@ -3892,6 +3903,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address impact",
           "Explain management",
         ],
+        hint: "Cross-currency arbitrage adds exchange rate risk. Think about different settlement timing and how currency moves can affect profit.",
         answer: "Currency and settlement risks enter when: arbitraging across countries (different currencies - exchange rate risk), bookmakers pay in different currencies (profit in one currency, loss in another - currency mismatch), and settlement timing differs (one bookmaker pays immediately, another delays - cash flow risk). Currency risk: if you arbitrage USD vs EUR bookmakers, exchange rates can move, affecting profit. Settlement risk: one bookmaker pays quickly, another delays - you're exposed until both settle. Impact: can turn profitable arbitrage into loss (currency moves against you), or create cash flow issues (can't withdraw from one bookmaker). Management: use same currency bookmakers when possible, hedge currency exposure, or accept risk. The key: cross-currency arbitrage adds currency risk to execution risk, making it more complex.",
         explanation: [
           "Sources: Cross-country arbitrage, different currencies, settlement timing",
@@ -3911,6 +3923,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address capital",
           "Explain solutions",
         ],
+        hint: "Scaling is constrained by account limits, restrictions, and capital requirements. Think about why doubling opportunities doesn't double profit.",
         answer: "Scaling arbitrage is difficult because: account limits (bookmakers cap bet sizes - can't increase position size), account restrictions (winning accounts get limited/banned - lose access), capital requirements (need significant capital across many accounts - expensive), and operational complexity (managing many accounts, currencies, bookmakers - complex). Challenges: as you scale, you hit limits faster (more opportunities but can't bet enough), need more accounts (expensive to maintain), and operational overhead increases (more to manage). Solutions: accept limits (work within constraints), focus on quality over quantity (better opportunities, not more), and automate operations (reduce overhead). The reality: arbitrage doesn't scale linearly - doubling opportunities doesn't double profit because limits constrain you. This is why arbitrage is often small-scale or requires significant infrastructure.",
         explanation: [
           "Challenges: Account limits, restrictions, capital, operational complexity",
@@ -3930,6 +3943,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address execution",
           "Explain monitoring",
         ],
+        hint: "Automation needs: data feeds, calculation engine, and execution system. Think about why speed matters and what components are needed.",
         answer: "Automate arbitrage detection with: data feeds (real-time odds from multiple bookmakers), calculation engine (identify when combined implied probability < 100%), alert system (notify when opportunity exists), and execution system (automatically place bets). System components: data aggregation (collect odds from all bookmakers), arbitrage calculator (check all combinations, identify opportunities), risk checker (verify accounts have funds, limits allow), and execution (place bets automatically). Monitoring: track opportunities found, execution success rate, and profitability. The key: automation is essential because opportunities are short-lived - humans are too slow. However: automation requires infrastructure (APIs, accounts, capital) and careful design (handle errors, account for limits). The goal: detect and execute within seconds, not minutes.",
         explanation: [
           "Components: Data feeds, calculation engine, alerts, execution",
