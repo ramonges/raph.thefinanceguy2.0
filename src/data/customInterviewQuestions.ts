@@ -1,8 +1,7 @@
 // Custom Interview Questions organized by track and company type
 // Based on Guide Technical 2025 question bank
 
-import { AssetCategory } from '@/types'
-import { assetQuestions } from './assetQuestions'
+import { assetQuestions, AssetCategory as AssetCategoryInterface } from './assetQuestions'
 
 export interface InterviewQuestion {
   id: string
@@ -994,7 +993,7 @@ export const quantHedgeFundFlow: InterviewFlow = {
 }
 
 // Helper function to get asset-specific technical questions
-function getAssetTechnicalQuestions(assetCategory: AssetCategory, count: number = 6): InterviewQuestion[] {
+function getAssetTechnicalQuestions(assetCategory: AssetCategoryInterface, count: number = 6): InterviewQuestion[] {
   const questions: InterviewQuestion[] = []
   const allSubcategories = Object.values(assetCategory.subcategories)
   
@@ -1023,7 +1022,7 @@ function getAssetTechnicalQuestions(assetCategory: AssetCategory, count: number 
 export function getInterviewFlow(
   track: 'sales' | 'trading' | 'quant', 
   companyType: 'bank' | 'hedge-fund',
-  assetCategory?: AssetCategory
+  assetCategory?: AssetCategoryInterface
 ): InterviewFlow {
   let baseFlow: InterviewFlow
   

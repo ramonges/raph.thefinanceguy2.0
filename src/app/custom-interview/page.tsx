@@ -67,7 +67,7 @@ export default function CustomInterviewPage() {
     if (step === 4 && blockType && companyType && tradingDesk) {
       setLoading(true)
       // Get the asset category object
-      const assetCategory = assetQuestions[tradingDesk]
+      const assetCategory = assetQuestions[tradingDesk] || undefined
       // Get the interview flow based on selections
       const flow = getInterviewFlow(blockType, companyType, assetCategory)
       setInterviewFlow(flow)

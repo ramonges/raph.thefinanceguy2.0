@@ -1,12 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import DashboardNav from '@/components/DashboardNav'
-import { Profile, AssetCategory } from '@/types'
-import { detectBlockTypeFromPath } from '@/lib/stats'
+import Statistics from '@/components/Statistics'
+import { Profile, AssetCategory, UserStats } from '@/types'
+import { detectBlockTypeFromPath, calculateStats } from '@/lib/stats'
 import { 
   TrendingUp,
   BarChart3,
@@ -18,6 +19,11 @@ import {
   Loader2,
   ArrowRight
 } from 'lucide-react'
+
+const emptyStats: UserStats = {
+  overall: { total: 0, correct: 0, wrong: 0, percentage: 0 },
+  byCategory: {}
+}
 
 const assets: Array<{
   id: AssetCategory
@@ -118,6 +124,9 @@ const assets: Array<{
 export default function AssetsPage() {
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
+  const [showStats, setShowStats] = useState(false)
+  const [stats, setStats] = useState<UserStats>(emptyStats)
+  const [userId, setUserId] = useState<string | null>(null)
   const router = useRouter()
   const pathname = usePathname()
   const supabase = createClient()
@@ -133,6 +142,8 @@ export default function AssetsPage() {
           return
         }
 
+        setUserId(user.id)
+
         const { data: profileData } = await supabase
           .from('profiles')
           .select('*')
@@ -141,6 +152,17 @@ export default function AssetsPage() {
 
         if (profileData) {
           setProfile(profileData)
+        }
+
+        // Load global stats (all tracks)
+        const { data: answeredQuestions } = await supabase
+          .from('user_answered_questions')
+          .select('*')
+          .eq('user_id', user.id)
+
+        if (answeredQuestions) {
+          const newStats = calculateStats(answeredQuestions, null) // null = all tracks
+          setStats(newStats)
         }
       } catch (error) {
         console.error('Error initializing:', error)
@@ -152,6 +174,31 @@ export default function AssetsPage() {
     initialize()
   }, [router, supabase])
 
+  // Function to reload stats from database
+  const reloadStats = useCallback(async () => {
+    if (!userId) return
+
+    try {
+      const { data: answeredQuestions } = await supabase
+        .from('user_answered_questions')
+        .select('*')
+        .eq('user_id', userId)
+
+      if (answeredQuestions) {
+        const newStats = calculateStats(answeredQuestions, null) // null = all tracks
+        setStats(newStats)
+      }
+    } catch (error) {
+      console.error('Error reloading stats:', error)
+    }
+  }, [userId, supabase])
+
+  // Handle opening stats - reload from database first
+  const handleOpenStats = useCallback(async () => {
+    await reloadStats()
+    setShowStats(true)
+  }, [reloadStats])
+
   if (loading) {
     return (
       <div className="min-h-screen gradient-bg flex items-center justify-center">
@@ -162,7 +209,7 @@ export default function AssetsPage() {
 
   return (
     <div className="min-h-screen gradient-bg">
-      <DashboardNav profile={profile} onOpenStats={() => {}} blockType={blockType} />
+      <DashboardNav profile={profile} onOpenStats={handleOpenStats} blockType={blockType} />
 
       <main className="pt-16 sm:pt-24 pb-12 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
@@ -220,6 +267,17 @@ export default function AssetsPage() {
           </div>
         </div>
       </main>
+
+      {/* Statistics Modal */}
+      {showStats && (
+        <Statistics 
+          stats={stats} 
+          onClose={() => setShowStats(false)} 
+          blockType={blockType || undefined}
+          userId={userId || undefined}
+          showGlobalStats={true}
+        />
+      )}
     </div>
   )
 }
