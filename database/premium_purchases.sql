@@ -46,3 +46,4 @@ CREATE TRIGGER update_premium_purchases_updated_at
   EXECUTE FUNCTION update_updated_at_column();
 
 
+

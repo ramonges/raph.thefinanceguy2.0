@@ -3237,6 +3237,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address structural factors",
           "Explain persistence",
         ],
+        hint: "Think about what prevents markets from being fully efficient: behavioral biases, information asymmetry, structural constraints, and time limits. Consider why liquidity alone isn't enough.",
         answer: "Pre-match markets can be inefficient despite liquidity due to: behavioral biases (public overbets favorites, creates value on underdogs), information asymmetry (not all information is public or incorporated), bookmaker margins (built-in edge, not true efficiency), limited arbitrage (account restrictions, limits prevent full efficiency), and time constraints (markets close at kickoff, limiting correction time). Additionally, bookmakers may intentionally misprice to balance books or exploit biases. High liquidity helps but doesn't guarantee efficiency if participants are biased or information is asymmetric. Inefficiencies persist because: correction requires capital and risk-taking, many participants are not profit-maximizing, and structural constraints limit arbitrage.",
         explanation: [
           "Sources: Behavioral biases, information asymmetry, margins, limits, time",
@@ -3256,6 +3257,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address volatility changes",
           "Explain final adjustments",
         ],
+        hint: "Think about how odds change over time. Consider the process from initial divergence to final convergence as information is incorporated and uncertainty decreases.",
         answer: "Market consensus evolves through: early divergence (initial lines vary, information is sparse), information incorporation (news, lineups, betting patterns narrow differences), convergence (odds across books converge as information spreads), and final stabilization (near kickoff, odds stabilize as information is fully incorporated). As kickoff approaches: volatility decreases (less uncertainty), spreads tighten (more efficient pricing), and last-minute news causes sharp moves (final information shocks). The process: wide initial range → information flow → narrowing → convergence → final adjustments. However, last-minute news (late team changes, weather) can cause sudden large moves right before kickoff.",
         explanation: [
           "Process: Divergence → information → convergence → stabilization",
@@ -3275,6 +3277,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss mitigation",
           "Address position management",
         ],
+        hint: "Line movements can be misleading. Think about false signals, timing risks, and what can go wrong when following line movements.",
         answer: "Risks when trading line movements include: false signals (moves that look informed but are noise, causing wrong bets), late information (news arrives after you bet, making your position wrong), line shopping (you bet at one price but better prices exist elsewhere), account restrictions (winning too much gets you limited or banned), and timing risk (betting too early misses better prices, too late misses value). Additionally: reverse line movement (line moves against you after you bet), steam moves (rapid moves that may reverse), and public money traps (following public moves into bad value). Mitigation: confirm moves across multiple books, wait for confirmation, use multiple accounts, and have exit strategies.",
         explanation: [
           "Risks: False signals, late information, line shopping, restrictions, timing",
@@ -3294,6 +3297,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address liquidity",
           "Explain advantages/disadvantages",
         ],
+        hint: "Think about the fundamental difference: bookmakers are the house, exchanges are peer-to-peer. Consider pricing, margins, and when to use each.",
         answer: "Bookmakers and exchanges differ fundamentally: bookmakers set prices (you bet against the house, they take the other side), while exchanges are peer-to-peer (you bet against other users, exchange takes commission). Bookmakers: fixed odds (price locked when you bet), built-in margin (less favorable odds), but simpler (one counterparty). Exchanges: dynamic pricing (odds change, you can trade out), tighter margins (better odds), but more complex (need counterparty, can lay bets). Pre-match: bookmakers offer more markets and better liquidity for popular events, exchanges offer better odds and trading flexibility. Bookmakers are better for casual betting, exchanges for serious trading.",
         explanation: [
           "Bookmakers: Fixed odds, house counterparty, built-in margin, simpler",
@@ -3313,6 +3317,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address model components",
           "Explain validation",
         ],
+        hint: "Think about different modeling approaches: statistical models (Poisson, expected goals), team ratings, and situational factors. Consider what data you need and how to validate the model.",
         answer: "Model fair odds using: statistical models (Poisson for goals, expected goals models, form metrics), team strength ratings (Elo, SPI, custom ratings), situational factors (home advantage, rest days, motivation), and market data (consensus odds, line movements). Components: base probability (team strength), adjustments (injuries, form, situation), and calibration (match model to historical results). Data needed: historical results, team stats, player data, market odds. Validation: backtest against historical odds, measure calibration (predicted vs actual), and track profitability. The model should output probabilities, which convert to fair odds. Key: model must be well-calibrated (predicted probabilities match actual frequencies) and incorporate all relevant information.",
         explanation: [
           "Approaches: Statistical (Poisson, xG), ratings (Elo, SPI), situational, market",
@@ -3332,6 +3337,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address exploitation opportunities",
           "Explain market correction",
         ],
+        hint: "Public bettors have biases: they overbet favorites, big teams, and home teams. Think about how this affects pricing and creates value opportunities.",
         answer: "Public bias significantly affects pre-match pricing: public overbets favorites (creates value on underdogs), bets on big teams regardless of value (name recognition bias), bets emotionally (home teams, recent winners), and ignores situational factors (rest, motivation, context). Impact: favorites become overpriced (odds too short), underdogs become underpriced (odds too long), creating value opportunities. Bookmakers may shade lines toward public preferences to balance books. Exploitation: bet against public when value exists, especially on underdogs. However, public money can be right sometimes (favorites win), so don't blindly fade. The key: identify when public bias creates mispricing vs when public is correctly assessing value.",
         explanation: [
           "Biases: Overbet favorites, big teams, emotional bets, ignore context",
@@ -3351,6 +3357,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address risk management",
           "Explain execution",
         ],
+        hint: "If a favorite is overpriced, you can lay it (bet against it) or bet the underdog. Think about position sizing, execution timing, and risk management.",
         answer: "Exploit a mispriced favorite by: laying the favorite (bet against it on exchanges, or bet the underdog), using multiple accounts (spread risk, avoid limits), sizing appropriately (Kelly or fractional Kelly, don't overbet), and having exit strategies (trade out if line moves, hedge if needed). Execution: bet early if you're confident (before line corrects), use best prices (shop lines, use exchanges), and monitor for line movement (if line moves against you, reassess). Risk management: don't bet more than you can afford to lose, have stop-losses, and diversify across multiple bets. The key: identify true mispricing (not just favorite bias), size correctly, and execute efficiently.",
         explanation: [
           "Method: Lay favorite or bet underdog, multiple accounts, proper sizing",
@@ -3372,6 +3379,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss information types",
           "Address speed requirements",
         ],
+        hint: "Pre-match information is static and known beforehand. In-play information is dynamic and arrives in real-time. Think about the speed and types of information in each case.",
         answer: "Information arrival differs fundamentally: pre-match information is static (team news, stats, models - known before start), while in-play information is dynamic and real-time (goals, cards, momentum, possession - constantly updating). In-play: information arrives continuously (every second matters), is highly actionable (immediate price impact), and requires fast processing (seconds, not hours). Pre-match: information is incorporated over hours/days, less time-sensitive. In-play information types: discrete events (goals, cards - cause sharp moves), continuous events (possession, shots - gradual price adjustment), and momentum (team performance - affects probabilities). The key difference: in-play requires real-time decision-making, pre-match allows analysis time.",
         explanation: [
           "Pre-match: Static, known before start, hours/days to incorporate",
@@ -3391,6 +3399,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address information shocks",
           "Explain structural factors",
         ],
+        hint: "Think about what causes volatility in-play: discrete events like goals, time decay, and lower liquidity. Consider how this differs from pre-match.",
         answer: "In-play trading is more volatile because: discrete events cause large moves (goals change probabilities dramatically - 0-0 to 1-0 is huge probability shift), information arrives unpredictably (goals, cards, injuries happen randomly), time decay accelerates (less time = more probability compression), and liquidity is lower (fewer participants, wider spreads). Structural factors: match state changes rapidly (momentum shifts, tactical changes), probabilities are time-sensitive (each minute changes win probability), and overreaction is common (markets overreact to events then correct). The volatility is event-driven: quiet periods (low vol) punctuated by sharp moves (high vol) on events. This creates both opportunities (misreactions) and risks (rapid losses).",
         explanation: [
           "Sources: Discrete events, unpredictable information, time decay, low liquidity",
@@ -3410,6 +3419,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address time remaining",
           "Explain market reaction",
         ],
+        hint: "Goals and red cards cause large probability shifts. Think about how the impact depends on timing - early vs late events have very different impacts.",
         answer: "Goals and red cards cause dramatic probability shifts: a goal changes win probability significantly (e.g., 0-0 to 1-0: favorite's win prob jumps from ~50% to ~70-80%), impact depends on time remaining (early goal = smaller impact, late goal = huge impact), and red cards compound the effect (10v11 = massive disadvantage, win prob drops 20-30%+). Market reaction: odds move immediately (within seconds), often overreact initially (too much move, then correction), and correct over time (find new equilibrium). The magnitude: early goal (min 10) = moderate move, late goal (min 85) = huge move, red card = always significant. Key: understand that probability shifts are non-linear - late events have disproportionate impact.",
         explanation: [
           "Goals: Large probability shifts, magnitude depends on time",
@@ -3429,6 +3439,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss latency",
           "Address mitigation",
         ],
+        hint: "In-play execution has unique risks: latency (speed matters), suspension (markets close during events), and price movement while orders are pending. Think about what can go wrong.",
         answer: "In-play execution risks include: latency (delay between decision and execution - goals happen, you're too slow), suspension (markets suspend during events - you can't trade when you need to), price movement (odds move while your order is pending - slippage), partial fills (you get part of your bet filled, rest at worse price), and connection issues (internet problems during critical moments). Latency is critical: milliseconds matter, slow execution = missed opportunities or worse prices. Suspension risk: markets close during goals/cards, you're stuck in positions. Mitigation: fast connections, multiple platforms, pre-positioning, and accepting that some risks are unavoidable. The key: in-play requires infrastructure (speed, reliability) that pre-match doesn't.",
         explanation: [
           "Risks: Latency, suspension, price movement, partial fills, connection",
@@ -3448,6 +3459,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address competitive advantage",
           "Explain infrastructure needs",
         ],
+        hint: "Speed matters in in-play trading. Think about how latency creates a winner-take-all dynamic and how suspension can trap you in positions.",
         answer: "Latency and suspension significantly affect profitability: low latency = first to react (get best prices before market moves), high latency = last to react (miss opportunities, get worse prices). Suspension: markets close during events (goals, cards) - you can't exit positions when you need to, creating risk. Impact: latency differences create winner-take-all dynamics (fastest wins, others lose), suspension creates trapped positions (can't hedge during critical moments). Infrastructure matters: co-location (servers near exchange), fast internet, automated systems. Without low latency: you're competing at a disadvantage, profitable strategies become unprofitable. The reality: in-play trading is infrastructure-dependent - you need speed to compete.",
         explanation: [
           "Latency: Low = best prices, high = missed/worse prices",
@@ -3467,6 +3479,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address timing",
           "Explain risk reduction",
         ],
+        hint: "Dynamic hedging means adjusting your hedge as the match state changes. Think about monitoring goals, time remaining, and adjusting hedge size based on changing probabilities.",
         answer: "Hedge in-play positions dynamically by: monitoring match state (goals, time, momentum), adjusting hedge size as probabilities change (more likely outcome = larger hedge), using correlated markets (match result, over/under, both teams to score), and timing hedges (hedge before events if possible, after events if caught). Strategy: initial position → monitor → adjust hedge as match evolves → final hedge near end. Dynamic adjustment: if your position becomes more likely (goal for your team), increase hedge; if less likely, reduce hedge. Timing: hedge early if confident (lock profit), hedge late if uncertain (wait for information). The goal: reduce risk while maintaining upside. However, hedging costs money (spreads, commissions) - balance risk reduction vs cost.",
         explanation: [
           "Method: Monitor state, adjust size, use correlated markets, time hedges",
@@ -3486,6 +3499,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address information processing",
           "Explain exploitation",
         ],
+        hint: "Markets often overreact to events in-play. Think about emotional trading, herding behavior, and how this creates opportunities to fade moves.",
         answer: "Overreaction occurs because: emotional trading (public bets emotionally on recent events), herding (traders follow the crowd, amplify moves), limited information processing (markets process events quickly, may overestimate impact), and liquidity constraints (low liquidity = larger moves for same information). Structural: automated systems react instantly (may overreact before human assessment), and market makers widen spreads during volatility (exaggerates moves). The pattern: event occurs → sharp move (overreaction) → correction (market finds equilibrium). Exploitation: bet against overreactions (fade the move), wait for correction, or trade the correction. However, sometimes moves are justified - distinguish overreaction from correct assessment.",
         explanation: [
           "Causes: Emotional trading, herding, limited processing, low liquidity",
@@ -3505,6 +3519,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address stop-losses",
           "Explain dynamic adjustment",
         ],
+        hint: "Rapid state changes (goals, cards) require proactive risk management. Think about position limits, stop-losses, and having rules in place before you need them.",
         answer: "Manage risk during rapid state changes by: position limits (max exposure per match/event), stop-losses (exit if loss exceeds threshold), dynamic hedging (adjust positions as state changes), and diversification (don't put all capital in one match). Techniques: pre-position limits (set max before match starts), real-time monitoring (watch positions constantly), automated exits (systems that close positions on triggers), and correlation awareness (don't overexpose to correlated outcomes). During rapid changes: reduce position size if uncertainty increases, hedge immediately if caught wrong-footed, and accept losses quickly (don't hope for reversal). The key: have risk management rules before you need them, and stick to them during stress.",
         explanation: [
           "Methods: Position limits, stop-losses, dynamic hedging, diversification",
@@ -3524,6 +3539,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address information advantage",
           "Explain profitability",
         ],
+        hint: "Informed traders have a systematic process and edge. Noise traders trade emotionally without a process. Think about what makes one profitable and the other not.",
         answer: "Informed traders: act on information (team news, tactical changes, momentum), trade systematically (models, edge-based), manage risk (position sizing, stops), and are profitable long-term. Noise traders: trade emotionally (hope, fear), act impulsively (react to events without analysis), ignore risk management (overbet, no stops), and lose long-term. Distinguishing: informed traders have edge (better information or models), trade consistently (same approach), and show discipline (stick to strategy). Noise traders: random behavior, emotional decisions, no edge. In-play: informed traders react quickly but thoughtfully, noise traders react quickly but emotionally. The key: informed traders have a process, noise traders don't.",
         explanation: [
           "Informed: Information-based, systematic, risk-managed, profitable",
@@ -3543,6 +3559,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address execution",
           "Explain risk management",
         ],
+        hint: "A systematic strategy needs: a model to calculate probabilities, triggers to identify opportunities, execution rules, and risk management. Think about the components and how they work together.",
         answer: "Structure a systematic in-play strategy with: model (probabilistic model that updates in real-time - Poisson, expected goals, momentum), triggers (specific conditions that signal trades - goal scored, time remaining, scoreline), execution rules (when to enter/exit, position sizing, hedging), and risk management (position limits, stop-losses, correlation limits). Components: data feed (real-time match data), probability engine (calculates fair odds), signal generator (identifies opportunities), execution system (places bets automatically), and monitoring (tracks performance). The system: monitors match → calculates probabilities → identifies mispricing → executes trades → manages risk. Key: system must be fast (low latency), robust (handles edge cases), and tested (backtested, paper traded).",
         explanation: [
           "Components: Model, triggers, execution rules, risk management",
@@ -3564,6 +3581,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss two-sided quotes",
           "Address profitability",
         ],
+        hint: "Market-making means providing liquidity by quoting both buy and sell prices. Think about how market makers profit from the spread while managing inventory risk.",
         answer: "Market-making on a sports exchange means providing liquidity by simultaneously offering to buy (back) and sell (lay) at different prices, creating a two-sided market. The market maker: posts bids and offers (quotes prices on both sides), earns the spread (difference between buy and sell prices), and provides liquidity (enables others to trade). Process: identify fair value → quote prices around it → adjust as information arrives → profit from spread. The market maker takes the other side of trades, hoping to profit from the spread while managing inventory risk. Unlike bookmakers who set lines, market makers react to market conditions and adjust prices continuously. Profitability comes from: spread capture, exchange rebates (for providing liquidity), and inventory management (avoiding bad positions).",
         explanation: [
           "Definition: Provide liquidity by quoting both buy and sell prices",
@@ -3583,6 +3601,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address model inputs",
           "Explain adjustment",
         ],
+        hint: "Fair value is the probability-weighted expected value, typically the midpoint where you're willing to take either side. Think about how models, information, and inventory affect fair value.",
         answer: "Fair value in a two-sided market is the probability-weighted expected value, typically the midpoint between back and lay prices where the market should trade. Calculation: use models (Poisson, expected goals, statistical models), incorporate information (team news, form, situation), and calibrate to market (adjust model to match market consensus). Fair value = probability of outcome × payout. For market makers: fair value is where they're indifferent (willing to take either side), adjusted for inventory (if long, quote higher to discourage more buys). The fair value changes continuously as: match state changes (goals, time), information arrives (news, momentum), and market moves. Market makers quote around fair value, with spread reflecting risk and inventory.",
         explanation: [
           "Definition: Probability-weighted expected value, market midpoint",
@@ -3602,6 +3621,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss adverse selection",
           "Address mitigation",
         ],
+        hint: "Market makers face several risks: informed traders trading against them, accumulating inventory, information arriving late, and model errors. Think about how to mitigate each.",
         answer: "Sports market makers face: adverse selection (informed traders trade against you, you get the bad side), inventory risk (accumulating positions in one direction, exposed to outcomes), information risk (news arrives, you're caught on wrong side), and model risk (your fair value is wrong). Adverse selection: informed bettors identify your mispricing, trade against you, you lose. Inventory risk: if you're long a team and they score, you lose; need to hedge or adjust quotes. Information risk: late team news, goals, cards - you're exposed before you can adjust. Model risk: your model misprices, you quote wrong, lose money. Mitigation: tight spreads (reduce adverse selection), inventory limits (cap exposure), fast adjustment (react quickly to information), and hedging (offset positions).",
         explanation: [
           "Risks: Adverse selection, inventory, information, model",
@@ -3621,6 +3641,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address time effects",
           "Explain market structure",
         ],
+        hint: "Spreads reflect risk and competition. Think about how liquidity (more participants = tighter) and time (approaching kickoff, events, near end) affect spreads.",
         answer: "Spreads evolve with liquidity and time: high liquidity = tight spreads (many participants, competition narrows spread), low liquidity = wide spreads (few participants, market makers need compensation for risk). Time effects: pre-match = spreads tighten as kickoff approaches (more information, more participants), in-play = spreads widen during events (volatility, uncertainty), and near resolution = spreads can widen or tighten (depending on certainty). Evolution: early pre-match (wide, uncertain) → approaching kickoff (tight, informed) → in-play quiet (moderate) → in-play events (wide, volatile) → near end (depends on certainty). Market structure: competitive markets (many market makers) = tight spreads, monopolistic (few makers) = wide spreads. The key: spreads reflect risk and competition.",
         explanation: [
           "Liquidity: High = tight, low = wide",
@@ -3640,6 +3661,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address identification",
           "Explain impact",
         ],
+        hint: "Adverse selection happens when informed traders trade against you. Think about signs: consistent losses, trades before information, one-sided inventory. Consider how to identify and mitigate it.",
         answer: "Adverse selection and information asymmetry appear when: informed traders identify mispricing (your quotes are wrong, they trade against you), you get the bad side of trades (they buy when price should be higher, sell when lower), and you lose money systematically (not random - pattern of losses). Signs: consistent losses on one side (always buying when should sell), trades happen right before information (they know something you don't), and your inventory becomes one-sided (accumulating bad positions). Information asymmetry: they have better information (team news, models, data) or process it faster. Impact: you quote fair value but they know it's wrong, trade against you, you lose. Mitigation: improve information (better data, faster processing), tighten spreads (reduce edge for informed), and limit exposure (don't quote too much).",
         explanation: [
           "Appearance: Informed traders identify mispricing, trade against you",
