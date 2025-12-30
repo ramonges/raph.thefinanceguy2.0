@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/client'
 import DashboardNav from '@/components/DashboardNav'
 import { Profile, BlockType, AssetCategory } from '@/types'
 import { getInterviewFlow, InterviewFlow } from '@/data/customInterviewQuestions'
+import { assetQuestions } from '@/data/assetQuestions'
 import { 
   Users, 
   TrendingUp, 
@@ -63,14 +64,16 @@ export default function CustomInterviewPage() {
   }, [router, supabase])
 
   useEffect(() => {
-    if (step === 4 && blockType && companyType) {
+    if (step === 4 && blockType && companyType && tradingDesk) {
       setLoading(true)
+      // Get the asset category object
+      const assetCategory = assetQuestions[tradingDesk]
       // Get the interview flow based on selections
-      const flow = getInterviewFlow(blockType, companyType)
+      const flow = getInterviewFlow(blockType, companyType, assetCategory)
       setInterviewFlow(flow)
       setLoading(false)
     }
-  }, [step, blockType, companyType])
+  }, [step, blockType, companyType, tradingDesk])
 
   const handleDownloadPDF = () => {
     if (!interviewFlow) return
@@ -251,8 +254,8 @@ export default function CustomInterviewPage() {
               </div>
             )}
 
-            {/* Step 2: Trading Desk (only for Trading) */}
-            {step === 2 && blockType === 'trading' && (
+            {/* Step 2: Asset Selection (for all tracks) */}
+            {step === 2 && blockType && (
               <div>
                 <button
                   onClick={() => setStep(1)}
@@ -261,8 +264,8 @@ export default function CustomInterviewPage() {
                   <ArrowLeft className="w-4 h-4" />
                   Back
                 </button>
-                <h2 className="text-2xl font-bold mb-2">Choose Trading Desk</h2>
-                <p className="text-[#9ca3af] mb-6">Select the specific trading desk</p>
+                <h2 className="text-2xl font-bold mb-2">Choose Asset Class</h2>
+                <p className="text-[#9ca3af] mb-6">Select the asset class to get targeted interview questions</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {tradingDesks.map((desk) => {
                     const Icon = desk.icon
@@ -293,53 +296,8 @@ export default function CustomInterviewPage() {
               </div>
             )}
 
-            {/* Step 2: For Sales and Quant, skip to Step 3 */}
-            {step === 2 && (blockType === 'sales' || blockType === 'quant') && (
-              <div>
-                <button
-                  onClick={() => setStep(1)}
-                  className="flex items-center gap-2 text-[#9ca3af] hover:text-white mb-6 transition-colors"
-                >
-                  <ArrowLeft className="w-4 h-4" />
-                  Back
-                </button>
-                <h2 className="text-2xl font-bold mb-2">Choose Company Type</h2>
-                <p className="text-[#9ca3af] mb-6">Select the type of financial institution</p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {[
-                    { id: 'bank' as CompanyType, label: 'Bank', icon: Building2, color: '#6366f1' },
-                    { id: 'hedge-fund' as CompanyType, label: 'Hedge Fund', icon: Briefcase, color: '#f97316' },
-                  ].map((company) => {
-                    const Icon = company.icon
-                    return (
-                      <button
-                        key={company.id}
-                        onClick={() => {
-                          setCompanyType(company.id)
-                          setTimeout(() => setStep(4), 300)
-                        }}
-                        className={`p-6 rounded-xl border-2 transition-all text-left ${
-                          companyType === company.id
-                            ? 'border-[#f97316] bg-[#f97316]/10'
-                            : 'border-[#1f2937] hover:border-[#374151]'
-                        }`}
-                      >
-                        <div
-                          className="w-12 h-12 rounded-lg flex items-center justify-center mb-4"
-                          style={{ backgroundColor: `${company.color}20` }}
-                        >
-                          <Icon className="w-6 h-6" style={{ color: company.color }} />
-                        </div>
-                        <h3 className="text-xl font-bold">{company.label}</h3>
-                      </button>
-                    )
-                  })}
-                </div>
-              </div>
-            )}
-
-            {/* Step 3: Company Type (only for Trading) */}
-            {step === 3 && blockType === 'trading' && (
+            {/* Step 3: Company Type (for all tracks) */}
+            {step === 3 && blockType && tradingDesk && (
               <div>
                 <button
                   onClick={() => setStep(2)}
@@ -388,7 +346,7 @@ export default function CustomInterviewPage() {
               <div>
                 <div className="flex items-center justify-between mb-6">
                   <button
-                    onClick={() => setStep(blockType === 'trading' ? 3 : 2)}
+                    onClick={() => setStep(3)}
                     className="flex items-center gap-2 text-[#9ca3af] hover:text-white transition-colors"
                   >
                     <ArrowLeft className="w-4 h-4" />

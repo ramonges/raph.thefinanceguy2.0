@@ -1,6 +1,9 @@
 // Custom Interview Questions organized by track and company type
 // Based on Guide Technical 2025 question bank
 
+import { AssetCategory } from '@/types'
+import { assetQuestions } from './assetQuestions'
+
 export interface InterviewQuestion {
   id: string
   question: string
@@ -990,17 +993,90 @@ export const quantHedgeFundFlow: InterviewFlow = {
   ]
 }
 
-// Map to get the right flow
-export function getInterviewFlow(track: 'sales' | 'trading' | 'quant', companyType: 'bank' | 'hedge-fund'): InterviewFlow {
-  if (track === 'sales' && companyType === 'bank') return salesBankFlow
-  if (track === 'sales' && companyType === 'hedge-fund') return salesHedgeFundFlow
-  if (track === 'trading' && companyType === 'bank') return tradingBankFlow
-  if (track === 'trading' && companyType === 'hedge-fund') return tradingHedgeFundFlow
-  if (track === 'quant' && companyType === 'bank') return quantBankFlow
-  if (track === 'quant' && companyType === 'hedge-fund') return quantHedgeFundFlow
+// Helper function to get asset-specific technical questions
+function getAssetTechnicalQuestions(assetCategory: AssetCategory, count: number = 6): InterviewQuestion[] {
+  const questions: InterviewQuestion[] = []
+  const allSubcategories = Object.values(assetCategory.subcategories)
   
-  // Default fallback
-  return salesBankFlow
+  // Collect questions from all subcategories
+  let questionIndex = 0
+  for (const subcategory of allSubcategories) {
+    for (const q of subcategory.questions.slice(0, Math.ceil(count / allSubcategories.length))) {
+      if (questionIndex >= count) break
+      questions.push({
+        id: `asset-tech-${questionIndex + 1}`,
+        question: q.question,
+        answer: q.answer,
+        hint: q.hint,
+        category: 'technical'
+      })
+      questionIndex++
+      if (questionIndex >= count) break
+    }
+    if (questionIndex >= count) break
+  }
+  
+  return questions.slice(0, count)
+}
+
+// Map to get the right flow
+export function getInterviewFlow(
+  track: 'sales' | 'trading' | 'quant', 
+  companyType: 'bank' | 'hedge-fund',
+  assetCategory?: AssetCategory
+): InterviewFlow {
+  let baseFlow: InterviewFlow
+  
+  // Get base flow
+  if (track === 'sales' && companyType === 'bank') baseFlow = salesBankFlow
+  else if (track === 'sales' && companyType === 'hedge-fund') baseFlow = salesHedgeFundFlow
+  else if (track === 'trading' && companyType === 'bank') baseFlow = tradingBankFlow
+  else if (track === 'trading' && companyType === 'hedge-fund') baseFlow = tradingHedgeFundFlow
+  else if (track === 'quant' && companyType === 'bank') baseFlow = quantBankFlow
+  else if (track === 'quant' && companyType === 'hedge-fund') baseFlow = quantHedgeFundFlow
+  else baseFlow = salesBankFlow // Default fallback
+  
+  // Deep copy the flow to avoid mutating original
+  const flow: InterviewFlow = {
+    ...baseFlow,
+    sections: baseFlow.sections.map(section => ({
+      ...section,
+      questions: [...section.questions]
+    }))
+  }
+  
+  // If asset category is provided, enhance technical section with asset-specific questions
+  if (assetCategory) {
+    const assetQuestions = getAssetTechnicalQuestions(assetCategory, 6)
+    
+    // Find the technical section and add asset-specific questions
+    const technicalSection = flow.sections.find(s => 
+      s.title.toLowerCase().includes('technical') || 
+      s.questions.some(q => q.category === 'technical')
+    )
+    
+    if (technicalSection) {
+      // Add asset-specific questions to the technical section
+      technicalSection.questions = [
+        ...technicalSection.questions,
+        ...assetQuestions
+      ]
+      
+      // Update section title to reflect asset focus
+      if (!technicalSection.title.includes(assetCategory.label)) {
+        technicalSection.title = `${technicalSection.title} (${assetCategory.label})`
+      }
+    } else {
+      // If no technical section exists, create one
+      flow.sections.push({
+        title: `4. Technical (${assetCategory.label})`,
+        description: `Asset-specific questions for ${assetCategory.label}`,
+        questions: assetQuestions
+      })
+    }
+  }
+  
+  return flow
 }
 
 
