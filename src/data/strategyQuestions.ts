@@ -3963,6 +3963,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address compliance",
           "Explain adaptation",
         ],
+        hint: "Regulations, taxes, and compliance requirements add complexity and cost. Think about how these constraints reduce profitability and limit access.",
         answer: "Regulatory and operational constraints impact arbitrage: regulations vary by jurisdiction (some countries restrict betting, arbitrage may be illegal), tax implications (arbitrage profits may be taxable, reducing net profit), and compliance requirements (KYC, AML - need to verify accounts, report transactions). Operational: account verification (takes time, delays starting), withdrawal restrictions (can't withdraw quickly - capital tied up), and platform restrictions (some platforms don't allow arbitrage, ban accounts). Impact: reduces profitability (taxes, compliance costs), limits access (can't use all bookmakers), and creates operational overhead (compliance, reporting). Adaptation: understand regulations (know what's legal), structure operations (comply with requirements), and factor in costs (taxes, compliance reduce profit). The key: constraints add complexity and cost, making arbitrage less attractive.",
         explanation: [
           "Constraints: Regulations, taxes, compliance, verification, restrictions",
@@ -3984,6 +3985,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Compare to financial volatility",
           "Address measurement",
         ],
+        hint: "Sports volatility is about probability changes, not price movements. Think about how it's event-driven, time-sensitive, and binary-resolving compared to financial markets.",
         answer: "Volatility in sports refers to the magnitude and frequency of probability changes during a match - how much and how quickly implied probabilities move. Unlike financial volatility (price movements), sports volatility is: event-driven (goals, cards cause sharp moves), time-sensitive (probabilities compress as time passes), and binary-resolving (match ends, outcome determined). Measurement: track probability changes (how much odds move), frequency of moves (how often prices change), and magnitude of events (goals cause larger moves than possession). Sports volatility is characterized by: quiet periods (low vol, steady probabilities) punctuated by sharp spikes (high vol, large probability shifts on events). The key: sports volatility is discrete and event-driven, not continuous like financial markets.",
         explanation: [
           "Definition: Magnitude and frequency of probability changes",
@@ -4003,6 +4005,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss timing effects",
           "Address market reaction",
         ],
+        hint: "Goals and red cards cause the largest volatility spikes. Think about how timing matters - late events have much bigger impact than early ones.",
         answer: "Events that generate volatility spikes: goals (largest impact - dramatically change win probabilities, especially late goals), red cards (massive impact - 10v11 creates huge disadvantage, win prob drops 20-30%+), injuries to key players (significant impact if star player), penalties (high-probability scoring chance, large prob shift), and tactical changes (substitutions, formation changes - moderate impact). Impact depends on timing: early events (min 10) = moderate impact, late events (min 85+) = huge impact (less time to recover). Market reaction: odds move immediately (within seconds), often overreact initially, then correct. The key: discrete events cause sharp volatility spikes, with magnitude depending on event type and timing.",
         explanation: [
           "Events: Goals, red cards, injuries, penalties, tactical changes",
@@ -4022,6 +4025,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address late-game dynamics",
           "Explain trading implications",
         ],
+        hint: "Time decay compresses probabilities - less time means less opportunity for outcomes to change. Think about how a team down 1-0 has different win probabilities at min 10 vs min 85.",
         answer: "Time decay in sports compresses probabilities as the match progresses - less time remaining means less opportunity for outcomes to change. Mechanism: early in match (min 0-30) = probabilities stable (plenty of time for comebacks), middle (min 30-70) = gradual compression (less time, probabilities shift), late (min 70-90) = rapid compression (little time, probabilities change dramatically). Example: team down 1-0 at min 10 has ~30% win prob (time to recover), but at min 85 has ~5% win prob (little time). Trading implications: early goals have smaller impact (time to recover), late goals have huge impact (no time to recover). The key: time decay creates non-linear probability compression - each minute becomes more valuable as time runs out.",
         explanation: [
           "Mechanism: Time compression reduces opportunity for outcomes to change",
@@ -4041,6 +4045,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address implementation",
           "Explain profitability",
         ],
+        hint: "Long volatility means profiting from large probability moves. Think about strategies like backing both teams or trading in-play to capture volatility spikes.",
         answer: "Long volatility in sports means positioning to profit from large probability moves (volatility spikes) during the match. Equivalent strategies: backing both teams pre-match (profit if either wins big - captures volatility), trading in-play (buy low, sell high as probabilities move), and event-driven positions (position before likely events - goals, cards). Implementation: buy positions that benefit from large moves (straddle-like positions), trade around events (profit from volatility spikes), or use options-like structures (if available). Profitability: long vol profits when actual volatility exceeds implied volatility (match is more volatile than expected). The key: long vol in sports means positioning to profit from probability swings, not just direction. However, sports 'options' are limited - most long vol is achieved through trading strategies.",
         explanation: [
           "Concept: Position to profit from large probability moves",
@@ -4060,6 +4065,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address probability shifts",
           "Explain trading opportunities",
         ],
+        hint: "Momentum is continued probability shifts after events. Think about psychological effects and how markets may overreact or underreact to momentum.",
         answer: "Momentum manifests as continued probability shifts after initial events - the team that scores often continues to perform better, probabilities continue to move in their favor. Psychological: scoring team gains confidence, conceding team loses confidence, crowd energy shifts. Probability shifts: after a goal, scoring team's win prob increases, but momentum can cause further increases (they score again, or dominate play). Trading opportunities: momentum can be overpriced (markets overreact, bet against momentum), or underpriced (momentum continues, bet with it). The key: momentum is real (teams do perform better after scoring) but markets may overreact or underreact. Trading: identify when momentum is mispriced, bet accordingly. However, momentum is hard to predict - sometimes teams collapse after conceding, sometimes they fight back.",
         explanation: [
           "Manifestation: Continued probability shifts after initial events",
@@ -4079,6 +4085,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address market structure",
           "Explain exploitation",
         ],
+        hint: "Mispricing comes from behavioral biases, model limitations, and market structure. Think about when markets assume quiet matches but events happen, or vice versa.",
         answer: "Volatility can be mispriced due to: behavioral biases (markets underestimate likelihood of events - goals, cards happen more than expected), model limitations (simple models underestimate tail events), public bias (public overbets favorites, creating mispricing on underdogs), and market structure (bookmakers balance books, may misprice volatility). Underpriced: markets assume quiet match, but events happen (goals, cards) - actual vol > implied vol. Overpriced: markets assume volatile match, but it's quiet - actual vol < implied vol. Exploitation: if you think volatility is mispriced, position accordingly (long vol if underpriced, short vol if overpriced). The key: volatility mispricing creates opportunities, but requires accurate assessment of actual vs implied volatility. However, mispricing is hard to identify - markets are usually reasonably efficient.",
         explanation: [
           "Sources: Behavioral biases, model limitations, public bias, market structure",
@@ -4098,6 +4105,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address position sizing",
           "Explain risk management",
         ],
+        hint: "Convexity means profiting disproportionately from large moves. Think about identifying likely events, positioning before them, and sizing based on event probability.",
         answer: "Trade event-driven convexity by positioning to profit disproportionately from large probability moves when events occur. Strategy: identify likely events (goals, cards, penalties), position before events (buy positions that benefit from large moves), and profit from convexity (small moves = small profit, large moves = large profit). Implementation: back both teams pre-match (profit if either wins big), trade in-play around events (buy before likely events, sell after), or use correlated markets (match result, over/under - both benefit from events). Position sizing: size based on event probability and expected impact (more likely events = larger positions). Risk management: don't overbet (convexity can lose if events don't happen), hedge if needed, and accept that some events won't occur. The key: convexity trades profit from large moves, but cost money if events don't happen.",
         explanation: [
           "Concept: Position to profit disproportionately from large probability moves",
@@ -4117,6 +4125,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address overreaction",
           "Explain trading implications",
         ],
+        hint: "Crowd behavior amplifies volatility through emotional trading and herding. Think about how overreactions create trading opportunities, but the crowd can also be right.",
         answer: "Crowd behavior influences volatility by: emotional trading (public bets emotionally on recent events, amplifying moves), herding (traders follow the crowd, creating momentum), and overreaction (markets overreact to events, then correct). Market impact: crowd behavior increases volatility (emotional bets cause larger moves), creates mispricing (overreactions create value), and affects liquidity (crowd bets on popular outcomes, less liquidity elsewhere). Trading implications: crowd overreactions create opportunities (fade the crowd, bet against overreactions), but can also be right (crowd sometimes correctly assesses situations). The key: crowd behavior amplifies volatility and creates mispricing, but distinguishing overreaction from correct assessment is difficult. Strategy: identify when crowd is overreacting vs correctly assessing, trade accordingly.",
         explanation: [
           "Effects: Emotional trading, herding, overreaction",
@@ -4136,6 +4145,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address adaptation",
           "Explain trading strategies",
         ],
+        hint: "Identify regimes using historical analysis, match characteristics, team styles, and market indicators. Think about adapting your strategy based on the regime.",
         answer: "Identify volatility regimes by: historical analysis (track actual volatility over time, identify patterns), match characteristics (rivalries, derbies = high vol, friendly matches = low vol), team styles (attacking teams = high vol, defensive = low vol), and market indicators (wide spreads = high vol expected, tight spreads = low vol). High vol regimes: competitive matches, attacking teams, important games, rivalries. Low vol regimes: one-sided matches, defensive teams, friendly games, clear favorites. Adaptation: in high vol regimes, expect large moves (position for volatility), in low vol regimes, expect quiet matches (position for stability). Trading strategies: high vol = trade events (profit from spikes), low vol = fade volatility (bet on stability). The key: identify regime characteristics, adapt strategy. However, regimes can change during matches (quiet start, volatile end).",
         explanation: [
           "Identification: Historical analysis, match characteristics, team styles, market indicators",
@@ -4155,6 +4165,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss implications",
           "Address trading approaches",
         ],
+        hint: "Sports volatility is discrete and event-driven, while financial is continuous. Think about time limits, binary resolution, and how information arrives differently.",
         answer: "Sports volatility differs fundamentally: discrete vs continuous (sports = event-driven spikes, financial = continuous price movements), time-limited vs unlimited (sports = match ends, financial = can hold indefinitely), binary resolution vs ongoing (sports = win/loss determined, financial = positions can adjust), and information arrival (sports = goals/cards are clear information, financial = information is ambiguous). Implications: sports volatility is more predictable (events are observable), but less hedgeable (can't hedge after match), and more time-sensitive (probabilities compress). Trading approaches: sports = trade events and time decay, financial = trade continuous movements and hedge. The key: sports volatility is event-driven and time-limited, making it both more predictable and more dangerous (binary resolution).",
         explanation: [
           "Differences: Discrete vs continuous, time-limited vs unlimited, binary vs ongoing",
@@ -4176,6 +4187,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address assumptions",
           "Explain limitations",
         ],
+        hint: "Poisson models work well for rare, independent events. Think about why goals fit this distribution and what makes Poisson simple to use.",
         answer: "Poisson models are commonly used because: goals are rare events (fit Poisson distribution - discrete, independent events), simple to implement (only need expected goals, easy to calculate), and reasonably accurate (captures goal-scoring patterns well). Suitability: goals are independent events (one goal doesn't directly cause another), occur randomly over time (fit Poisson process), and are countable (discrete events). Assumptions: goals are independent, occur at constant rate, and are rare. Limitations: assumes independence (goals may be correlated - team scores, other team responds), constant rate (teams change tactics, rate varies), and ignores context (form, motivation, situation). Despite limitations, Poisson models are widely used because they're simple, interpretable, and reasonably accurate for goal-based predictions.",
         explanation: [
           "Why: Goals are rare events, simple to implement, reasonably accurate",
@@ -4195,6 +4207,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss improvements",
           "Address model selection",
         ],
+        hint: "Simple models ignore context, assume independence, and treat all goals equally. Think about what's missing: form, motivation, correlation, and quality.",
         answer: "Limitations of simple goal-based models: ignore context (form, motivation, situation - teams play differently in different contexts), assume independence (goals may be correlated - scoring changes game dynamics), constant rates (teams change tactics, goal rates vary), and ignore quality (all goals treated equally - but quality matters). Additionally: don't account for time (early goals vs late goals have different impact), ignore player quality (star players matter), and oversimplify (real games are complex). Improvements: add context (form, motivation, situation), account for correlation (goals affect each other), use dynamic rates (adjust as match progresses), and incorporate quality (expected goals, player ratings). Model selection: simple models are starting points, but need enhancement for accuracy. The key: simple models are useful but limited - need to add complexity for better predictions.",
         explanation: [
           "Limitations: Ignore context, assume independence, constant rates, ignore quality",
@@ -4214,6 +4227,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address implementation",
           "Explain advantages",
         ],
+        hint: "Bayesian updating combines prior beliefs with new evidence. Think about starting with pre-match probabilities, observing match events, and continuously updating.",
         answer: "Update probabilities in-play using Bayesian methods: start with prior probability (pre-match assessment - team strength, form), observe evidence (goals, possession, shots - match events), update to posterior probability (combine prior with evidence using Bayes' theorem), and repeat (continuously update as match progresses). Implementation: prior = pre-match win probability, likelihood = probability of observing events given team strength, posterior = updated win probability. Formula: P(win|events) = P(events|win) × P(win) / P(events). Advantages: incorporates all information (prior + evidence), updates continuously (adapts as match progresses), and is theoretically sound (Bayes' theorem is mathematically rigorous). The key: Bayesian updating allows you to combine pre-match assessment with in-play evidence, creating more accurate probabilities as the match progresses.",
         explanation: [
           "Process: Prior → observe evidence → posterior → repeat",
@@ -4233,6 +4247,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss feature engineering",
           "Address model selection",
         ],
+        hint: "Most informative features predict future events. Think about scoreline, time remaining, expected goals, and shots on target. Consider which features are predictive vs just descriptive.",
         answer: "Most informative features in live trading: scoreline (obvious but crucial - current score drives probabilities), time remaining (less time = probabilities compress), possession (indicates control, but not always predictive), shots on target (better predictor than total shots - quality matters), expected goals (xG - better than goals, accounts for quality), and momentum (recent performance - form matters). Feature importance: scoreline and time are most important (drive probabilities), xG and shots on target are predictive (indicate future goals), possession is less predictive (control doesn't always win). Feature engineering: combine features (possession × shots = better predictor), create ratios (shots for/against), and use time-weighted features (recent events matter more). Model selection: use features that are predictive (correlate with outcomes), not just descriptive. The key: focus on features that predict future events, not just describe current state.",
         explanation: [
           "Features: Scoreline, time, possession, shots on target, xG, momentum",
@@ -4252,6 +4267,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address prevention",
           "Explain validation",
         ],
+        hint: "Overfitting happens when models memorize training data but fail on new data. Think about using simple models, cross-validation, and out-of-sample testing.",
         answer: "Avoid overfitting by: using simple models (fewer parameters = less overfitting), cross-validation (test on out-of-sample data, not training data), regularization (penalize complexity - L1/L2 regularization), and feature selection (use only predictive features, not all available). Causes: too many features (model memorizes noise), too complex models (fits training data perfectly but fails on new data), and small datasets (not enough data to generalize). Prevention: train on historical data, test on future data (time-series split), use walk-forward analysis (continuously retrain and test), and be skeptical (if model is too good, it's probably overfit). Validation: out-of-sample testing (test on data not used for training), cross-validation (multiple train/test splits), and real-time testing (paper trade before live). The key: overfitting is the enemy - simple models that generalize are better than complex models that memorize.",
         explanation: [
           "Prevention: Simple models, cross-validation, regularization, feature selection",
@@ -4271,6 +4287,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address solutions",
           "Explain validation",
         ],
+        hint: "Non-stationary data means past doesn't predict future. Think about walk-forward analysis, avoiding look-ahead bias, and continuously retraining models.",
         answer: "Backtest with non-stationary data by: using walk-forward analysis (train on past, test on future, continuously update), avoiding look-ahead bias (only use information available at time of decision), accounting for regime changes (teams change, adapt models), and using rolling windows (train on recent data, not all historical). Challenges: past performance doesn't predict future (teams change, rules change), data distribution shifts (non-stationary), and overfitting to historical patterns. Solutions: time-series cross-validation (train on past, test on future), out-of-sample testing (hold out recent data), and continuous retraining (update models as new data arrives). Validation: test on multiple time periods (different seasons, different teams), check for regime stability (does model work across regimes?), and be conservative (assume future will be different). The key: non-stationary data requires dynamic backtesting - continuously retrain and test, don't assume past predicts future.",
         explanation: [
           "Methods: Walk-forward analysis, avoid look-ahead bias, account for regimes, rolling windows",
@@ -4290,6 +4307,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss impact",
           "Address realism",
         ],
+        hint: "Real execution has constraints: latency, slippage, partial fills, account limits, and suspension. Think about how these affect profitability and why they must be included.",
         answer: "Execution constraints to include: latency (delay between signal and execution - affects prices), slippage (odds move while order pending - worse execution prices), partial fills (only part of bet executes - incomplete positions), account limits (bet size restrictions - can't bet as much as model suggests), and suspension risk (markets close during events - can't execute). Impact: constraints reduce profitability (ideal strategy may be unprofitable with constraints), affect sizing (limits prevent optimal sizing), and create execution risk (can't always execute when needed). Realism: include all constraints that exist in reality (don't assume perfect execution), test with different constraint levels (vary limits, latency), and be conservative (assume worst-case constraints). The key: constraints can turn profitable strategies unprofitable - must include them in simulations to get realistic results.",
         explanation: [
           "Constraints: Latency, slippage, partial fills, limits, suspension",
@@ -4309,6 +4327,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address statistical significance",
           "Explain persistence",
         ],
+        hint: "Edge is systematic and repeatable; luck is random. Think about sample size, statistical significance, and consistency over time to distinguish them.",
         answer: "Measure edge vs luck by: sample size (need many bets to distinguish edge from luck - small samples are noisy), statistical significance (test if results are statistically significant - p-values, confidence intervals), consistency (edge should be consistent over time - not just one good period), and risk-adjusted returns (Sharpe ratio, not just raw returns). Methods: t-tests (test if mean return is significantly different from zero), confidence intervals (range of likely true edge), and walk-forward analysis (test edge persists over time). Luck: random variation, not repeatable, inconsistent. Edge: systematic advantage, repeatable, consistent. The key: need large sample size (hundreds/thousands of bets) and statistical testing to distinguish edge from luck. Small samples can't distinguish - could be luck or edge.",
         explanation: [
           "Methods: Sample size, statistical significance, consistency, risk-adjusted returns",
@@ -4328,6 +4347,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address metrics",
           "Explain deployment",
         ],
+        hint: "Validation requires out-of-sample testing, walk-forward analysis, and paper trading. Think about checking for overfitting and starting small when deploying.",
         answer: "Validate a sports trading model by: out-of-sample testing (test on data not used for training - true test of generalization), walk-forward analysis (train on past, test on future, continuously update), cross-validation (multiple train/test splits), and paper trading (test on real markets without real money). Metrics: profitability (does it make money?), Sharpe ratio (risk-adjusted returns), win rate (percentage of profitable bets), and drawdown (maximum loss from peak). Validation steps: train on historical data, test on out-of-sample data, check for overfitting (training >> test performance = overfit), and paper trade before live. Deployment: start small (test with small positions), monitor performance (track metrics, compare to backtest), and be ready to stop (if performance differs from backtest, stop and reassess). The key: validation is ongoing - models need continuous validation, not just one-time testing.",
         explanation: [
           "Methods: Out-of-sample testing, walk-forward, cross-validation, paper trading",
@@ -4347,6 +4367,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Discuss mitigation",
           "Address acceptance",
         ],
+        hint: "Sports model risk is higher: binary outcomes, non-stationary data, and less hedgeable. Think about team changes, rule changes, and why models become wrong faster.",
         answer: "Model risk differs because: sports outcomes are binary (win/loss - no partial outcomes, model either right or wrong), non-stationary (teams change, rules change - models become outdated), and less hedgeable (can't hedge model risk easily - limited instruments). Financial: continuous outcomes (can adjust positions), more stationary (markets more stable), and hedgeable (can hedge model risk). Sports-specific: team changes (players, coaches - model assumptions break), rule changes (VAR, offside rules - affect model), and context matters (form, motivation - hard to model). Mitigation: continuous retraining (update models as teams change), accept model risk (can't eliminate it), and diversify (don't rely on one model). The key: sports model risk is higher because outcomes are binary and non-stationary - models become wrong faster, and wrong predictions are costly (binary outcomes).",
         explanation: [
           "Differences: Binary outcomes, non-stationary, less hedgeable",
@@ -4368,6 +4389,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address psychological factors",
           "Explain survival",
         ],
+        hint: "Poor bankroll management can cause ruin even with an edge. Think about how one bad streak can wipe you out and why proper sizing is essential for survival.",
         answer: "Bankroll management is critical because: prevents ruin (poor sizing can wipe out bankroll even with edge - one bad streak destroys you), allows edge to compound (proper sizing lets edge work over time - small edge compounds with good sizing), and maintains psychological health (large losses cause tilt - emotional trading, bad decisions). Consequences of poor management: ruin (lose all capital, can't continue trading), emotional damage (stress, tilt, bad decisions), and missed opportunities (no capital when good opportunities arise). The key: even with positive expected value, poor bankroll management can cause ruin. Example: betting 50% of bankroll each bet with 55% win rate - high probability of ruin despite edge. Proper management: size bets based on edge and bankroll (Kelly or fractional Kelly), never bet more than you can afford to lose, and maintain discipline.",
         explanation: [
           "Importance: Prevents ruin, allows edge to compound, maintains psychology",
@@ -4387,6 +4409,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address limitations",
           "Explain fractional Kelly",
         ],
+        hint: "Kelly criterion maximizes long-term growth but can be aggressive. Think about the formula, limitations (unknown probabilities, variance), and why fractional Kelly is often used.",
         answer: "Kelly criterion sizes bets to maximize long-term growth: f* = (p × b - q) / b, where f* = fraction of bankroll, p = win probability, q = loss probability (1-p), b = odds received. Application: if you have 60% win probability at even odds (b=1), f* = (0.6 × 1 - 0.4) / 1 = 0.2 = 20% of bankroll. Limitations: assumes known probabilities (you don't know true probabilities), ignores variance (Kelly maximizes growth but high variance), and can be aggressive (full Kelly = high risk of large drawdowns). Fractional Kelly: bet f* / k (e.g., half Kelly = f* / 2) - reduces risk while maintaining most of growth. Sports application: estimate win probability, calculate Kelly, use fractional Kelly (typically 0.25-0.5 Kelly) for safety. The key: Kelly optimizes growth but is aggressive - fractional Kelly balances growth and risk.",
         explanation: [
           "Formula: f* = (p × b - q) / b",
@@ -4406,6 +4429,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address sequence risk",
           "Explain mitigation",
         ],
+        hint: "Even with positive expected value, variance and poor sizing can cause ruin. Think about losing streaks, sequence risk, and why proper bankroll management is essential.",
         answer: "Positive-EV strategies can go bankrupt due to: variance (even with edge, losing streaks happen - variance can wipe you out before edge compounds), poor sizing (betting too much - one bad streak destroys bankroll), and sequence risk (order of wins/losses matters - early losses force position reduction, preventing recovery). Example: 55% win rate, even odds, but betting 30% of bankroll - high probability of ruin despite positive EV. The problem: variance creates drawdowns, and if drawdowns exceed bankroll, you're ruined. Mitigation: proper sizing (Kelly or fractional Kelly - limits bet size), bankroll management (never bet more than you can afford to lose), and accept variance (edge works long-term, but short-term variance can be brutal). The key: positive EV doesn't guarantee survival - need proper sizing and bankroll management to survive variance.",
         explanation: [
           "Causes: Variance, poor sizing, sequence risk",
@@ -4425,6 +4449,7 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Address discipline",
           "Explain recovery",
         ],
+        hint: "Drawdowns are normal but can cause tilt. Think about accepting variance, maintaining discipline, recognizing tilt, and trusting the process during recovery.",
         answer: "Manage drawdowns psychologically by: accepting variance (drawdowns are normal - even with edge, losing streaks happen), maintaining discipline (stick to strategy, don't chase losses - tilt causes bad decisions), setting expectations (know that drawdowns will occur - prepare mentally), and taking breaks (if stressed, step away - clear mind, avoid tilt). Tilt: emotional trading after losses - chasing losses, overbetting, abandoning strategy. Prevention: recognize tilt (awareness is first step), have rules (stop-losses, position limits - force discipline), and maintain perspective (short-term variance, long-term edge). Recovery: trust the process (if strategy has edge, it will recover), don't change strategy during drawdowns (stick to plan), and be patient (edge works over time, not immediately). The key: psychological management is as important as technical - can't execute strategy if you're tilted.",
         explanation: [
           "Methods: Accept variance, maintain discipline, set expectations, take breaks",
