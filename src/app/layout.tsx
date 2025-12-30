@@ -2,12 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Raph The Finance Guy | Trading Interview Prep",
+  title: "Raph The Finance Guy",
   description: "Master Trading Interviews with Confidence. Practice mental math, probability puzzles, trading intuition, Greeks, behavioral questions, and ML concepts.",
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/favicon.ico',
+    icon: "/favicon.ico",
   },
   openGraph: {
     title: "Raph The Finance Guy | Trading Interview Prep",
