@@ -791,6 +791,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Liquidity impact",
           "Risk management",
         ],
+        hint: "Think about what happens to deal spreads during market stress. Consider how correlations change and what this means for merger arbitrage positions.",
+        answer: "Deal spreads widen dramatically in stressed markets. During market crashes (2008, 2020 Q1), all deal spreads widen simultaneously as targets fall more than deal prices. Correlations spike to near 1 - all deals move together, eliminating diversification benefits. Liquidity dries up - can't exit positions, forced to hold losses. Risk management: (1) Reduce position sizes before stress, (2) Monitor market conditions, (3) Have exit plans, (4) Diversify across deals. The key: stressed markets are dangerous for merger arb - spreads widen, correlations spike, liquidity disappears.",
       },
       {
         id: 4,
@@ -802,6 +804,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Risk assessment",
           "Historical regulatory outcomes",
         ],
+        hint: "Regulatory approval is a key risk in M&A deals. Think about the antitrust process, how to assess regulatory risk, and how it affects deal spreads.",
+        answer: "Regulatory risks significantly impact event strategies: (1) Antitrust concerns - DOJ/FTC can block deals if they reduce competition, (2) Regulatory approval process - takes 6-12 months, creates uncertainty, (3) Risk assessment - analyze market concentration, competitive impact, deal size, (4) Historical outcomes - certain industries (tech, healthcare) face more scrutiny. Impact: regulatory uncertainty widens deal spreads, deals can break if blocked. Risk management: (1) Assess regulatory risk early, (2) Reduce size if risk high, (3) Monitor regulatory process, (4) Diversify across deals. The key: regulatory risk is a major factor - need to assess and manage it carefully.",
       },
       {
         id: 5,
@@ -813,6 +817,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Deal structure considerations",
           "Market cycle impact",
         ],
+        hint: "Deals require financing. Think about how credit market conditions affect deal completion, especially for leveraged deals.",
+        answer: "Financing availability is critical: (1) Credit market conditions - tight credit markets can cause deals to break, (2) Financing risk assessment - evaluate buyer's ability to secure financing, (3) Deal structure - cash deals less affected, leveraged deals more vulnerable, (4) Market cycle - deals break more in credit crises (2008). Impact: financing issues cause deals to break, spreads widen when financing uncertain. Risk management: (1) Assess financing structure, (2) Monitor credit markets, (3) Prefer deals with committed financing, (4) Reduce size if financing risk high. The key: financing risk is critical - monitor credit markets and deal financing structure.",
       },
       {
         id: 6,
@@ -824,6 +830,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Financing issues",
           "Management statements",
         ],
+        hint: "There are warning signs before deals break. Think about spread movements, regulatory issues, financing problems, and management statements.",
+        answer: "Signals of deal break: (1) Spread widening - spreads widen beyond normal range, (2) Regulatory concerns - antitrust issues arise, regulatory pushback, (3) Financing issues - credit markets tighten, financing becomes difficult, (4) Management statements - buyer or seller expresses doubts, deal terms change, (5) Market conditions - market crashes, sector stress. Risk management: (1) Monitor spreads continuously, (2) Watch for warning signs, (3) Reduce size if signals appear, (4) Exit if break risk high. The key: early warning signs exist - monitor closely and act on signals.",
       },
       {
         id: 7,
@@ -835,6 +843,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Portfolio concentration",
           "Kelly criterion application",
         ],
+        hint: "Event-driven trades have binary outcomes. Think about position sizing based on deal probability, risk-adjusted sizing, and portfolio constraints.",
+        answer: "Size positions by: (1) Binary outcome considerations - deals complete or break, size based on break probability, (2) Risk-adjusted sizing - size based on risk, not just return, (3) Portfolio concentration - limit to 5-10% per deal, 20-30% total event exposure, (4) Kelly criterion - optimal sizing based on edge and probability. Formula: position size = (probability × edge) / risk. The key: position sizing is critical - too large = high risk from binary outcomes, too small = low returns - need balance.",
       },
       {
         id: 8,
@@ -846,6 +856,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Stress correlation",
           "Diversification benefits",
         ],
+        hint: "Event strategies are often marketed as low correlation, but correlations change. Think about normal vs stress periods and what happens to correlations.",
+        answer: "Event strategies have low correlation in normal markets (0.2-0.4) but high correlation in stress (0.8-1.0). Normal markets: low correlation, defensive characteristics, diversification benefits. Stress periods: correlations spike, all deals move together, diversification disappears. The key: event strategies are low correlation until stress - then correlations spike, eliminating diversification benefits. Risk management: (1) Don't rely on low correlation in stress, (2) Monitor correlations, (3) Reduce exposure before stress, (4) Understand correlation is regime-dependent.",
       },
       {
         id: 9,
@@ -857,6 +869,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Sector diversification",
           "Geographic diversification",
         ],
+        hint: "Diversification is key for event strategies. Think about spreading across multiple deals, sectors, geographies, and event types.",
+        answer: "Diversify by: (1) Multiple deals - hold 10-20 deals, not 1-2, reduces impact of single deal break, (2) Different event types - M&A, spin-offs, restructurings, not just one type, (3) Sector diversification - spread across sectors (tech, healthcare, industrials), (4) Geographic diversification - US, Europe, Asia deals. Benefits: reduces impact of single deal break, reduces correlation risk. The key: diversification is essential - single deal breaks can cause large losses, multiple deals reduce risk.",
       },
       {
         id: 10,
@@ -868,6 +882,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Loss potential",
           "Risk-adjusted returns",
         ],
+        hint: "Clients need to understand the risks. Think about how to explain binary outcomes, deal break scenarios, and realistic loss potential.",
+        answer: "Explain downside risk by: (1) Binary outcome explanation - deals complete (profit) or break (loss), not continuous, (2) Deal break scenarios - show historical break rates (5-10%), worst-case losses, (3) Loss potential - single deal break can cause 10-20% loss if concentrated, (4) Risk-adjusted returns - emphasize consistency and low correlation, not high returns. Communication: be transparent about risks, show historical drawdowns, set realistic expectations. The key: clients underestimate binary risk - need to explain clearly and set realistic expectations.",
       },
     ],
   },
@@ -903,6 +919,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Downside vs upside",
           "Risk management implications",
         ],
+        hint: "Bonds have positive convexity. Think about how this creates asymmetric price movements when rates rise vs fall.",
+        answer: "Rate hikes vs cuts affect duration asymmetrically due to convexity: (1) Convexity effects - bonds have positive convexity (price increases more when rates fall than decreases when rates rise), (2) Asymmetric price movements - 1% rate cut → larger price gain than 1% rate hike → price loss, (3) Downside vs upside - downside is limited (rates can't go infinitely negative), upside is larger (rates can fall significantly), (4) Risk management implications - long duration benefits more from cuts than suffers from hikes. The key: convexity creates asymmetry - long duration benefits more from rate cuts than suffers from rate hikes.",
       },
       {
         id: 3,
@@ -914,6 +932,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Flight to quality",
           "Limitations of duration hedge",
         ],
+        hint: "Duration hedging assumes rates move together. Think about when this assumption breaks: inflation, flight to quality, correlation breakdown.",
+        answer: "Duration fails as a hedge when: (1) Correlation breakdown - rates don't move together (e.g., credit spreads widen while rates fall), (2) Inflation scenarios - real rates rise while nominal rates fall (inflation hedge fails), (3) Flight to quality - safe assets (bonds) rise while risky assets fall (duration works, but correlation breaks), (4) Limitations - duration only hedges rate risk, not credit, liquidity, or inflation risk. The key: duration hedging assumes rates move together - when correlations break, hedging fails.",
       },
       {
         id: 4,
@@ -925,6 +945,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Volatility-adjusted duration",
           "Risk management",
         ],
+        hint: "Higher volatility increases the value of convexity. Think about how volatility affects duration risk and convexity benefits.",
+        answer: "Volatility changes duration behavior: (1) Volatility impact - higher volatility increases convexity value (optionality value), (2) Convexity effects - volatility increases the benefit of positive convexity (larger price gains from rate moves), (3) Volatility-adjusted duration - effective duration changes with volatility (higher vol = higher effective duration), (4) Risk management - need to adjust position sizes for volatility changes. The key: volatility increases convexity value - higher volatility makes duration positions more valuable but also more risky.",
       },
       {
         id: 5,
@@ -936,6 +958,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Key rate duration",
           "Portfolio impact",
         ],
+        hint: "Duration assumes parallel shifts, but curves shift non-parallel. Think about steepening, flattening, and how this affects duration trades.",
+        answer: "Curve shifts affect duration trades: (1) Parallel vs non-parallel shifts - duration assumes parallel shifts, but curves steepen/flatten, (2) Curve risk vs duration risk - curve risk (steepening/flattening) is separate from duration risk (parallel shifts), (3) Key rate duration - measures sensitivity to specific curve points (2yr, 10yr, 30yr), (4) Portfolio impact - non-parallel shifts can hurt duration hedges. The key: duration only hedges parallel shifts - non-parallel shifts (steepening/flattening) create curve risk that duration doesn't hedge.",
       },
       {
         id: 6,
@@ -947,6 +971,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Cost efficiency",
           "Execution methods",
         ],
+        hint: "There are multiple ways to express duration views. Think about futures, swaps, ETFs, and cash bonds - which is most efficient?",
+        answer: "Express duration views efficiently: (1) Futures vs cash - futures are more capital-efficient (leverage), cheaper (no bid-ask), easier to adjust, (2) Leverage considerations - futures allow leverage (5-10x), cash requires full capital, (3) Cost efficiency - futures are cheaper (futures spread vs bond bid-ask), (4) Execution methods - futures for tactical views, swaps for longer-term, cash for specific bonds. The key: futures are most efficient for duration views - leverage, low cost, easy to adjust.",
       },
       {
         id: 7,
@@ -958,6 +984,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Risk underestimation",
           "Education points",
         ],
+        hint: "Clients often confuse duration with maturity or underestimate duration risk. Think about common misconceptions and how to educate clients.",
+        answer: "Clients misuse duration by: (1) Common misconceptions - confusing duration with maturity, thinking duration = time to maturity, (2) Duration vs maturity confusion - duration measures rate sensitivity, not time, (3) Risk underestimation - not understanding that duration = risk (high duration = high risk), (4) Education points - need to explain duration measures price sensitivity, not time. The key: clients confuse duration with maturity - need to educate that duration measures risk, not time.",
       },
       {
         id: 8,
@@ -969,6 +997,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "TIPS considerations",
           "Portfolio construction",
         ],
+        hint: "Real duration measures sensitivity to real rates, nominal duration to nominal rates. Think about inflation and TIPS.",
+        answer: "Real vs nominal duration: (1) Real duration definition - measures sensitivity to real interest rates (nominal rates - inflation), (2) Inflation impact - real duration hedges real rate risk, nominal duration hedges nominal rate risk, (3) TIPS considerations - TIPS have real duration, nominal bonds have nominal duration, (4) Portfolio construction - need to match duration type to risk (real rate risk vs nominal rate risk). The key: real duration hedges real rate risk (inflation-adjusted), nominal duration hedges nominal rate risk - need to match to risk exposure.",
       },
       {
         id: 9,
@@ -980,6 +1010,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Hedge ratio adjustments",
           "Cost considerations",
         ],
+        hint: "Duration changes as rates move. Think about dynamic hedging: rebalancing frequency, hedge ratio adjustments, and cost considerations.",
+        answer: "Hedge duration dynamically by: (1) Dynamic hedging strategies - adjust hedge as duration changes (duration changes with rates), (2) Rebalancing frequency - rebalance weekly/monthly or when duration drifts >10%, (3) Hedge ratio adjustments - adjust hedge ratio as portfolio duration changes, (4) Cost considerations - balance hedging cost vs risk reduction. The key: duration is dynamic - need to rebalance hedges as duration changes to maintain effective hedge.",
       },
       {
         id: 10,
@@ -991,6 +1023,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Real-world examples",
           "Risk communication",
         ],
+        hint: "Clients need simple explanations. Think about analogies (like a seesaw), practical examples, and visual aids to explain duration risk.",
+        answer: "Explain duration risk simply: (1) Simple analogies - duration is like a seesaw: higher duration = more sensitive to rate changes, (2) Visual explanations - show price sensitivity charts, duration ladder, (3) Real-world examples - 'If rates rise 1%, a 10-year duration bond falls 10%', (4) Risk communication - duration = risk: high duration = high risk, low duration = low risk. The key: use simple analogies and examples - duration measures how much prices move when rates change.",
       },
     ],
     'credit': [
@@ -1024,6 +1058,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Market sentiment",
           "Macro factors",
         ],
+        hint: "Credit spreads compensate for risk. Think about what risks investors demand compensation for: default, liquidity, and market sentiment.",
+        answer: "Credit spreads are driven by: (1) Default risk - probability of issuer default, higher default risk = wider spreads, (2) Liquidity risk - less liquid bonds trade wider, liquidity premium, (3) Market sentiment - risk-on (tight spreads) vs risk-off (wide spreads), (4) Macro factors - economic growth, credit cycle, monetary policy. The key: spreads compensate for default and liquidity risk, but also move with market sentiment and macro conditions.",
       },
       {
         id: 3,
@@ -1035,6 +1071,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Bid-ask spreads",
           "Liquidity risk management",
         ],
+        hint: "Liquidity is critical in credit markets. Think about what happens during market stress: bid-ask spreads widen, liquidity disappears.",
+        answer: "Liquidity conditions impact credit: (1) Liquidity premium - less liquid bonds trade wider (liquidity premium), (2) Market stress impact - liquidity dries up during stress, spreads widen dramatically, (3) Bid-ask spreads - wider spreads = higher transaction costs, (4) Liquidity risk management - focus on liquid bonds, avoid illiquid names, have exit plans. The key: liquidity is critical - during stress, liquidity disappears and spreads widen, making it hard to exit positions.",
       },
       {
         id: 4,
@@ -1046,6 +1084,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Deteriorating fundamentals",
           "Warning signs",
         ],
+        hint: "High carry can hide deteriorating credit quality. Think about when high yields mask increasing default risk.",
+        answer: "Carry masks credit risk when: (1) Carry vs risk trade-off - high carry (yield) compensates for high risk, but risk may be underestimated, (2) Risk-adjusted returns - need to assess risk-adjusted returns, not just yield, (3) Deteriorating fundamentals - high yield may reflect deteriorating credit quality, not just risk premium, (4) Warning signs - widening spreads, downgrades, negative news. The key: high carry doesn't always mean good value - need to assess if risk is properly priced or if fundamentals are deteriorating.",
       },
       {
         id: 5,
@@ -1057,6 +1097,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Historical patterns",
           "Risk management",
         ],
+        hint: "Defaults don't happen immediately when the economy weakens. Think about the lag between economic downturn and actual defaults.",
+        answer: "Defaults lag macro indicators: (1) Default cycle timing - defaults peak 6-12 months after recession starts, (2) Leading indicators - spreads widen before defaults, spreads are leading, defaults are lagging, (3) Historical patterns - 2008 recession started Q4 2007, defaults peaked Q2 2009, (4) Risk management - use leading indicators (spreads, macro data) to anticipate defaults, not wait for defaults. The key: defaults lag macro indicators - use leading indicators (spreads, economic data) to anticipate defaults, not wait for defaults to occur.",
       },
       {
         id: 6,
@@ -1068,6 +1110,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Diversification",
           "Risk management",
         ],
+        hint: "Downgrades cause price declines. Think about the price impact, especially for fallen angels (investment grade to high yield).",
+        answer: "Downgrades affect portfolio risk: (1) Price impact of downgrades - downgrades cause price declines (2-5% typically), fallen angels (IG→HY) cause larger declines (5-10%), (2) Portfolio risk assessment - downgrades increase portfolio risk, need to reassess, (3) Diversification - multiple downgrades increase correlation risk, (4) Risk management - monitor credit quality, reduce exposure to downgrade candidates, exit before downgrade if possible. The key: downgrades increase risk and cause losses - need to monitor credit quality and manage downgrade risk.",
       },
       {
         id: 7,
@@ -1079,6 +1123,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Recovery timing",
           "Risk management",
         ],
+        hint: "Credit spreads widen dramatically in recessions. Think about historical patterns: how much do spreads widen, and when do they recover?",
+        answer: "Spreads behave in recessions: (1) Historical spread behavior - spreads widen 200-500bps in recessions (2008: +400bps, 2020: +300bps), (2) Recession patterns - spreads widen early in recession, peak mid-recession, (3) Recovery timing - spreads tighten as recovery begins, but lag economic recovery, (4) Risk management - reduce exposure before recession, increase quality, have exit plans. The key: spreads widen dramatically in recessions - need to reduce exposure before recession and increase quality.",
       },
       {
         id: 8,
@@ -1090,6 +1136,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Sector hedging",
           "Cost-benefit analysis",
         ],
+        hint: "There are multiple ways to hedge credit risk. Think about CDS, duration hedging, and sector hedging - what are the trade-offs?",
+        answer: "Hedge credit exposure by: (1) CDS hedging - buy CDS protection to hedge credit risk, most direct hedge, (2) Duration hedging - hedge rate risk but not credit risk, (3) Sector hedging - hedge sector exposure using sector ETFs or CDS indices, (4) Cost-benefit analysis - hedging costs 1-3% annually, need to assess if worth it. The key: CDS is most direct hedge for credit risk, but hedging is expensive - need to assess cost-benefit.",
       },
       {
         id: 9,
@@ -1101,6 +1149,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Sector rotation",
           "Portfolio construction",
         ],
+        hint: "Some sectors are more sensitive to economic cycles. Think about which sectors perform well in expansions vs recessions.",
+        answer: "Most cyclical sectors: (1) Cyclical sectors - energy, materials, industrials, consumer discretionary (high economic sensitivity), (2) Defensive sectors - utilities, consumer staples, healthcare (low economic sensitivity), (3) Sector rotation - overweight cyclicals in expansion, defensive in recession, (4) Portfolio construction - balance cyclical and defensive based on cycle. The key: cyclicals outperform in expansion but underperform in recession - need to rotate based on cycle.",
       },
       {
         id: 10,
@@ -1112,6 +1162,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Quality focus",
           "Risk communication",
         ],
+        hint: "Late-cycle is risky for credit. Think about how to position: reduce exposure, increase quality, and communicate risks clearly.",
+        answer: "Pitch credit late-cycle by: (1) Late-cycle credit risks - spreads widen, defaults increase, downgrades accelerate, (2) Positioning adjustments - reduce exposure, increase quality (IG over HY), shorten duration, (3) Quality focus - emphasize high-quality credits, avoid cyclicals, (4) Risk communication - be transparent about risks, set realistic expectations, emphasize defensive positioning. The key: late-cycle is dangerous for credit - need to reduce exposure, increase quality, and communicate risks clearly.",
       },
     ],
     'carry': [
@@ -1125,6 +1177,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Carry vs capital gains",
           "Carry strategies across assets",
         ],
+        hint: "Carry is the return from holding an asset. Think about yield harvesting: earning interest or dividends while holding positions.",
+        answer: "A carry strategy harvests yield from holding assets. Definition: carry = income from holding (interest, dividends, roll-down). Yield harvesting: earn carry while holding positions, not relying on price appreciation. Carry vs capital gains: carry is income (predictable), capital gains are price appreciation (uncertain). Carry strategies across assets: bonds (yield), currencies (interest rate differential), commodities (roll yield), equities (dividends). The key: carry strategies earn income from holding assets - predictable income, but vulnerable to price moves.",
       },
       {
         id: 2,
@@ -1136,6 +1190,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Market structure",
           "Historical performance",
         ],
+        hint: "Carry works because it's a risk premium. Think about why investors demand compensation for taking risk.",
+        answer: "Carry works most of the time because: (1) Risk premium explanation - carry compensates for risk (default, liquidity, volatility), investors demand compensation, (2) Behavioral factors - investors prefer safe assets, creating carry opportunities in risky assets, (3) Market structure - risk-averse investors bid up safe assets, creating carry in risky assets, (4) Historical performance - carry strategies have positive returns over long term (risk premium). The key: carry is a risk premium - works most of the time, but fails during stress when risk materializes.",
       },
       {
         id: 3,
@@ -1147,6 +1203,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Liquidity crises",
           "Risk management",
         ],
+        hint: "Carry unwinds when risk materializes. Think about market stress, liquidity crises, and what causes carry trades to reverse.",
+        answer: "Carry unwinds violently when: (1) Carry unwind scenarios - risk materializes, correlations spike, all carry trades reverse together, (2) Market stress - risk-off periods cause carry trades to unwind (2008, 2020 Q1), (3) Liquidity crises - liquidity disappears, can't exit positions, forced to hold losses, (4) Risk management - need to reduce exposure before stress, have exit plans. The key: carry unwinds violently during stress - all carry trades reverse together, correlations spike, liquidity disappears.",
       },
       {
         id: 4,
@@ -1158,6 +1216,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Leverage effects",
           "Risk management",
         ],
+        hint: "Volatility spikes are dangerous for carry trades. Think about margin calls, leverage effects, and forced liquidations.",
+        answer: "Volatility spikes affect carry trades: (1) Volatility impact - volatility spikes cause price moves, hurting carry positions, (2) Margin calls - higher volatility increases margin requirements, forces deleveraging, (3) Leverage effects - leverage amplifies losses during volatility spikes, (4) Risk management - need to reduce leverage, reduce position sizes, have exit plans. The key: volatility spikes are dangerous - cause margin calls, forced deleveraging, and large losses in carry trades.",
       },
       {
         id: 5,
@@ -1169,6 +1229,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Funding market stress",
           "Return impact",
         ],
+        hint: "Carry strategies often require funding. Think about how funding costs reduce net carry and what happens during funding stress.",
+        answer: "Funding costs impact carry returns: (1) Funding cost calculation - net carry = gross carry - funding cost, (2) Net carry - funding costs reduce returns (1-3% annually typically), (3) Funding market stress - funding costs spike during stress (2008, 2020 Q1), making carry unprofitable, (4) Return impact - funding costs can consume 20-50% of gross carry. The key: funding costs reduce net carry - need to generate enough gross carry to cover funding costs and still profit.",
       },
       {
         id: 6,
@@ -1180,6 +1242,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Risk communication",
           "Position sizing",
         ],
+        hint: "Clients focus on steady returns but underestimate tail risk. Think about historical carry crashes and how to communicate tail risk.",
+        answer: "Clients underestimate tail risk by: (1) Tail risk in carry - carry strategies have low volatility most of the time, but large losses during stress, (2) Historical examples - 2008 (carry trades lost 20-40%), 2020 Q1 (carry trades lost 15-30%), (3) Risk communication - need to explain tail risk explicitly, show worst-case scenarios, (4) Position sizing - size positions for tail risk, not just expected return. The key: clients underestimate tail risk - need to explain that carry works until it doesn't, and tail risk is significant.",
       },
       {
         id: 7,
@@ -1191,6 +1255,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Hedging strategies",
           "Position sizing",
         ],
+        hint: "Negative convexity means losses accelerate as prices move against you. Think about how to manage this risk.",
+        answer: "Manage negative convexity by: (1) Negative convexity definition - losses accelerate as prices move against you (opposite of positive convexity), (2) Risk management techniques - reduce position sizes, use stop-losses, limit leverage, (3) Hedging strategies - hedge with options (buy puts), use dynamic hedging, (4) Position sizing - size positions for convexity risk, not just expected return. The key: negative convexity is dangerous - losses accelerate, need to manage carefully with position sizing and hedging.",
       },
       {
         id: 8,
@@ -1202,6 +1268,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Forward guidance",
           "Strategy adjustments",
         ],
+        hint: "Central bank policy affects interest rates and carry. Think about rate policy, QE/QT, and how this impacts carry strategies.",
+        answer: "Central banks affect carry: (1) Rate policy impact - rate cuts reduce carry (lower yields), rate hikes increase carry (higher yields), (2) QE/QT effects - QE reduces carry (compresses yields), QT increases carry (allows yields to rise), (3) Forward guidance - central bank communication affects carry expectations, (4) Strategy adjustments - adjust positions based on central bank policy, reduce exposure if policy tightening. The key: central bank policy directly affects carry - need to monitor and adjust positions based on policy.",
       },
       {
         id: 9,
@@ -1213,6 +1281,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Sector diversification",
           "Correlation management",
         ],
+        hint: "Diversification is key for carry strategies. Think about spreading across assets, geographies, and sectors to reduce correlation risk.",
+        answer: "Diversify carry exposure by: (1) Cross-asset carry - bonds, currencies, commodities, not just one asset class, (2) Geographic diversification - US, Europe, Asia, emerging markets, (3) Sector diversification - different sectors within asset classes, (4) Correlation management - monitor correlations, avoid highly correlated positions. The key: diversification reduces correlation risk - but correlations spike during stress, so diversification helps but doesn't eliminate risk.",
       },
       {
         id: 10,
@@ -1224,6 +1294,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Position sizing",
           "Exit strategies",
         ],
+        hint: "There are signals before carry unwinds. Think about risk-off indicators, market stress, and when to reduce exposure.",
+        answer: "Reduce carry risk when: (1) Risk-off signals - VIX spikes, credit spreads widen, safe assets outperform, (2) Market stress indicators - volatility increases, correlations spike, liquidity dries up, (3) Position sizing - reduce position sizes, reduce leverage, (4) Exit strategies - have exit plans, use stop-losses, reduce exposure before stress. The key: reduce carry risk before stress - by the time stress hits, it's too late to exit without losses.",
       },
     ],
     'curve': [
@@ -1237,6 +1309,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Curve positioning",
           "Time horizon",
         ],
+        hint: "Yield curve strategies trade the shape of the curve. Think about steepening (long end rises more than short end) and flattening (short end rises more than long end).",
+        answer: "A yield curve strategy trades the shape of the yield curve. Definition: positioning based on curve shape changes (steepening/flattening), not just level changes. Steepening vs flattening: steepening = long rates rise more than short rates (curve gets steeper), flattening = short rates rise more than long rates (curve gets flatter). Curve positioning: long steepener (long long end, short short end), long flattener (short long end, long short end). Time horizon: typically 3-12 months. The key: curve strategies trade curve shape, not just rate level - profit from steepening or flattening.",
       },
       {
         id: 2,
@@ -1248,6 +1322,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Monetary policy",
           "Market sentiment",
         ],
+        hint: "Curve shape reflects macro expectations. Think about what causes steepening (growth/inflation expectations) vs flattening (recession/monetary tightening).",
+        answer: "Macro signals drive curve shape: (1) Economic growth - strong growth → steepening (long rates rise), weak growth → flattening (long rates fall), (2) Inflation expectations - rising inflation → steepening, falling inflation → flattening, (3) Monetary policy - rate hikes → flattening (short rates rise), rate cuts → steepening (short rates fall), (4) Market sentiment - risk-on → steepening, risk-off → flattening. The key: curve shape reflects macro expectations - steepening = growth/inflation expectations, flattening = recession/monetary tightening.",
       },
       {
         id: 3,
@@ -1259,6 +1335,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Market neutral",
           "Risk characteristics",
         ],
+        hint: "Curve trades are relative value, duration trades are directional. Think about market-neutral vs directional positioning.",
+        answer: "Curve trades differ from duration trades: (1) Curve risk vs duration risk - curve trades = relative value (steepening/flattening), duration trades = directional (rate level), (2) Relative value - curve trades are market-neutral (long one maturity, short another), duration trades are directional (long or short rates), (3) Market neutral - curve trades can be duration-neutral, duration trades have duration exposure, (4) Risk characteristics - curve trades have lower risk (relative value), duration trades have higher risk (directional). The key: curve trades are relative value (market-neutral), duration trades are directional (market exposure).",
       },
       {
         id: 4,
@@ -1270,6 +1348,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Operation twist",
           "Signal interpretation",
         ],
+        hint: "Central bank policy can distort curve signals. Think about QE (buys long bonds, flattens curve), QT (sells long bonds, steepens curve), and forward guidance.",
+        answer: "Central banks distort curve signals: (1) QE/QT impact - QE buys long bonds (flattens curve artificially), QT sells long bonds (steepens curve), (2) Forward guidance - central bank communication affects curve shape (guidance on future rates), (3) Operation twist - buying long bonds, selling short bonds (flattens curve), (4) Signal interpretation - need to distinguish policy-driven curve changes from fundamental signals. The key: central bank policy distorts curve signals - need to adjust for policy impact when interpreting curve shape.",
       },
       {
         id: 5,
@@ -1281,6 +1361,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Demand factors",
           "Technical vs fundamental",
         ],
+        hint: "Supply and demand affect curve shape. Think about Treasury issuance, auction impact, and how supply changes affect different maturities.",
+        answer: "Supply affects curve shape: (1) Treasury supply - more long-term supply → steepens curve (long rates rise), more short-term supply → flattens curve (short rates rise), (2) Auction impact - large auctions can move curve (supply overwhelms demand), (3) Demand factors - demand for long bonds (pensions, insurance) flattens curve, demand for short bonds steepens curve, (4) Technical vs fundamental - supply is technical factor, need to distinguish from fundamental (growth, inflation). The key: supply is a technical factor - more supply at a maturity pushes rates up at that maturity, affecting curve shape.",
       },
       {
         id: 6,
@@ -1292,6 +1374,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Hedging instruments",
           "Cost considerations",
         ],
+        hint: "Curve risk is different from duration risk. Think about key rate duration (sensitivity to specific maturities) and butterfly trades.",
+        answer: "Hedge curve risk by: (1) Key rate duration - measure sensitivity to specific curve points (2yr, 10yr, 30yr), hedge each point, (2) Butterfly trades - hedge curve risk using butterfly positions (long middle, short wings), (3) Hedging instruments - use futures, swaps, or options on specific maturities, (4) Cost considerations - hedging costs 0.5-1% annually, need to assess cost-benefit. The key: curve risk requires hedging specific maturities, not just overall duration - use key rate duration and butterfly trades.",
       },
       {
         id: 7,
@@ -1303,6 +1387,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Market stress",
           "Historical examples",
         ],
+        hint: "Traditional curve relationships can break. Think about regime changes, policy distortions, and market stress.",
+        answer: "Traditional curve relationships break when: (1) Regime changes - economic regime shifts (growth to recession) break relationships, (2) Policy distortions - QE, forward guidance distort normal relationships, (3) Market stress - stress periods (2008, 2020) cause relationships to break, (4) Historical examples - 2008 (curve inverted despite growth), 2020 (curve steepened despite recession). The key: traditional relationships break during regime changes, policy distortions, and stress - need to adapt strategies.",
       },
       {
         id: 8,
@@ -1314,6 +1400,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Defensive characteristics",
           "Risk management",
         ],
+        hint: "Curves typically steepen in recessions (long rates fall more than short rates). Think about historical patterns and defensive positioning.",
+        answer: "Curve trades perform in recessions: (1) Historical performance - curves typically steepen in recessions (long rates fall, short rates stable or rise), (2) Recession patterns - long steepeners (long long end, short short end) perform well, (3) Defensive characteristics - curve trades can be defensive (relative value, not directional), (4) Risk management - need to manage correlation risk (correlations spike in stress). The key: curves steepen in recessions - long steepeners perform well, but need to manage correlation risk.",
       },
       {
         id: 9,
@@ -1325,6 +1413,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Risk underestimation",
           "Education points",
         ],
+        hint: "Clients often misunderstand curve strategies. Think about common misconceptions: confusing curve trades with duration trades, timing errors, risk underestimation.",
+        answer: "Client mistakes: (1) Common misconceptions - confusing curve trades with duration trades, thinking curve trades are always safe, (2) Timing errors - entering curve trades at wrong time (after move already happened), (3) Risk underestimation - not understanding that curve trades still have risk (correlation risk, timing risk), (4) Education points - need to explain curve trades are relative value, not risk-free. The key: clients misunderstand curve strategies - need to educate that curve trades are relative value, not risk-free, and timing matters.",
       },
       {
         id: 10,
@@ -1336,6 +1426,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Return component",
           "Visual aids",
         ],
+        hint: "Roll-down is the return from a bond moving down the curve as time passes. Think about how to explain this simply with examples.",
+        answer: "Explain roll-down: (1) Roll-down definition - return from bond moving down curve as time passes (10yr bond becomes 9yr bond, yield falls), (2) Simple explanation - 'bond earns return as it moves to lower yield on curve', (3) Return component - roll-down is part of total return (along with carry, price appreciation), (4) Visual aids - show curve diagram, demonstrate how bond moves down curve. The key: roll-down is return from bond moving down curve - use simple explanation and visual aids.",
       },
     ],
     'relative-value': [
@@ -1349,6 +1441,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Relative value opportunities",
           "Risk characteristics",
         ],
+        hint: "Relative value strategies are market-neutral. Think about buying undervalued assets and shorting overvalued assets to profit from mispricings.",
+        answer: "A relative value strategy is market-neutral, profiting from mispricings between related assets. Definition: long undervalued assets, short overvalued assets, maintain market neutrality. Market neutral approach: beta-neutral, duration-neutral, factor-neutral (ideally). Relative value opportunities: mispricings between similar bonds, sectors, or markets. Risk characteristics: lower risk than directional strategies, but still has risk (correlation risk, model risk). The key: RV strategies are market-neutral - profit from relative mispricings, not market direction.",
       },
       {
         id: 2,
@@ -1360,6 +1454,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Factor neutral",
           "True neutrality testing",
         ],
+        hint: "True market neutrality requires neutralizing all exposures. Think about beta, duration, and factor exposures - not just one dimension.",
+        answer: "True market neutrality requires: (1) Beta neutral - no market exposure (beta = 0), (2) Duration neutral - no rate exposure (duration = 0), (3) Factor neutral - no factor exposures (value, growth, momentum), (4) True neutrality testing - test in stress scenarios, monitor continuously. The key: true neutrality requires neutralizing all exposures - beta, duration, factors - not just one dimension.",
       },
       {
         id: 3,
@@ -1371,6 +1467,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Risk management",
           "Historical examples",
         ],
+        hint: "RV trades assume correlations remain stable. Think about what happens when correlations break down during stress.",
+        answer: "Correlation breakdown affects RV trades: (1) Correlation breakdown - correlations spike to 1 during stress, eliminating diversification, (2) Stress scenarios - all RV trades fail together when correlations break (2008, 2020 Q1), (3) Risk management - need to reduce exposure before stress, monitor correlations, (4) Historical examples - 2008 (correlations → 1), 2020 Q1 (correlations → 1). The key: correlation breakdown is the biggest risk for RV - correlations spike during stress, causing all trades to fail together.",
       },
       {
         id: 4,
@@ -1382,6 +1480,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Market stress",
           "Risk management",
         ],
+        hint: "RV strategies often use leverage. Think about how funding costs and funding constraints affect returns and risk.",
+        answer: "Funding constraints impact RV: (1) Funding cost impact - funding costs reduce returns (1-3% annually), (2) Leverage constraints - funding constraints limit leverage, reducing returns, (3) Market stress - funding costs spike during stress, making RV unprofitable, (4) Risk management - need to manage funding risk, have backup funding sources. The key: funding constraints are critical - funding costs reduce returns, and funding can disappear during stress.",
       },
       {
         id: 5,
@@ -1393,6 +1493,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Risk amplification",
           "Position sizing",
         ],
+        hint: "Leverage amplifies both returns and risks. Think about margin calls, forced deleveraging, and how leverage can cause large losses.",
+        answer: "Leverage amplifies RV risk: (1) Leverage impact - leverage amplifies losses (2x leverage = 2x losses), (2) Margin calls - higher leverage = higher margin requirements, forces deleveraging, (3) Risk amplification - leverage amplifies all risks (correlation, liquidity, model risk), (4) Position sizing - need to size positions for leverage risk, not just expected return. The key: leverage amplifies risk - need to manage leverage carefully, especially during stress when margin calls force deleveraging.",
       },
       {
         id: 6,
@@ -1404,6 +1506,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Stress testing",
           "Risk monitoring",
         ],
+        hint: "RV trades can have hidden directional exposure. Think about factor analysis, beta analysis, and stress testing to identify hidden risks.",
+        answer: "Identify hidden directional exposure by: (1) Factor exposure analysis - analyze factor exposures (value, growth, momentum), (2) Beta analysis - measure portfolio beta, should be near 0, (3) Stress testing - test how portfolio behaves in stress scenarios, (4) Risk monitoring - continuously monitor exposures, adjust positions. The key: hidden directional exposure is dangerous - need to analyze factors, beta, and stress test to identify hidden risks.",
       },
       {
         id: 7,
@@ -1415,6 +1519,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Liquidity stress",
           "Historical analysis",
         ],
+        hint: "Stress testing is critical for RV strategies. Think about testing correlation breakdown, liquidity stress, and historical stress scenarios.",
+        answer: "Stress-test RV strategies by: (1) Stress scenarios - test correlation breakdown (correlations → 1), liquidity stress (can't exit), (2) Correlation breakdown - test how portfolio behaves when correlations spike, (3) Liquidity stress - test liquidity scenarios (bid-ask widens, can't exit), (4) Historical analysis - analyze historical stress periods (2008, 2020 Q1). The key: stress testing is critical - test correlation breakdown, liquidity stress, and historical scenarios to understand tail risk.",
       },
       {
         id: 8,
@@ -1426,6 +1532,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Risk identification",
           "Position adjustments",
         ],
+        hint: "RV can become directional during regime changes or correlation breakdown. Think about when and why this happens.",
+        answer: "RV becomes directional when: (1) Regime changes - economic regime shifts cause RV to become directional, (2) Correlation breakdown - correlations spike, eliminating diversification, RV becomes directional, (3) Risk identification - need to identify when RV becomes directional (monitor beta, factors), (4) Position adjustments - adjust positions when RV becomes directional (reduce exposure, exit trades). The key: RV becomes directional during regime changes and correlation breakdown - need to identify and adjust positions.",
       },
       {
         id: 9,
@@ -1437,6 +1545,8 @@ export const strategyQuestions: Record<string, Record<string, BehavioralQuestion
           "Leverage limits",
           "Portfolio constraints",
         ],
+        hint: "Position sizing is critical for RV strategies. Think about risk-adjusted sizing, correlation considerations, and leverage limits.",
+        answer: "Size RV positions by: (1) Risk-adjusted sizing - size based on risk, not just expected return, (2) Correlation considerations - account for correlation risk (correlations spike in stress), (3) Leverage limits - limit leverage (2-5x typically), don't over-leverage, (4) Portfolio constraints - limit position sizes (5-10% per trade), total exposure (50-100% gross). The key: position sizing is critical - size based on risk, account for correlation risk, and limit leverage.",
       },
       {
         id: 10,
