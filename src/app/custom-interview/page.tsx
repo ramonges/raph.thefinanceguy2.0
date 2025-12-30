@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import DashboardNav from '@/components/DashboardNav'
 import { Profile, BlockType, AssetCategory } from '@/types'
+import { getInterviewFlow, InterviewFlow } from '@/data/customInterviewQuestions'
 import { 
   Users, 
   TrendingUp, 
@@ -15,30 +16,22 @@ import {
   Building2,
   Briefcase,
   Check,
-  Lock,
-  Sparkles
+  Sparkles,
+  Download,
+  FileText
 } from 'lucide-react'
+import jsPDF from 'jspdf'
 
 type CompanyType = 'bank' | 'hedge-fund'
-
-interface CustomQuestion {
-  id: number
-  question: string
-  answer: string
-  hint?: string
-  explanation?: string[]
-  difficulty?: 'easy' | 'medium' | 'hard'
-}
 
 export default function CustomInterviewPage() {
   const [step, setStep] = useState(1)
   const [blockType, setBlockType] = useState<BlockType | null>(null)
   const [tradingDesk, setTradingDesk] = useState<AssetCategory | null>(null)
   const [companyType, setCompanyType] = useState<CompanyType | null>(null)
-  const [questions, setQuestions] = useState<CustomQuestion[]>([])
+  const [interviewFlow, setInterviewFlow] = useState<InterviewFlow | null>(null)
   const [loading, setLoading] = useState(false)
   const [profile, setProfile] = useState<Profile | null>(null)
-  const [checkoutLoading, setCheckoutLoading] = useState(false)
   const router = useRouter()
   const supabase = createClient()
 
@@ -70,62 +63,89 @@ export default function CustomInterviewPage() {
   }, [router, supabase])
 
   useEffect(() => {
-    if (step === 4 && blockType && tradingDesk && companyType) {
-      generateQuestions()
-    }
-  }, [step, blockType, tradingDesk, companyType])
-
-  const generateQuestions = async () => {
-    setLoading(true)
-    // Simulate question generation - in production, this would fetch from your database
-    // For now, we'll create sample questions based on selections
-    const sampleQuestions: CustomQuestion[] = Array.from({ length: 20 }, (_, i) => ({
-      id: i + 1,
-      question: `Customized ${blockType} question for ${tradingDesk} desk at ${companyType === 'bank' ? 'Bank' : 'Hedge Fund'} - Question ${i + 1}`,
-      answer: `This is a detailed answer for question ${i + 1} tailored to ${blockType} role in ${tradingDesk} at a ${companyType === 'bank' ? 'bank' : 'hedge fund'}.`,
-      hint: `Hint for question ${i + 1}`,
-      explanation: [`Explanation point 1 for question ${i + 1}`, `Explanation point 2 for question ${i + 1}`],
-      difficulty: i % 3 === 0 ? 'easy' : i % 3 === 1 ? 'medium' : 'hard'
-    }))
-    
-    setTimeout(() => {
-      setQuestions(sampleQuestions)
+    if (step === 4 && blockType && companyType) {
+      setLoading(true)
+      // Get the interview flow based on selections
+      const flow = getInterviewFlow(blockType, companyType)
+      setInterviewFlow(flow)
       setLoading(false)
-    }, 1000)
-  }
+    }
+  }, [step, blockType, companyType])
 
-  const handleCheckout = async () => {
-    setCheckoutLoading(true)
-    try {
-      const response = await fetch('/api/create-checkout-session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          blockType,
-          tradingDesk,
-          companyType,
-        }),
+  const handleDownloadPDF = () => {
+    if (!interviewFlow) return
+
+    const doc = new jsPDF()
+    let yPos = 20
+
+    // Title
+    doc.setFontSize(18)
+    doc.setFont('helvetica', 'bold')
+    doc.text(interviewFlow.title, 20, yPos)
+    yPos += 10
+
+    // Goal and Mindset
+    doc.setFontSize(12)
+    doc.setFont('helvetica', 'normal')
+    doc.text(`Goal: ${interviewFlow.goal}`, 20, yPos)
+    yPos += 7
+    doc.text(`Mindset tested: "${interviewFlow.mindset}"`, 20, yPos)
+    yPos += 15
+
+    // Sections
+    interviewFlow.sections.forEach((section, sectionIdx) => {
+      // Section title
+      if (yPos > 250) {
+        doc.addPage()
+        yPos = 20
+      }
+      
+      doc.setFontSize(14)
+      doc.setFont('helvetica', 'bold')
+      doc.text(section.title, 20, yPos)
+      yPos += 8
+
+      if (section.description) {
+        doc.setFontSize(10)
+        doc.setFont('helvetica', 'italic')
+        doc.text(section.description, 20, yPos)
+        yPos += 6
+      }
+
+      // Questions
+      section.questions.forEach((question, qIdx) => {
+        if (yPos > 250) {
+          doc.addPage()
+          yPos = 20
+        }
+
+        doc.setFontSize(11)
+        doc.setFont('helvetica', 'bold')
+        const questionText = `${qIdx + 1}. ${question.question}`
+        const questionLines = doc.splitTextToSize(questionText, 170)
+        doc.text(questionLines, 20, yPos)
+        yPos += questionLines.length * 5 + 3
+
+        if (question.hint) {
+          doc.setFontSize(9)
+          doc.setFont('helvetica', 'italic')
+          doc.text(`Hint: ${question.hint}`, 25, yPos)
+          yPos += 5
+        }
+
+        doc.setFontSize(10)
+        doc.setFont('helvetica', 'normal')
+        const answerLines = doc.splitTextToSize(`Answer: ${question.answer}`, 170)
+        doc.text(answerLines, 20, yPos)
+        yPos += answerLines.length * 5 + 8
       })
 
-      const { url, error } = await response.json()
+      yPos += 5
+    })
 
-      if (error) {
-        console.error('Checkout error:', error)
-        alert('Error creating checkout session. Please try again.')
-        setCheckoutLoading(false)
-        return
-      }
-
-      if (url) {
-        window.location.href = url
-      }
-    } catch (error) {
-      console.error('Checkout error:', error)
-      alert('Error creating checkout session. Please try again.')
-      setCheckoutLoading(false)
-    }
+    // Save PDF
+    const fileName = `${interviewFlow.track}-${interviewFlow.companyType}-interview.pdf`
+    doc.save(fileName)
   }
 
   const tradingDesks: Array<{ id: AssetCategory; label: string; icon: React.ElementType; color: string }> = [
@@ -151,7 +171,7 @@ export default function CustomInterviewPage() {
       <DashboardNav profile={profile} onOpenStats={() => {}} blockType={null} />
 
       <main className="pt-16 sm:pt-24 pb-12 px-4 sm:px-6">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2 bg-[#1f2937] border border-[#374151] text-[#f97316] px-4 py-2 rounded-full mb-4">
@@ -363,109 +383,81 @@ export default function CustomInterviewPage() {
               </div>
             )}
 
-            {/* Step 4: Questions Preview */}
-            {step === 4 && (
+            {/* Step 4: Interview Flow */}
+            {step === 4 && interviewFlow && (
               <div>
-                <button
-                  onClick={() => setStep(blockType === 'trading' ? 3 : 2)}
-                  className="flex items-center gap-2 text-[#9ca3af] hover:text-white mb-6 transition-colors"
-                >
-                  <ArrowLeft className="w-4 h-4" />
-                  Back
-                </button>
-                <h2 className="text-2xl font-bold mb-2">Your Customized Questions</h2>
-                <p className="text-[#9ca3af] mb-6">
-                  Preview the first 4 questions. Purchase to unlock all {questions.length} questions.
-                </p>
+                <div className="flex items-center justify-between mb-6">
+                  <button
+                    onClick={() => setStep(blockType === 'trading' ? 3 : 2)}
+                    className="flex items-center gap-2 text-[#9ca3af] hover:text-white transition-colors"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                    Back
+                  </button>
+                  <button
+                    onClick={handleDownloadPDF}
+                    className="flex items-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white px-4 py-2 rounded-lg transition-colors"
+                  >
+                    <Download className="w-4 h-4" />
+                    Download PDF
+                  </button>
+                </div>
+
+                {/* Interview Header */}
+                <div className="mb-8 pb-6 border-b border-[#1f2937]">
+                  <h2 className="text-3xl font-bold mb-3">{interviewFlow.title}</h2>
+                  <div className="space-y-2">
+                    <p className="text-[#9ca3af]">
+                      <span className="font-semibold text-white">Goal:</span> {interviewFlow.goal}
+                    </p>
+                    <p className="text-[#9ca3af]">
+                      <span className="font-semibold text-white">Mindset tested:</span> "{interviewFlow.mindset}"
+                    </p>
+                  </div>
+                </div>
 
                 {loading ? (
                   <div className="flex items-center justify-center py-12">
                     <Loader2 className="w-8 h-8 animate-spin text-[#f97316]" />
                   </div>
                 ) : (
-                  <>
-                    <div className="space-y-4 mb-8">
-                      {questions.slice(0, 4).map((q, idx) => (
-                        <div
-                          key={q.id}
-                          className="bg-[#1f2937] border border-[#374151] rounded-xl p-6"
-                        >
-                          <div className="flex items-start gap-4">
-                            <div className="w-8 h-8 rounded-full bg-[#f97316] flex items-center justify-center font-bold flex-shrink-0">
-                              {idx + 1}
-                            </div>
-                            <div className="flex-1">
-                              <h3 className="font-semibold mb-2">{q.question}</h3>
-                              {q.hint && (
-                                <p className="text-sm text-[#9ca3af] mb-2">
-                                  <span className="font-medium">Hint:</span> {q.hint}
-                                </p>
-                              )}
-                              <div className="mt-3 pt-3 border-t border-[#374151]">
-                                <p className="text-sm text-[#6b7280]">
-                                  <span className="font-medium text-[#9ca3af]">Answer:</span> {q.answer}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-
-                      {/* Blurred Questions */}
-                      {questions.length > 4 && (
-                        <div className="relative">
-                          <div className="blur-sm space-y-4">
-                            {questions.slice(4).map((q, idx) => (
-                              <div
-                                key={q.id}
-                                className="bg-[#1f2937] border border-[#374151] rounded-xl p-6"
-                              >
-                                <div className="flex items-start gap-4">
-                                  <div className="w-8 h-8 rounded-full bg-[#6b7280] flex items-center justify-center font-bold flex-shrink-0">
-                                    {idx + 5}
-                                  </div>
-                                  <div className="flex-1">
-                                    <h3 className="font-semibold mb-2">{q.question}</h3>
-                                    <p className="text-sm text-[#9ca3af]">Answer preview...</p>
+                  <div className="space-y-8">
+                    {interviewFlow.sections.map((section, sectionIdx) => (
+                      <div key={sectionIdx} className="bg-[#1f2937] border border-[#374151] rounded-xl p-6">
+                        <h3 className="text-xl font-bold mb-4 text-[#f97316]">{section.title}</h3>
+                        {section.description && (
+                          <p className="text-[#9ca3af] mb-4">{section.description}</p>
+                        )}
+                        
+                        <div className="space-y-6">
+                          {section.questions.map((question, qIdx) => (
+                            <div key={question.id} className="bg-[#0a0f1a] border border-[#374151] rounded-lg p-5">
+                              <div className="flex items-start gap-4">
+                                <div className="w-8 h-8 rounded-full bg-[#f97316] flex items-center justify-center font-bold flex-shrink-0 text-sm">
+                                  {qIdx + 1}
+                                </div>
+                                <div className="flex-1">
+                                  <h4 className="font-semibold mb-3 text-white">{question.question}</h4>
+                                  {question.hint && (
+                                    <div className="mb-3 p-3 bg-[#1f2937] rounded border-l-2 border-[#6366f1]">
+                                      <p className="text-sm text-[#9ca3af]">
+                                        <span className="font-medium text-[#6366f1]">Hint:</span> {question.hint}
+                                      </p>
+                                    </div>
+                                  )}
+                                  <div className="mt-4 pt-4 border-t border-[#374151]">
+                                    <p className="text-sm text-[#6b7280] leading-relaxed">
+                                      <span className="font-medium text-[#9ca3af]">Answer:</span> {question.answer}
+                                    </p>
                                   </div>
                                 </div>
                               </div>
-                            ))}
-                          </div>
-                          <div className="absolute inset-0 flex items-center justify-center bg-[#111827]/80 rounded-xl">
-                            <div className="text-center">
-                              <Lock className="w-12 h-12 text-[#f97316] mx-auto mb-4" />
-                              <p className="text-lg font-semibold mb-2">
-                                Unlock {questions.length - 4} more questions
-                              </p>
-                              <p className="text-sm text-[#9ca3af] mb-4">
-                                Get the complete mock interview tailored to your role
-                              </p>
                             </div>
-                          </div>
+                          ))}
                         </div>
-                      )}
-                    </div>
-
-                    {/* Purchase Button */}
-                    <button
-                      onClick={handleCheckout}
-                      disabled={checkoutLoading}
-                      className="w-full btn-primary flex items-center justify-center gap-2 py-4 text-lg font-semibold"
-                    >
-                      {checkoutLoading ? (
-                        <>
-                          <Loader2 className="w-5 h-5 animate-spin" />
-                          Processing...
-                        </>
-                      ) : (
-                        <>
-                          <Sparkles className="w-5 h-5" />
-                          Purchase Full Custom Interview - $49
-                        </>
-                      )}
-                    </button>
-                  </>
+                      </div>
+                    ))}
+                  </div>
                 )}
               </div>
             )}
@@ -475,4 +467,3 @@ export default function CustomInterviewPage() {
     </div>
   )
 }
-
