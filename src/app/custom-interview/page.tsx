@@ -7,6 +7,7 @@ import DashboardNav from '@/components/DashboardNav'
 import { Profile, BlockType, AssetCategory } from '@/types'
 import { getInterviewFlow, InterviewFlow } from '@/data/customInterviewQuestions'
 import { assetQuestions } from '@/data/assetQuestions'
+import { CheckCircle, XCircle } from 'lucide-react'
 import { 
   Users, 
   TrendingUp, 
@@ -33,6 +34,9 @@ export default function CustomInterviewPage() {
   const [interviewFlow, setInterviewFlow] = useState<InterviewFlow | null>(null)
   const [loading, setLoading] = useState(false)
   const [profile, setProfile] = useState<Profile | null>(null)
+  // State for probability question answers
+  const [userAnswers, setUserAnswers] = useState<Record<string, string>>({})
+  const [answerFeedback, setAnswerFeedback] = useState<Record<string, boolean | null>>({})
   const router = useRouter()
   const supabase = createClient()
 
@@ -72,8 +76,89 @@ export default function CustomInterviewPage() {
       const flow = getInterviewFlow(blockType, companyType, assetCategory)
       setInterviewFlow(flow)
       setLoading(false)
+      // Reset answers when flow changes
+      setUserAnswers({})
+      setAnswerFeedback({})
     }
   }, [step, blockType, companyType, tradingDesk])
+
+  // Helper function to extract numeric value from answer string
+  const extractNumericAnswer = (answerText: string): number | null => {
+    // Try to find numbers in the answer
+    // Look for patterns like "3/8", "37.5%", "2,500,000", "$2.5 million", etc.
+    const patterns = [
+      /(\d+\.?\d*)\s*\/\s*(\d+\.?\d*)/, // Fraction like 3/8
+      /(\d+\.?\d*)\s*%/, // Percentage like 37.5%
+      /[\$]?\s*(\d{1,3}(?:,\d{3})*(?:\.\d+)?)\s*(?:million|billion|thousand)?/i, // Currency amounts
+      /(\d+\.?\d*)/, // Plain number
+    ]
+
+    for (const pattern of patterns) {
+      const match = answerText.match(pattern)
+      if (match) {
+        if (pattern.source.includes('/')) {
+          // Fraction
+          const numerator = parseFloat(match[1])
+          const denominator = parseFloat(match[2])
+          return denominator !== 0 ? numerator / denominator : null
+        } else if (pattern.source.includes('%')) {
+          // Percentage
+          return parseFloat(match[1]) / 100
+        } else if (match[0].toLowerCase().includes('million')) {
+          // Millions
+          const num = parseFloat(match[1].replace(/,/g, ''))
+          return num * 1000000
+        } else if (match[0].toLowerCase().includes('billion')) {
+          // Billions
+          const num = parseFloat(match[1].replace(/,/g, ''))
+          return num * 1000000000
+        } else if (match[0].toLowerCase().includes('thousand')) {
+          // Thousands
+          const num = parseFloat(match[1].replace(/,/g, ''))
+          return num * 1000
+        } else {
+          // Plain number
+          return parseFloat(match[1].replace(/,/g, ''))
+        }
+      }
+    }
+    return null
+  }
+
+  // Helper function to check if user answer is correct
+  const checkAnswer = (questionId: string, correctAnswer: string, userAnswer: string): boolean => {
+    const correctNumeric = extractNumericAnswer(correctAnswer)
+    if (correctNumeric === null) {
+      // If we can't extract a number, do a simple text comparison
+      return correctAnswer.toLowerCase().trim() === userAnswer.toLowerCase().trim()
+    }
+
+    // Parse user input
+    const userNumeric = parseFloat(userAnswer.replace(/,/g, '').replace(/%/g, ''))
+    if (isNaN(userNumeric)) {
+      return false
+    }
+
+    // Allow small tolerance for floating point errors (0.1% or 0.01 absolute, whichever is larger)
+    const tolerance = Math.max(Math.abs(correctNumeric) * 0.001, 0.01)
+    return Math.abs(userNumeric - correctNumeric) <= tolerance
+  }
+
+  const handleAnswerSubmit = (questionId: string, correctAnswer: string) => {
+    const userAnswer = userAnswers[questionId] || ''
+    if (!userAnswer.trim()) return
+
+    const isCorrect = checkAnswer(questionId, correctAnswer, userAnswer)
+    setAnswerFeedback({ ...answerFeedback, [questionId]: isCorrect })
+  }
+
+  const handleAnswerChange = (questionId: string, value: string) => {
+    setUserAnswers({ ...userAnswers, [questionId]: value })
+    // Clear feedback when user types
+    if (answerFeedback[questionId] !== null) {
+      setAnswerFeedback({ ...answerFeedback, [questionId]: null })
+    }
+  }
 
   const handleDownloadPDF = () => {
     if (!interviewFlow) return
@@ -388,30 +473,96 @@ export default function CustomInterviewPage() {
                         )}
                         
                         <div className="space-y-6">
-                          {section.questions.map((question, qIdx) => (
-                            <div key={question.id} className="bg-[#0a0f1a] border border-[#374151] rounded-lg p-5">
-                              <div className="flex items-start gap-4">
-                                <div className="w-8 h-8 rounded-full bg-[#f97316] flex items-center justify-center font-bold flex-shrink-0 text-sm">
-                                  {qIdx + 1}
-                                </div>
-                                <div className="flex-1">
-                                  <h4 className="font-semibold mb-3 text-white">{question.question}</h4>
-                                  {question.hint && (
-                                    <div className="mb-3 p-3 bg-[#1f2937] rounded border-l-2 border-[#6366f1]">
-                                      <p className="text-sm text-[#9ca3af]">
-                                        <span className="font-medium text-[#6366f1]">Hint:</span> {question.hint}
-                                      </p>
-                                    </div>
-                                  )}
-                                  <div className="mt-4 pt-4 border-t border-[#374151]">
-                                    <p className="text-sm text-[#6b7280] leading-relaxed">
-                                      <span className="font-medium text-[#9ca3af]">Answer:</span> {question.answer}
-                                    </p>
+                          {section.questions.map((question, qIdx) => {
+                            const isProbability = question.category === 'probability'
+                            const userAnswer = userAnswers[question.id] || ''
+                            const feedback = answerFeedback[question.id]
+                            const showFeedback = feedback !== null && feedback !== undefined
+
+                            return (
+                              <div key={question.id} className="bg-[#0a0f1a] border border-[#374151] rounded-lg p-5">
+                                <div className="flex items-start gap-4">
+                                  <div className="w-8 h-8 rounded-full bg-[#f97316] flex items-center justify-center font-bold flex-shrink-0 text-sm">
+                                    {qIdx + 1}
+                                  </div>
+                                  <div className="flex-1">
+                                    <h4 className="font-semibold mb-3 text-white">{question.question}</h4>
+                                    {question.hint && (
+                                      <div className="mb-3 p-3 bg-[#1f2937] rounded border-l-2 border-[#6366f1]">
+                                        <p className="text-sm text-[#9ca3af]">
+                                          <span className="font-medium text-[#6366f1]">Hint:</span> {question.hint}
+                                        </p>
+                                      </div>
+                                    )}
+                                    
+                                    {isProbability ? (
+                                      // Interactive answer input for probability questions
+                                      <div className="mt-4 pt-4 border-t border-[#374151]">
+                                        <div className="space-y-3">
+                                          <div className="flex gap-3">
+                                            <input
+                                              type="text"
+                                              value={userAnswer}
+                                              onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                                              onKeyDown={(e) => {
+                                                if (e.key === 'Enter') {
+                                                  handleAnswerSubmit(question.id, question.answer)
+                                                }
+                                              }}
+                                              placeholder="Enter your answer..."
+                                              className="flex-1 bg-[#111827] border border-[#374151] rounded-lg px-4 py-2 text-white placeholder-[#6b7280] focus:outline-none focus:border-[#f97316] transition-colors"
+                                            />
+                                            <button
+                                              onClick={() => handleAnswerSubmit(question.id, question.answer)}
+                                              disabled={!userAnswer.trim()}
+                                              className="px-6 py-2 bg-[#f97316] hover:bg-[#ea580c] text-white rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                            >
+                                              Check
+                                            </button>
+                                          </div>
+                                          
+                                          {showFeedback && (
+                                            <div className={`flex items-center gap-2 p-3 rounded-lg ${
+                                              feedback 
+                                                ? 'bg-green-500/10 border border-green-500/30' 
+                                                : 'bg-red-500/10 border border-red-500/30'
+                                            }`}>
+                                              {feedback ? (
+                                                <>
+                                                  <CheckCircle className="w-5 h-5 text-green-400" />
+                                                  <span className="text-green-400 font-medium">Correct!</span>
+                                                </>
+                                              ) : (
+                                                <>
+                                                  <XCircle className="w-5 h-5 text-red-400" />
+                                                  <span className="text-red-400 font-medium">Incorrect. Try again!</span>
+                                                </>
+                                              )}
+                                            </div>
+                                          )}
+
+                                          {showFeedback && !feedback && (
+                                            <div className="mt-3 p-3 bg-[#1f2937] rounded border-l-2 border-[#6366f1]">
+                                              <p className="text-sm text-[#9ca3af]">
+                                                <span className="font-medium text-[#6366f1]">Correct Answer:</span> {question.answer}
+                                              </p>
+                                            </div>
+                                          )}
+                                        </div>
+                                      </div>
+                                    ) : (
+                                      // Regular answer display for non-probability questions
+                                      <div className="mt-4 pt-4 border-t border-[#374151]">
+                                        <p className="text-sm text-[#6b7280] leading-relaxed">
+                                          <span className="font-medium text-[#9ca3af]">Answer:</span> {question.answer}
+                                        </p>
+                                      </div>
+                                    )}
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          ))}
+                            )
+                          })}
                         </div>
                       </div>
                     ))}
