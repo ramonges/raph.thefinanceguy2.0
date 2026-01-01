@@ -117,7 +117,8 @@ export default function SelectBlockPage() {
 
         setUserId(user.id)
 
-        const { data: profileData } = await supabase
+        // Fetch or create profile
+        let { data: profileData } = await supabase
           .from('profiles')
           .select('*')
           .eq('id', user.id)
@@ -125,6 +126,29 @@ export default function SelectBlockPage() {
 
         if (profileData) {
           setProfile(profileData)
+        } else {
+          // Profile doesn't exist, create it (fallback in case callback didn't create it)
+          try {
+            const { data: newProfile, error: profileError } = await supabase
+              .from('profiles')
+              .insert({
+                id: user.id,
+                email: user.email,
+                full_name: user.user_metadata?.full_name || user.user_metadata?.name || null,
+                avatar_url: user.user_metadata?.avatar_url || user.user_metadata?.picture || null,
+                auth_provider: user.app_metadata?.provider || 'email',
+              })
+              .select()
+              .single()
+
+            if (profileError) {
+              console.error('Error creating profile:', profileError)
+            } else if (newProfile) {
+              setProfile(newProfile)
+            }
+          } catch (err) {
+            console.error('Error creating profile:', err)
+          }
         }
 
         // Load global stats (all tracks)

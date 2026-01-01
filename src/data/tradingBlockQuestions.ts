@@ -301,7 +301,7 @@ export const tradingBlockQuestions = {
     {
       id: 118,
       question: '(Balls and urns) An urn contains 10 red balls and 10 blue balls. You randomly draw two balls. If they are the same color, you put back one red ball. If they are different colors, you put back one blue ball. You repeat until only one ball remains. What color is the final ball?',
-      answer: 'The final ball is always blue. The parity (odd/even) of blue balls is invariant. Initially: 10 blue (even). Same color draw: if both blue, put back red (blue count decreases by 2, stays even). If both red, put back red (blue count unchanged, stays even). Different colors: put back blue (blue count unchanged, stays even). Since we start with even blue balls and parity is preserved, we end with even blue balls. With one ball remaining, even means 0 blue, so the final ball is red. Wait, let me reconsider...',
+      answer: 'The final ball is always RED. The parity (odd/even) of blue balls is invariant. Initially: 10 blue (even). Same color draw: if both blue, put back red (blue count decreases by 2, stays even). If both red, put back red (blue count unchanged, stays even). Different colors: put back blue (blue count unchanged, stays even). Since we start with even blue balls and parity is preserved, we end with even blue balls. With one ball remaining, even means 0 blue, so the final ball is RED.',
       explanation: [
         'Key insight: The parity of the number of blue balls is invariant under the operations.',
         'Initially: 10 blue balls (even number).',
@@ -309,9 +309,8 @@ export const tradingBlockQuestions = {
         'Same color (both red): Remove 2 red, add 1 red → blue count unchanged (still even).',
         'Different colors: Remove 1 blue and 1 red, add 1 blue → blue count unchanged (still even).',
         'Since we start with an even number of blue balls and parity is preserved, we must end with an even number.',
-        'With one ball remaining, even means 0 blue balls, so the final ball must be red.',
-        'Actually, wait - if we end with 1 ball and even blue count means 0 blue, then the ball is red. But let me verify the invariant more carefully...',
-        'The invariant is: (number of blue balls) mod 2. This is always 0 (even). With 1 ball remaining, even means the ball is red. So the answer is RED.',
+        'With one ball remaining, even means 0 blue balls, so the final ball must be RED.',
+        'The invariant is: (number of blue balls) mod 2. This is always 0 (even). With 1 ball remaining, even means the ball is RED.',
       ],
       hint: 'Find an invariant that is preserved by all operations (think about parity)',
       difficulty: 'hard',

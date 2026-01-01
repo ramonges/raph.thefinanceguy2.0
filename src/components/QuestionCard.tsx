@@ -73,67 +73,115 @@ export default function QuestionCard({
     setAnswerFeedback(null)
   }, [question.id, category])
 
-  // Helper function to extract numeric value from answer string
+  // Helper function to extract numeric value from answer string or user input
   const extractNumericAnswer = useCallback((answerText: string): number | null => {
-    // Try to find numbers in the answer
-    // Look for patterns like "3/8", "37.5%", "2,500,000", "$2.5 million", "≈ 1.806", etc.
-    const patterns = [
-      /(\d+\.?\d*)\s*\/\s*(\d+\.?\d*)/, // Fraction like 3/8
-      /(\d+\.?\d*)\s*%/, // Percentage like 37.5%
-      /[\$]?\s*(\d{1,3}(?:,\d{3})*(?:\.\d+)?)\s*(?:million|billion|thousand)?/i, // Currency amounts
-      /≈\s*(\d+\.?\d*)/, // Approximation like ≈ 1.806
-      /(\d+\.?\d*)/, // Plain number
-    ]
-
-    for (const pattern of patterns) {
-      const match = answerText.match(pattern)
-      if (match) {
-        if (pattern.source.includes('/')) {
-          // Fraction
-          const numerator = parseFloat(match[1])
-          const denominator = parseFloat(match[2])
-          return denominator !== 0 ? numerator / denominator : null
-        } else if (pattern.source.includes('%')) {
-          // Percentage
-          return parseFloat(match[1]) / 100
-        } else if (match[0].toLowerCase().includes('million')) {
-          // Millions
-          const num = parseFloat(match[1].replace(/,/g, ''))
-          return num * 1000000
-        } else if (match[0].toLowerCase().includes('billion')) {
-          // Billions
-          const num = parseFloat(match[1].replace(/,/g, ''))
-          return num * 1000000000
-        } else if (match[0].toLowerCase().includes('thousand')) {
-          // Thousands
-          const num = parseFloat(match[1].replace(/,/g, ''))
-          return num * 1000
-        } else {
-          // Plain number or approximation
-          return parseFloat(match[1].replace(/,/g, ''))
-        }
+    if (!answerText || typeof answerText !== 'string') return null
+    
+    // Clean the input
+    const cleaned = answerText.trim()
+    
+    // Try to find numbers - check fractions first
+    // Look for patterns like "3/8", "3/2", "1.5", "37.5%", "2,500,000", "$2.5 million", "≈ 1.806", etc.
+    
+    // First, try to match fractions (most specific)
+    const fractionPattern = /(\d+\.?\d*)\s*\/\s*(\d+\.?\d*)/
+    const fractionMatch = cleaned.match(fractionPattern)
+    if (fractionMatch) {
+      const numerator = parseFloat(fractionMatch[1])
+      const denominator = parseFloat(fractionMatch[2])
+      if (denominator !== 0 && !isNaN(numerator) && !isNaN(denominator)) {
+        return numerator / denominator
       }
     }
+    
+    // Try percentage
+    const percentagePattern = /(\d+\.?\d*)\s*%/
+    const percentageMatch = cleaned.match(percentagePattern)
+    if (percentageMatch) {
+      const num = parseFloat(percentageMatch[1])
+      if (!isNaN(num)) {
+        return num / 100
+      }
+    }
+    
+    // Try currency with scale words
+    const currencyPattern = /[\$]?\s*(\d{1,3}(?:,\d{3})*(?:\.\d+)?)\s*(million|billion|thousand)/i
+    const currencyMatch = cleaned.match(currencyPattern)
+    if (currencyMatch) {
+      const num = parseFloat(currencyMatch[1].replace(/,/g, ''))
+      const scale = currencyMatch[2].toLowerCase()
+      if (!isNaN(num)) {
+        if (scale === 'million') return num * 1000000
+        if (scale === 'billion') return num * 1000000000
+        if (scale === 'thousand') return num * 1000
+      }
+    }
+    
+    // Try approximation symbol
+    const approxPattern = /≈\s*(\d+\.?\d*)/
+    const approxMatch = cleaned.match(approxPattern)
+    if (approxMatch) {
+      const num = parseFloat(approxMatch[1].replace(/,/g, ''))
+      if (!isNaN(num)) {
+        return num
+      }
+    }
+    
+    // Try plain number (most general, check last)
+    const numberPattern = /(-?\d{1,3}(?:,\d{3})*(?:\.\d+)?)/
+    const numberMatch = cleaned.match(numberPattern)
+    if (numberMatch) {
+      const num = parseFloat(numberMatch[1].replace(/,/g, ''))
+      if (!isNaN(num)) {
+        return num
+      }
+    }
+    
     return null
   }, [])
 
   // Helper function to check if user answer is correct
   const checkAnswer = useCallback((correctAnswer: string, userAnswer: string): boolean => {
+    // First try to extract numeric values from both
     const correctNumeric = extractNumericAnswer(correctAnswer)
-    if (correctNumeric === null) {
-      // If we can't extract a number, do a simple text comparison
-      return correctAnswer.toLowerCase().trim() === userAnswer.toLowerCase().trim()
+    const userNumeric = extractNumericAnswer(userAnswer)
+    
+    // If both are numeric, compare them
+    if (correctNumeric !== null && userNumeric !== null) {
+      // Allow small tolerance for floating point errors (0.1% or 0.01 absolute, whichever is larger)
+      const tolerance = Math.max(Math.abs(correctNumeric) * 0.001, 0.01)
+      return Math.abs(userNumeric - correctNumeric) <= tolerance
     }
-
-    // Parse user input
-    const userNumeric = parseFloat(userAnswer.replace(/,/g, '').replace(/%/g, ''))
-    if (isNaN(userNumeric)) {
-      return false
+    
+    // If we couldn't extract numbers, do text comparison (case-insensitive, trimmed)
+    const correctText = correctAnswer.toLowerCase().trim()
+    const userText = userAnswer.toLowerCase().trim()
+    
+    // Exact match
+    if (correctText === userText) {
+      return true
     }
-
-    // Allow small tolerance for floating point errors (0.1% or 0.01 absolute, whichever is larger)
-    const tolerance = Math.max(Math.abs(correctNumeric) * 0.001, 0.01)
-    return Math.abs(userNumeric - correctNumeric) <= tolerance
+    
+    // Try to match just the key part (e.g., if answer contains "RED" or "red", accept that)
+    // Extract single word answers (like "red", "blue", "8", etc.)
+    const singleWordPattern = /\b(red|blue|green|yellow|black|white|\d+)\b/i
+    const correctKey = correctText.match(singleWordPattern)?.[0]
+    const userKey = userText.match(singleWordPattern)?.[0]
+    
+    if (correctKey && userKey && correctKey.toLowerCase() === userKey.toLowerCase()) {
+      return true
+    }
+    
+    // Final fallback: check if user answer is contained in correct answer or vice versa
+    // (useful for answers like "The answer is 8" vs user input "8")
+    if (correctText.includes(userText) || userText.includes(correctText)) {
+      // But only if the match is substantial (at least 2 characters)
+      if (userText.length >= 2) {
+        return true
+      }
+    }
+    
+    return false
   }, [extractNumericAnswer])
 
   const handleShowAnswer = useCallback(() => {

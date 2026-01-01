@@ -28,7 +28,37 @@ export async function GET(request: Request) {
       }
       
       // Successfully authenticated
-      if (data?.session) {
+      if (data?.session && data?.user) {
+        // Ensure profile exists for the user (important for OAuth users)
+        try {
+          const { data: existingProfile } = await supabase
+            .from('profiles')
+            .select('id')
+            .eq('id', data.user.id)
+            .single()
+
+          // If profile doesn't exist, create it
+          if (!existingProfile) {
+            const { error: profileError } = await supabase
+              .from('profiles')
+              .insert({
+                id: data.user.id,
+                email: data.user.email,
+                full_name: data.user.user_metadata?.full_name || data.user.user_metadata?.name || null,
+                avatar_url: data.user.user_metadata?.avatar_url || data.user.user_metadata?.picture || null,
+                auth_provider: data.user.app_metadata?.provider || 'email',
+              })
+
+            if (profileError) {
+              console.error('Error creating profile:', profileError)
+              // Don't fail the auth flow if profile creation fails, but log it
+            }
+          }
+        } catch (profileErr) {
+          console.error('Error checking/creating profile:', profileErr)
+          // Don't fail the auth flow if profile check/creation fails
+        }
+
         // Determine the correct base URL for redirection
         const isLocalEnv = process.env.NODE_ENV === 'development'
         const productionUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://raphthefinanceguy.com'
