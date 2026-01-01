@@ -550,7 +550,7 @@ export const probaQuestions: ProbaQuestion[] = [
     explanation: [
       "For uniform [0,1], P(max < t) = P(X<t)P(Y<t) = t²",
       "PDF of max: f(t) = 2t",
-      "E[max] = ∫₀¹ t × 2t dt = 2∫₀¹ t² dt = 2[t³/3]₀¹ = 2/3",
+      "E[max] = ∫[0 to 1] t × 2t dt = 2∫[0 to 1] t² dt = 2[t^3/3][0 to 1] = 2/3",
     ],
     hint: "Find the CDF of the maximum, then derive PDF and compute expectation",
     difficulty: "hard",
@@ -640,8 +640,8 @@ export const probaQuestions: ProbaQuestion[] = [
     answer: "4/3",
     explanation: [
       "For uniform [a,b], E[X²] = (b³ - a³)/(3(b-a))",
-      "Or integrate: E[X²] = ∫₀² x² × (1/2) dx",
-      "= (1/2) × [x³/3]₀² = (1/2) × (8/3) = 4/3",
+      "Or integrate: E[X²] = ∫[0 to 2] x² × (1/2) dx",
+      "= (1/2) × [x³/3][0 to 2] = (1/2) × (8/3) = 4/3",
     ],
     hint: "Integrate x² times the PDF over [0,2]",
     difficulty: "medium",
@@ -880,7 +880,7 @@ export const probaQuestions: ProbaQuestion[] = [
     explanation: [
       "For n uniform[0,1] variables, E[max] = n/(n+1)",
       "For n=2: E[max] = 2/3",
-      "Can derive: CDF of max is t², PDF is 2t, E[max] = ∫₀¹ 2t² dt = 2/3",
+      "Can derive: CDF of max is t², PDF is 2t, E[max] = ∫[0 to 1] 2t² dt = 2/3",
     ],
     hint: "E[max of n uniforms] = n/(n+1)",
     difficulty: "hard",
@@ -920,8 +920,8 @@ export const probaQuestions: ProbaQuestion[] = [
     question: "Expected value of |Z| for Z standard normal?",
     answer: "√(2/π) ≈ 0.798",
     explanation: [
-      "E[|Z|] = 2 × ∫₀^∞ z × φ(z) dz where φ is standard normal PDF",
-      "= 2 × (1/√(2π)) × ∫₀^∞ z × e^(-z²/2) dz",
+      "E[|Z|] = 2 × ∫[0 to ∞] z × φ(z) dz where φ is standard normal PDF",
+      "= 2 × (1/√(2π)) × ∫[0 to ∞] z × e^(-z²/2) dz",
       "= 2 × (1/√(2π)) × 1 = √(2/π) ≈ 0.798",
     ],
     hint: "Use symmetry and integrate",
