@@ -2841,6 +2841,7 @@ export const quantBlockQuestions = {
       targetTime: 90,
     },
   ] as TradingQuestion[],
+}
 
 export const quantCategoryLabels: Record<string, string> = {
   'mental-calculations': 'Mental Calculations',
