@@ -119,6 +119,18 @@ const assets: Array<{
       'Hybrid products',
     ]
   },
+  {
+    id: 'market-making',
+    label: 'Market Making',
+    icon: BarChart3,
+    color: '#14b8a6',
+    subcategories: [
+      'Market Making Fundamentals',
+      'Pricing, Spreads & Risk',
+      'Market Microstructure',
+      'Strategy & Practical Intuition',
+    ]
+  },
 ]
 
 export default function AssetsPage() {

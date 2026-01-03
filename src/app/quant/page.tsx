@@ -24,6 +24,7 @@ const categoryIcons: Record<string, React.ElementType> = {
   'statistics-ml': Cpu,
   'trading-intuition': TrendingUp,
   'research-discussion': BookOpen,
+  'quant-models': BookOpen,
 }
 
 export default function QuantPage() {

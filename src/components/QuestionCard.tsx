@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { ChevronDown, ChevronUp, Clock, CheckCircle, XCircle } from 'lucide-react'
+import { ChevronDown, ChevronUp, Clock, CheckCircle, XCircle, ChevronLeft, ChevronRight } from 'lucide-react'
 import { MathQuestion, ProbaQuestion, TradingQuestion, BehavioralQuestion, MLQuestion, Category } from '@/types'
 
 type QuestionType = MathQuestion | ProbaQuestion | TradingQuestion | BehavioralQuestion | MLQuestion
@@ -12,6 +12,9 @@ interface QuestionCardProps {
   questionNumber: number
   totalQuestions: number
   onAnswer: (correct: boolean, timeSpent: number) => void
+  onNavigate?: (direction: 'prev' | 'next') => void
+  canGoPrevious?: boolean
+  canGoNext?: boolean
 }
 
 function getDifficultyClass(difficulty: string) {
@@ -41,6 +44,9 @@ export default function QuestionCard({
   questionNumber,
   totalQuestions,
   onAnswer,
+  onNavigate,
+  canGoPrevious = false,
+  canGoNext = true,
 }: QuestionCardProps) {
   const [showHint, setShowHint] = useState(false)
   const [showAnswer, setShowAnswer] = useState(false)
@@ -372,6 +378,28 @@ export default function QuestionCard({
 
       {/* Actions */}
       <div className="px-4 sm:px-6 py-3 sm:py-4 border-t border-[#1f2937]">
+        {/* Navigation buttons */}
+        {onNavigate && (
+          <div className="flex gap-2 mb-3 sm:mb-4">
+            <button
+              onClick={() => onNavigate('prev')}
+              disabled={!canGoPrevious}
+              className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 rounded-lg border border-[#374151] text-[#9ca3af] hover:text-white hover:border-[#6b7280] transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              Previous
+            </button>
+            <button
+              onClick={() => onNavigate('next')}
+              disabled={!canGoNext}
+              className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 rounded-lg border border-[#374151] text-[#9ca3af] hover:text-white hover:border-[#6b7280] transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base ml-auto"
+            >
+              Next
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+        
         {!showAnswer ? (
           <button
             onClick={handleShowAnswer}

@@ -388,6 +388,15 @@ export default function StrategySubcategoryTrainingPage() {
               questionNumber={currentQuestionIndex + 1}
               totalQuestions={questions.length}
               onAnswer={handleAnswer}
+              onNavigate={(direction) => {
+                if (direction === 'prev' && currentQuestionIndex > 0) {
+                  setCurrentQuestionIndex(currentQuestionIndex - 1)
+                } else if (direction === 'next' && currentQuestionIndex < questions.length - 1) {
+                  setCurrentQuestionIndex(currentQuestionIndex + 1)
+                }
+              }}
+              canGoPrevious={currentQuestionIndex > 0}
+              canGoNext={currentQuestionIndex < questions.length - 1}
             />
           ) : null}
 
