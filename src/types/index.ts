@@ -78,6 +78,7 @@ export type QuantCategory =
   | 'statistics-ml'
   | 'trading-intuition'
   | 'research-discussion'
+  | 'quant-models'
 
 export type AssetCategory = 
   | 'equity'
@@ -87,6 +88,7 @@ export type AssetCategory =
   | 'foreign-exchange'
   | 'rates-derivatives'
   | 'structured-products'
+  | 'market-making'
 
 export type StrategyCategory = 
   | 'equity-strategies'
