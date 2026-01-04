@@ -86,10 +86,28 @@ export default function QuestionCard({
     // Clean the input
     const cleaned = answerText.trim()
     
-    // Try to find numbers - check fractions first
-    // Look for patterns like "3/8", "3/2", "1.5", "37.5%", "2,500,000", "$2.5 million", "≈ 1.806", etc.
+    // PRIORITY 1: Try to match number at the very start (before any parentheses or other text)
+    // This handles cases like "147 (35% = 30% + 5% = 126 + 21 = 147)" or "25 (125^(1/3) = 5, then 5² = 25)"
+    const startNumberPattern = /^(-?\d+(?:,\d{3})*(?:\.\d+)?)/
+    const startMatch = cleaned.match(startNumberPattern)
+    if (startMatch) {
+      const num = parseFloat(startMatch[1].replace(/,/g, ''))
+      if (!isNaN(num)) {
+        return num
+      }
+    }
     
-    // First, try to match fractions (most specific)
+    // PRIORITY 2: Try approximation symbol (e.g., "≈ 1.806")
+    const approxPattern = /≈\s*(\d+\.?\d*)/
+    const approxMatch = cleaned.match(approxPattern)
+    if (approxMatch) {
+      const num = parseFloat(approxMatch[1].replace(/,/g, ''))
+      if (!isNaN(num)) {
+        return num
+      }
+    }
+    
+    // PRIORITY 3: Try to match fractions (e.g., "3/8", "3/2")
     const fractionPattern = /(\d+\.?\d*)\s*\/\s*(\d+\.?\d*)/
     const fractionMatch = cleaned.match(fractionPattern)
     if (fractionMatch) {
@@ -100,8 +118,9 @@ export default function QuestionCard({
       }
     }
     
-    // Try percentage
-    const percentagePattern = /(\d+\.?\d*)\s*%/
+    // PRIORITY 4: Try percentage (only if no number found at start)
+    // This prevents matching percentages in explanations like "147 (35% = ...)"
+    const percentagePattern = /^(\d+\.?\d*)\s*%/
     const percentageMatch = cleaned.match(percentagePattern)
     if (percentageMatch) {
       const num = parseFloat(percentageMatch[1])
@@ -110,7 +129,7 @@ export default function QuestionCard({
       }
     }
     
-    // Try currency with scale words
+    // PRIORITY 5: Try currency with scale words (e.g., "$2.5 million")
     const currencyPattern = /[\$]?\s*(\d{1,3}(?:,\d{3})*(?:\.\d+)?)\s*(million|billion|thousand)/i
     const currencyMatch = cleaned.match(currencyPattern)
     if (currencyMatch) {
@@ -123,18 +142,8 @@ export default function QuestionCard({
       }
     }
     
-    // Try approximation symbol
-    const approxPattern = /≈\s*(\d+\.?\d*)/
-    const approxMatch = cleaned.match(approxPattern)
-    if (approxMatch) {
-      const num = parseFloat(approxMatch[1].replace(/,/g, ''))
-      if (!isNaN(num)) {
-        return num
-      }
-    }
-    
-    // Try plain number (most general, check last)
-    const numberPattern = /(-?\d{1,3}(?:,\d{3})*(?:\.\d+)?)/
+    // PRIORITY 6: Fallback - try to match any number (but prefer the first one)
+    const numberPattern = /(-?\d+(?:,\d{3})*(?:\.\d+)?)/
     const numberMatch = cleaned.match(numberPattern)
     if (numberMatch) {
       const num = parseFloat(numberMatch[1].replace(/,/g, ''))
@@ -156,7 +165,26 @@ export default function QuestionCard({
     if (correctNumeric !== null && userNumeric !== null) {
       // Allow small tolerance for floating point errors (0.1% or 0.01 absolute, whichever is larger)
       const tolerance = Math.max(Math.abs(correctNumeric) * 0.001, 0.01)
-      return Math.abs(userNumeric - correctNumeric) <= tolerance
+      const isMatch = Math.abs(userNumeric - correctNumeric) <= tolerance
+      if (isMatch) {
+        return true
+      }
+    }
+    
+    // Additional check: if user answer is a number, check if it appears in the correct answer
+    // This handles cases like answer "25 (125^(1/3) = 5, then 5² = 25)" and user enters "25"
+    if (userNumeric !== null) {
+      // Convert user number to string and check if it appears in correct answer
+      const userNumStr = userNumeric.toString()
+      // Check if the number appears as a standalone word or at the start
+      const numPattern = new RegExp(`(^|\\s|\\()${userNumStr.replace('.', '\\.')}(\\s|\\)|$|,|%)`, 'g')
+      if (numPattern.test(correctAnswer)) {
+        return true
+      }
+      // Also check if the number appears at the very start of the answer
+      if (correctAnswer.trim().startsWith(userNumStr)) {
+        return true
+      }
     }
     
     // If we couldn't extract numbers, do text comparison (case-insensitive, trimmed)
