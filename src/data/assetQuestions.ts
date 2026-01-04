@@ -6437,12 +6437,12 @@ export const assetQuestions: Record<string, AssetCategory> = {
           {
             id: 1,
             question: 'Why does oil often trade in backwardation?',
-            answer: 'Oil trades in backwardation when: supply is tight (production disruptions, OPEC cuts), demand is strong, or storage is full. Backwardation indicates immediate supply tightness. Convenience yield (value of holding physical oil) is high, making spot more valuable than futures.',
+            answer: 'Oil trades in backwardation when near-term supply is tight and demand is strong. Production disruptions, OPEC cuts, or geopolitical risks reduce available inventories, increasing the convenience yield of holding physical oil. When inventories are low, the value of immediate delivery rises, making spot prices trade above futures prices.',
             explanation: [
-              'Supply tightness: production disruptions, OPEC cuts create backwardation.',
-              'Demand: strong demand creates backwardation.',
-              'Storage: full storage creates backwardation.',
-              'Convenience yield: high convenience yield = backwardation.',
+              'Supply tightness: production disruptions, OPEC cuts, geopolitical risks reduce inventories.',
+              'Demand: strong demand increases need for immediate delivery.',
+              'Convenience yield: low inventories increase convenience yield of holding physical oil.',
+              'Spot vs futures: low inventories make spot prices trade above futures prices.',
             ],
             hint: 'Backwardation indicates supply tightness',
             difficulty: 'medium',
