@@ -79,6 +79,101 @@ export default function QuestionCard({
     setAnswerFeedback(null)
   }, [question.id, category])
 
+  // Helper function to parse number string handling both US (1,234.56) and European (1.234,56) formats
+  const parseNumberString = useCallback((numStr: string): number | null => {
+    if (!numStr) return null
+    
+    // Remove spaces
+    const cleaned = numStr.trim()
+    
+    // Check if it's European format (dot for thousands, comma for decimal)
+    // Pattern: digits with dots as thousands separators and comma as decimal (e.g., "1.234,56")
+    const europeanPattern = /^-?\d{1,3}(?:\.\d{3})*(?:,\d+)?$/
+    if (europeanPattern.test(cleaned)) {
+      // Replace dot (thousands) with nothing, comma (decimal) with dot
+      const normalized = cleaned.replace(/\./g, '').replace(',', '.')
+      const num = parseFloat(normalized)
+      if (!isNaN(num)) {
+        return num
+      }
+    }
+    
+    // US format or simple number (comma for thousands, dot for decimal, or no separators)
+    // Pattern: digits with commas as thousands separators and dot as decimal (e.g., "1,234.56")
+    // Or just digits with optional decimal dot (e.g., "1234.56" or "1234")
+    const usPattern = /^-?\d{1,3}(?:,\d{3})*(?:\.\d+)?$|^-?\d+\.?\d*$/
+    if (usPattern.test(cleaned)) {
+      // Remove commas (thousands separator), keep dot as decimal
+      const normalized = cleaned.replace(/,/g, '')
+      const num = parseFloat(normalized)
+      if (!isNaN(num)) {
+        return num
+      }
+    }
+    
+    // Fallback: try to parse as-is after removing all commas and dots, then figure out format
+    // This handles ambiguous cases
+    const hasComma = cleaned.includes(',')
+    const hasDot = cleaned.includes('.')
+    
+    if (hasComma && hasDot) {
+      // Both separators present - determine format
+      const lastComma = cleaned.lastIndexOf(',')
+      const lastDot = cleaned.lastIndexOf('.')
+      
+      if (lastComma > lastDot) {
+        // European: comma is decimal separator (e.g., "1.234,56")
+        const normalized = cleaned.replace(/\./g, '').replace(',', '.')
+        const num = parseFloat(normalized)
+        if (!isNaN(num)) return num
+      } else {
+        // US: dot is decimal separator (e.g., "1,234.56")
+        const normalized = cleaned.replace(/,/g, '')
+        const num = parseFloat(normalized)
+        if (!isNaN(num)) return num
+      }
+    } else if (hasComma && !hasDot) {
+      // Only comma - could be thousands separator or decimal
+      // If followed by exactly 3 digits, likely thousands (e.g., "1,234")
+      // If followed by 1-2 digits, likely decimal (e.g., "1,5" European format)
+      const commaIndex = cleaned.indexOf(',')
+      const afterComma = cleaned.substring(commaIndex + 1)
+      if (afterComma.length <= 2 && /^\d+$/.test(afterComma)) {
+        // Likely European decimal format
+        const normalized = cleaned.replace(',', '.')
+        const num = parseFloat(normalized)
+        if (!isNaN(num)) return num
+      } else {
+        // Likely US thousands format
+        const normalized = cleaned.replace(/,/g, '')
+        const num = parseFloat(normalized)
+        if (!isNaN(num)) return num
+      }
+    } else if (hasDot && !hasComma) {
+      // Only dot - could be decimal or thousands
+      // If followed by exactly 3 digits, could be thousands (European)
+      // Otherwise, likely decimal (US)
+      const dotIndex = cleaned.indexOf('.')
+      const afterDot = cleaned.substring(dotIndex + 1)
+      if (afterDot.length === 3 && /^\d+$/.test(afterDot) && cleaned.split('.').length > 2) {
+        // Likely European thousands format (multiple dots)
+        const normalized = cleaned.replace(/\./g, '')
+        const num = parseFloat(normalized)
+        if (!isNaN(num)) return num
+      } else {
+        // Likely US decimal format
+        const num = parseFloat(cleaned)
+        if (!isNaN(num)) return num
+      }
+    } else {
+      // No separators, just parse directly
+      const num = parseFloat(cleaned)
+      if (!isNaN(num)) return num
+    }
+    
+    return null
+  }, [])
+
   // Helper function to extract numeric value from answer string or user input
   const extractNumericAnswer = useCallback((answerText: string): number | null => {
     if (!answerText || typeof answerText !== 'string') return null
@@ -88,54 +183,55 @@ export default function QuestionCard({
     
     // PRIORITY 1: Try to match number at the very start (before any parentheses or other text)
     // This handles cases like "147 (35% = 30% + 5% = 126 + 21 = 147)" or "25 (125^(1/3) = 5, then 5² = 25)"
-    const startNumberPattern = /^(-?\d+(?:,\d{3})*(?:\.\d+)?)/
+    // Updated to handle both US and European formats
+    const startNumberPattern = /^(-?\d+(?:[.,]\d+)*(?:[.,]\d+)?)/
     const startMatch = cleaned.match(startNumberPattern)
     if (startMatch) {
-      const num = parseFloat(startMatch[1].replace(/,/g, ''))
-      if (!isNaN(num)) {
+      const num = parseNumberString(startMatch[1])
+      if (num !== null) {
         return num
       }
     }
     
-    // PRIORITY 2: Try approximation symbol (e.g., "≈ 1.806")
-    const approxPattern = /≈\s*(\d+\.?\d*)/
+    // PRIORITY 2: Try approximation symbol (e.g., "≈ 1.806" or "≈ 1,806")
+    const approxPattern = /≈\s*([\d.,]+)/
     const approxMatch = cleaned.match(approxPattern)
     if (approxMatch) {
-      const num = parseFloat(approxMatch[1].replace(/,/g, ''))
-      if (!isNaN(num)) {
+      const num = parseNumberString(approxMatch[1])
+      if (num !== null) {
         return num
       }
     }
     
     // PRIORITY 3: Try to match fractions (e.g., "3/8", "3/2")
-    const fractionPattern = /(\d+\.?\d*)\s*\/\s*(\d+\.?\d*)/
+    const fractionPattern = /([\d.,]+)\s*\/\s*([\d.,]+)/
     const fractionMatch = cleaned.match(fractionPattern)
     if (fractionMatch) {
-      const numerator = parseFloat(fractionMatch[1])
-      const denominator = parseFloat(fractionMatch[2])
-      if (denominator !== 0 && !isNaN(numerator) && !isNaN(denominator)) {
+      const numerator = parseNumberString(fractionMatch[1])
+      const denominator = parseNumberString(fractionMatch[2])
+      if (numerator !== null && denominator !== null && denominator !== 0) {
         return numerator / denominator
       }
     }
     
     // PRIORITY 4: Try percentage (only if no number found at start)
     // This prevents matching percentages in explanations like "147 (35% = ...)"
-    const percentagePattern = /^(\d+\.?\d*)\s*%/
+    const percentagePattern = /^([\d.,]+)\s*%/
     const percentageMatch = cleaned.match(percentagePattern)
     if (percentageMatch) {
-      const num = parseFloat(percentageMatch[1])
-      if (!isNaN(num)) {
+      const num = parseNumberString(percentageMatch[1])
+      if (num !== null) {
         return num / 100
       }
     }
     
-    // PRIORITY 5: Try currency with scale words (e.g., "$2.5 million")
-    const currencyPattern = /[\$]?\s*(\d{1,3}(?:,\d{3})*(?:\.\d+)?)\s*(million|billion|thousand)/i
+    // PRIORITY 5: Try currency with scale words (e.g., "$2.5 million" or "$2,5 million")
+    const currencyPattern = /[\$]?\s*([\d.,]+)\s*(million|billion|thousand)/i
     const currencyMatch = cleaned.match(currencyPattern)
     if (currencyMatch) {
-      const num = parseFloat(currencyMatch[1].replace(/,/g, ''))
+      const num = parseNumberString(currencyMatch[1])
       const scale = currencyMatch[2].toLowerCase()
-      if (!isNaN(num)) {
+      if (num !== null) {
         if (scale === 'million') return num * 1000000
         if (scale === 'billion') return num * 1000000000
         if (scale === 'thousand') return num * 1000
@@ -143,17 +239,17 @@ export default function QuestionCard({
     }
     
     // PRIORITY 6: Fallback - try to match any number (but prefer the first one)
-    const numberPattern = /(-?\d+(?:,\d{3})*(?:\.\d+)?)/
+    const numberPattern = /(-?[\d.,]+)/
     const numberMatch = cleaned.match(numberPattern)
     if (numberMatch) {
-      const num = parseFloat(numberMatch[1].replace(/,/g, ''))
-      if (!isNaN(num)) {
+      const num = parseNumberString(numberMatch[1])
+      if (num !== null) {
         return num
       }
     }
     
     return null
-  }, [])
+  }, [parseNumberString])
 
   // Helper function to check if user answer is correct
   const checkAnswer = useCallback((correctAnswer: string, userAnswer: string): boolean => {
