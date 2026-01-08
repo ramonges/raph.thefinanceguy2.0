@@ -46,25 +46,71 @@ export default function CompaniesPage() {
     initialize()
   }, [router, supabase])
 
-  // Filter companies based on search query and type filter
-  const filteredData = companiesData.map(region => ({
-    ...region,
-    cities: region.cities
-      .map(city => ({
-        ...city,
-        companies: city.companies.filter(company => {
-          const matchesSearch = 
-            company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            company.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            company.region.toLowerCase().includes(searchQuery.toLowerCase())
-          
-          const matchesType = filterType === 'all' || company.type === filterType
-          
-          return matchesSearch && matchesType
-        })
-      }))
-      .filter(city => city.companies.length > 0)
-  })).filter(region => region.cities.length > 0)
+  // Normalize city names to merge variations (e.g., "New York City" -> "New York")
+  // This ensures cities with different names but same location are grouped together
+  const normalizeCityName = (cityName: string): string => {
+    const normalized = cityName.toLowerCase().trim()
+    
+    // Map of variations to standard names
+    // Only include actual variations found in the data
+    const cityNormalizations: Record<string, string> = {
+      // New York variations - the only real variation in our data
+      'new york city': 'New York',
+      'new york': 'New York',
+      'nyc': 'New York',
+    }
+    
+    // Check if we have a normalization for this city
+    if (cityNormalizations[normalized]) {
+      return cityNormalizations[normalized]
+    }
+    
+    // If no normalization found, return original city name as-is
+    // This preserves all other cities exactly as they appear
+    return cityName
+  }
+
+  // Filter and merge companies based on search query, type filter, and normalized city names
+  const filteredData = companiesData.map(region => {
+    // Group companies by normalized city name
+    const cityMap = new Map<string, Company[]>()
+    
+    region.cities.forEach(city => {
+      city.companies.forEach(company => {
+        const matchesSearch = 
+          company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          company.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          company.region.toLowerCase().includes(searchQuery.toLowerCase())
+        
+        const matchesType = filterType === 'all' || company.type === filterType
+        
+        if (matchesSearch && matchesType) {
+          const normalizedCity = normalizeCityName(city.city)
+          if (!cityMap.has(normalizedCity)) {
+            cityMap.set(normalizedCity, [])
+          }
+          cityMap.get(normalizedCity)!.push(company)
+        }
+      })
+    })
+
+    // Convert map back to cities array
+    const mergedCities = Array.from(cityMap.entries()).map(([normalizedCity, companies]) => ({
+      city: normalizedCity,
+      companies: companies.sort((a, b) => {
+        // Sort by type (banks first) then by name
+        if (a.type !== b.type) {
+          return a.type === 'bank' ? -1 : 1
+        }
+        return a.name.localeCompare(b.name)
+      })
+    }))
+
+    return {
+      ...region,
+      cities: mergedCities.filter(city => city.companies.length > 0)
+    }
+  }).filter(region => region.cities.length > 0)
 
   const handleCompanyClick = (website: string) => {
     window.open(website, '_blank', 'noopener,noreferrer')
