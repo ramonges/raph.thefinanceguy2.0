@@ -89,18 +89,19 @@ export default function FundsPage() {
           {/* Search Bar */}
           <div className="mb-6 sm:mb-8">
             <div className="relative group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6b7280] pointer-events-none transition-colors group-focus-within:text-[#f97316]" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6b7280] pointer-events-none transition-colors group-focus-within:text-[#f97316] z-10" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by fund name, city, or region..."
-                className="w-full pl-14 sm:pl-16 pr-10 py-3.5 sm:py-4 bg-[#111827] border border-[#1f2937] rounded-xl text-white placeholder-[#6b7280] focus:outline-none focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all duration-200 text-sm sm:text-base"
+                className="w-full pr-10 py-3.5 sm:py-4 bg-[#111827] border border-[#1f2937] rounded-xl text-white placeholder-[#6b7280] focus:outline-none focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all duration-200 text-sm sm:text-base"
+                style={{ paddingLeft: '3.5rem' }}
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-[#1f2937] transition-colors text-[#6b7280] hover:text-white"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-[#1f2937] transition-colors text-[#6b7280] hover:text-white z-10"
                 >
                   <X className="w-4 h-4" />
                 </button>
