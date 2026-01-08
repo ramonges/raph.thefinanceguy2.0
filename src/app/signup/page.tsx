@@ -17,8 +17,17 @@ export default function SignupPage() {
   const router = useRouter()
   const supabase = createClient()
 
-  // Check if user is already logged in
+  // Check if user is already logged in and read error from URL
   useEffect(() => {
+    // Check for error in URL params (from OAuth callback)
+    const urlParams = new URLSearchParams(window.location.search)
+    const errorParam = urlParams.get('error')
+    if (errorParam) {
+      setError(decodeURIComponent(errorParam))
+      // Clean up URL
+      window.history.replaceState({}, '', '/signup')
+    }
+
     async function checkSession() {
       try {
         const { data: { user } } = await supabase.auth.getUser()
@@ -77,7 +86,8 @@ export default function SignupPage() {
 
     try {
       // Use the current origin to ensure OAuth redirect works on all devices (mobile, desktop, preview URLs)
-      const redirectUrl = `${window.location.origin}/auth/callback?next=/select-block`
+      // Add source=signup to track that this is a signup flow
+      const redirectUrl = `${window.location.origin}/auth/callback?next=/select-block&source=signup`
       
       console.log('Initiating Google OAuth signup with redirectTo:', redirectUrl)
       
@@ -87,8 +97,6 @@ export default function SignupPage() {
         provider: 'google',
         options: {
           redirectTo: redirectUrl,
-          // Skip browser redirect check to allow new user creation
-          skipBrowserRedirect: false,
         },
       })
 

@@ -9,11 +9,49 @@ export function createClient() {
     // This will never be used at runtime since env vars will be available
     return createBrowserClient(
       'https://placeholder.supabase.co',
-      'placeholder-key'
+      'placeholder-key',
+      {
+        cookies: {
+          getAll() {
+            return document.cookie.split('; ').map(cookie => {
+              const [name, ...rest] = cookie.split('=')
+              return { name, value: rest.join('=') }
+            })
+          },
+          setAll(cookiesToSet) {
+            cookiesToSet.forEach(({ name, value, options }) => {
+              // Set cookie with proper attributes for mobile compatibility
+              const cookieString = `${name}=${value}; path=${options?.path || '/'}; ${options?.maxAge ? `max-age=${options.maxAge};` : ''} ${options?.sameSite ? `sameSite=${options.sameSite};` : 'sameSite=lax;'} ${options?.secure || window.location.protocol === 'https:' ? 'secure;' : ''}`
+              document.cookie = cookieString
+            })
+          },
+        },
+      }
     )
   }
 
-  return createBrowserClient(supabaseUrl, supabaseAnonKey)
+  return createBrowserClient(
+    supabaseUrl,
+    supabaseAnonKey,
+    {
+      cookies: {
+        getAll() {
+          return document.cookie.split('; ').map(cookie => {
+            const [name, ...rest] = cookie.split('=')
+            return { name, value: rest.join('=') }
+          })
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            // Set cookie with proper attributes for mobile compatibility
+            // This ensures PKCE code verifier is stored correctly
+            const cookieString = `${name}=${value}; path=${options?.path || '/'}; ${options?.maxAge ? `max-age=${options.maxAge};` : ''} ${options?.sameSite ? `sameSite=${options.sameSite};` : 'sameSite=lax;'} ${options?.secure || window.location.protocol === 'https:' ? 'secure;' : ''}`
+            document.cookie = cookieString
+          })
+        },
+      },
+    }
+  )
 }
 
 

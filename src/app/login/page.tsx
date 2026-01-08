@@ -72,7 +72,8 @@ export default function LoginPage() {
 
     try {
       // Use the current origin to ensure OAuth redirect works on all devices (mobile, desktop, preview URLs)
-      const redirectUrl = `${window.location.origin}/auth/callback?next=/select-block`
+      // Add source=login to track that this is a login flow
+      const redirectUrl = `${window.location.origin}/auth/callback?next=/select-block&source=login`
       
       console.log('Initiating Google OAuth with redirectTo:', redirectUrl)
       

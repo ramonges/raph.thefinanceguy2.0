@@ -5,6 +5,7 @@ export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
   const next = searchParams.get('next') ?? '/select-block'
+  const source = searchParams.get('source') // 'signup' or 'login' to know where to redirect on error
 
   if (code) {
     try {
@@ -18,12 +19,13 @@ export async function GET(request: Request) {
           code: error.code,
         })
         
-        // Determine error URL
+        // Determine error URL - redirect to signup if source is signup, otherwise login
         const productionUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://raphthefinanceguy.com'
         const isLocalEnv = process.env.NODE_ENV === 'development'
+        const errorPage = source === 'signup' ? 'signup' : 'login'
         const errorUrl = isLocalEnv 
-          ? `${origin}/login?error=${encodeURIComponent(error.message || 'Could not authenticate user')}` 
-          : `${productionUrl}/login?error=${encodeURIComponent(error.message || 'Could not authenticate user')}`
+          ? `${origin}/${errorPage}?error=${encodeURIComponent(error.message || 'Could not authenticate user')}` 
+          : `${productionUrl}/${errorPage}?error=${encodeURIComponent(error.message || 'Could not authenticate user')}`
         return NextResponse.redirect(errorUrl)
       }
       
@@ -108,9 +110,10 @@ export async function GET(request: Request) {
         console.error('No session returned after code exchange')
         const productionUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://raphthefinanceguy.com'
         const isLocalEnv = process.env.NODE_ENV === 'development'
+        const errorPage = source === 'signup' ? 'signup' : 'login'
         const errorUrl = isLocalEnv 
-          ? `${origin}/login?error=${encodeURIComponent('Authentication failed: No session created')}` 
-          : `${productionUrl}/login?error=${encodeURIComponent('Authentication failed: No session created')}`
+          ? `${origin}/${errorPage}?error=${encodeURIComponent('Authentication failed: No session created')}` 
+          : `${productionUrl}/${errorPage}?error=${encodeURIComponent('Authentication failed: No session created')}`
         return NextResponse.redirect(errorUrl)
       }
     } catch (err) {
@@ -118,17 +121,21 @@ export async function GET(request: Request) {
       const productionUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://raphthefinanceguy.com'
       const isLocalEnv = process.env.NODE_ENV === 'development'
       const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred'
+      const errorPage = source === 'signup' ? 'signup' : 'login'
       const errorUrl = isLocalEnv 
-        ? `${origin}/login?error=${encodeURIComponent(errorMessage)}` 
-        : `${productionUrl}/login?error=${encodeURIComponent(errorMessage)}`
+        ? `${origin}/${errorPage}?error=${encodeURIComponent(errorMessage)}` 
+        : `${productionUrl}/${errorPage}?error=${encodeURIComponent(errorMessage)}`
       return NextResponse.redirect(errorUrl)
     }
   }
 
-  // No code provided, redirect to login
+  // No code provided, redirect based on source
   const productionUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://raphthefinanceguy.com'
   const isLocalEnv = process.env.NODE_ENV === 'development'
-  const errorUrl = isLocalEnv ? `${origin}/login?error=No authentication code provided` : `${productionUrl}/login?error=No authentication code provided`
+  const errorPage = source === 'signup' ? 'signup' : 'login'
+  const errorUrl = isLocalEnv 
+    ? `${origin}/${errorPage}?error=No authentication code provided` 
+    : `${productionUrl}/${errorPage}?error=No authentication code provided`
   return NextResponse.redirect(errorUrl)
 }
 
