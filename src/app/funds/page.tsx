@@ -95,7 +95,7 @@ export default function FundsPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by fund name, city, or region..."
-                className="w-full pl-12 pr-4 py-3.5 sm:py-4 bg-[#111827] border border-[#1f2937] rounded-xl text-white placeholder-[#6b7280] focus:outline-none focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all duration-200 text-sm sm:text-base"
+                className="w-full pl-14 sm:pl-16 pr-10 py-3.5 sm:py-4 bg-[#111827] border border-[#1f2937] rounded-xl text-white placeholder-[#6b7280] focus:outline-none focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all duration-200 text-sm sm:text-base"
               />
               {searchQuery && (
                 <button
