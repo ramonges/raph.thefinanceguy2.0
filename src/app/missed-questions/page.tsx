@@ -64,29 +64,29 @@ function MissedQuestionCard({
     <div className="bg-[#111827] border border-[#1f2937] rounded-xl overflow-hidden transition-all duration-200 hover:border-[#374151]">
       <button
         onClick={onToggle}
-        className="w-full flex items-center gap-4 p-5 text-left"
+        className="w-full flex items-center gap-3 sm:gap-4 p-4 sm:p-5 text-left"
       >
         <div 
-          className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+          className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center flex-shrink-0"
           style={{ backgroundColor: `${color}20` }}
         >
-          <Icon className="w-5 h-5" style={{ color }} />
+          <Icon className="w-4 h-4 sm:w-5 sm:h-5" style={{ color }} />
         </div>
         
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: `${color}20`, color }}>
+          <div className="flex items-center gap-1.5 sm:gap-2 mb-1 flex-wrap">
+            <span className="text-xs font-medium px-1.5 sm:px-2 py-0.5 rounded-full" style={{ backgroundColor: `${color}20`, color }}>
               {categoryLabels[section]}
             </span>
             <span className="text-xs text-[#6b7280]">Q{question.question_number}</span>
             {question.reviewed && (
               <span className="flex items-center gap-1 text-xs text-green-400">
                 <CheckCircle2 className="w-3 h-3" />
-                Reviewed
+                <span className="hidden sm:inline">Reviewed</span>
               </span>
             )}
           </div>
-          <p className="text-[#e8eaed] line-clamp-2">{question.question_text}</p>
+          <p className="text-sm sm:text-base text-[#e8eaed] line-clamp-2">{question.question_text}</p>
         </div>
 
         <div className="flex-shrink-0">
@@ -99,10 +99,10 @@ function MissedQuestionCard({
       </button>
 
       {expanded && (
-        <div className="px-5 pb-5 border-t border-[#1f2937] pt-4 fade-in">
-          <div className="bg-[#0a0f1a] rounded-xl p-4 mb-4">
-            <h4 className="text-sm font-semibold text-[#f97316] mb-2">Correct Answer:</h4>
-            <p className="text-[#e8eaed] whitespace-pre-wrap">{question.correct_answer}</p>
+        <div className="px-4 sm:px-5 pb-4 sm:pb-5 border-t border-[#1f2937] pt-3 sm:pt-4 fade-in">
+          <div className="bg-[#0a0f1a] rounded-xl p-3 sm:p-4 mb-3 sm:mb-4">
+            <h4 className="text-xs sm:text-sm font-semibold text-[#f97316] mb-2">Correct Answer:</h4>
+            <p className="text-sm sm:text-base text-[#e8eaed] whitespace-pre-wrap">{question.correct_answer}</p>
           </div>
           
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
@@ -116,17 +116,17 @@ function MissedQuestionCard({
               })}
             </span>
             
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
               {!question.reviewed && (
                 <button
                   onClick={(e) => {
                     e.stopPropagation()
                     onMarkReviewed()
                   }}
-                  className="flex items-center gap-2 text-xs sm:text-sm text-[#f97316] hover:text-[#ea580c] transition-colors"
+                  className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-[#f97316] hover:text-[#ea580c] transition-colors px-2 py-1.5 rounded-lg hover:bg-[#f97316]/10"
                 >
-                  <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4" />
-                  Mark as Reviewed
+                  <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <span>Mark as Reviewed</span>
                 </button>
               )}
               {!question.understood && (
@@ -135,10 +135,10 @@ function MissedQuestionCard({
                     e.stopPropagation()
                     onMarkUnderstood()
                   }}
-                  className="flex items-center gap-2 text-xs sm:text-sm text-green-400 hover:text-green-300 transition-colors"
+                  className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-green-400 hover:text-green-300 transition-colors px-2 py-1.5 rounded-lg hover:bg-green-400/10"
                 >
-                  <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4" />
-                  I understood
+                  <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <span>I understood</span>
                 </button>
               )}
             </div>
@@ -285,20 +285,20 @@ export default function MissedQuestionsPage() {
     <div className="min-h-screen gradient-bg">
       <DashboardNav profile={profile} onOpenStats={() => setShowStats(true)} blockType={blockType} />
 
-      <main className="pt-24 pb-12 px-6">
+      <main className="pt-20 sm:pt-24 pb-12 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold mb-2">Missed Questions</h1>
-            <p className="text-[#9ca3af]">
+          <div className="mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2">Missed Questions</h1>
+            <p className="text-sm sm:text-base text-[#9ca3af]">
               Review questions you got wrong to improve your understanding.
             </p>
           </div>
 
           {/* Filters */}
-          <div className="bg-[#111827] border border-[#1f2937] rounded-xl p-4 mb-6 space-y-4">
+          <div className="bg-[#111827] border border-[#1f2937] rounded-xl p-3 sm:p-4 mb-6 space-y-3 sm:space-y-4">
             {/* Main Category Filters */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 items-center">
               <button
                 onClick={() => {
                   setFilterCategory('all')
@@ -306,7 +306,7 @@ export default function MissedQuestionsPage() {
                   setFilterAssetCategory('all')
                   setFilterStrategyCategory('all')
                 }}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors ${
                   filterCategory === 'all' && filterBlockType === 'all' && filterAssetCategory === 'all' && filterStrategyCategory === 'all'
                     ? 'bg-[#f97316] text-[#0a0f1a]'
                     : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
@@ -321,7 +321,7 @@ export default function MissedQuestionsPage() {
                   <button
                     key={cat}
                     onClick={() => setFilterCategory(cat)}
-                    className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                    className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors ${
                       filterCategory === cat
                         ? 'text-[#0a0f1a]'
                         : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
@@ -336,8 +336,8 @@ export default function MissedQuestionsPage() {
 
             {/* Block Type Filters */}
             {blockTypes.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                <span className="text-xs text-[#6b7280] self-center">Block:</span>
+              <div className="flex flex-wrap gap-2 items-center">
+                <span className="text-xs text-[#6b7280] self-center whitespace-nowrap">Block:</span>
                 <button
                   onClick={() => setFilterBlockType('all')}
                   className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
@@ -366,8 +366,8 @@ export default function MissedQuestionsPage() {
 
             {/* Asset Category Filters */}
             {assetCategories.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                <span className="text-xs text-[#6b7280] self-center">Asset:</span>
+              <div className="flex flex-wrap gap-2 items-center">
+                <span className="text-xs text-[#6b7280] self-center whitespace-nowrap">Asset:</span>
                 <button
                   onClick={() => setFilterAssetCategory('all')}
                   className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
@@ -396,8 +396,8 @@ export default function MissedQuestionsPage() {
 
             {/* Strategy Category Filters */}
             {strategyCategories.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                <span className="text-xs text-[#6b7280] self-center">Strategy:</span>
+              <div className="flex flex-wrap gap-2 items-center">
+                <span className="text-xs text-[#6b7280] self-center whitespace-nowrap">Strategy:</span>
                 <button
                   onClick={() => setFilterStrategyCategory('all')}
                   className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
@@ -425,24 +425,24 @@ export default function MissedQuestionsPage() {
             )}
 
             {/* Toggle Options */}
-            <div className="flex flex-wrap gap-4 pt-2 border-t border-[#1f2937]">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 pt-2 border-t border-[#1f2937]">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={showReviewed}
                   onChange={(e) => setShowReviewed(e.target.checked)}
-                  className="w-4 h-4 rounded border-[#374151] bg-[#1f2937] text-[#f97316] focus:ring-[#f97316] focus:ring-offset-0"
+                  className="w-4 h-4 rounded border-[#374151] bg-[#1f2937] text-[#f97316] focus:ring-[#f97316] focus:ring-offset-0 cursor-pointer"
                 />
-                <span className="text-sm text-[#9ca3af]">Show reviewed</span>
+                <span className="text-xs sm:text-sm text-[#9ca3af]">Show reviewed</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={showUnderstood}
                   onChange={(e) => setShowUnderstood(e.target.checked)}
-                  className="w-4 h-4 rounded border-[#374151] bg-[#1f2937] text-[#f97316] focus:ring-[#f97316] focus:ring-offset-0"
+                  className="w-4 h-4 rounded border-[#374151] bg-[#1f2937] text-[#f97316] focus:ring-[#f97316] focus:ring-offset-0 cursor-pointer"
                 />
-                <span className="text-sm text-[#9ca3af]">Show understood</span>
+                <span className="text-xs sm:text-sm text-[#9ca3af]">Show understood</span>
               </label>
             </div>
           </div>
@@ -471,7 +471,7 @@ export default function MissedQuestionsPage() {
               </p>
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-2 sm:space-y-3">
               {filteredQuestions.map((question) => (
                 <MissedQuestionCard
                   key={question.id}

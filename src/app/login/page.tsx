@@ -55,12 +55,29 @@ export default function LoginPage() {
         password,
       })
 
-      if (error) throw error
+      if (error) {
+        // Check if user doesn't exist - redirect to signup
+        if (error.message.includes('Invalid login credentials') || 
+            error.message.includes('User not found') ||
+            error.message.includes('Email not confirmed')) {
+          // Redirect to signup with email pre-filled
+          router.push(`/signup?email=${encodeURIComponent(email)}`)
+          return
+        }
+        throw error
+      }
 
       router.push('/select-block')
       router.refresh()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred')
+      const errorMessage = err instanceof Error ? err.message : 'An error occurred'
+      // If it's a user not found error, redirect to signup
+      if (errorMessage.includes('Invalid login credentials') || 
+          errorMessage.includes('User not found')) {
+        router.push(`/signup?email=${encodeURIComponent(email)}`)
+        return
+      }
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }
@@ -80,6 +97,10 @@ export default function LoginPage() {
         provider: 'google',
         options: {
           redirectTo: redirectUrl,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          },
         },
       })
 
