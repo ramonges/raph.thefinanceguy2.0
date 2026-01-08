@@ -79,16 +79,29 @@ export default function SignupPage() {
       // Use the current origin to ensure OAuth redirect works on all devices (mobile, desktop, preview URLs)
       const redirectUrl = `${window.location.origin}/auth/callback?next=/select-block`
       
-      const { error } = await supabase.auth.signInWithOAuth({
+      console.log('Initiating Google OAuth signup with redirectTo:', redirectUrl)
+      
+      // signInWithOAuth automatically creates an account if the user doesn't exist
+      // This works for both new signups and existing users
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: redirectUrl,
+          // Skip browser redirect check to allow new user creation
+          skipBrowserRedirect: false,
         },
       })
 
-      if (error) throw error
+      if (error) {
+        console.error('OAuth signup error:', error)
+        throw error
+      }
+
+      // If data.url exists, the redirect will happen automatically
+      // No need to set loading to false here as the page will redirect
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred')
+      console.error('Error in handleGoogleSignup:', err)
+      setError(err instanceof Error ? err.message : 'An error occurred during signup. Please try again.')
       setLoading(false)
     }
   }

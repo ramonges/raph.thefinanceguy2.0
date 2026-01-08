@@ -29,17 +29,25 @@ export async function GET(request: Request) {
       
       // Successfully authenticated
       if (data?.session && data?.user) {
+        console.log('OAuth callback successful - User ID:', data.user.id, 'Email:', data.user.email, 'Is new user:', data.user.created_at === data.user.updated_at)
+        
         // Ensure profile exists for the user (important for OAuth users)
         try {
-          const { data: existingProfile } = await supabase
+          const { data: existingProfile, error: selectError } = await supabase
             .from('profiles')
             .select('id')
             .eq('id', data.user.id)
             .single()
 
-          // If profile doesn't exist, create it
+          if (selectError && selectError.code !== 'PGRST116') {
+            // PGRST116 is "not found" which is expected for new users
+            console.error('Error checking existing profile:', selectError)
+          }
+
+          // If profile doesn't exist, create it (this happens for new OAuth users)
           if (!existingProfile) {
-            const { error: profileError } = await supabase
+            console.log('Creating new profile for OAuth user:', data.user.id)
+            const { data: newProfile, error: profileError } = await supabase
               .from('profiles')
               .insert({
                 id: data.user.id,
@@ -48,14 +56,25 @@ export async function GET(request: Request) {
                 avatar_url: data.user.user_metadata?.avatar_url || data.user.user_metadata?.picture || null,
                 auth_provider: data.user.app_metadata?.provider || 'email',
               })
+              .select()
+              .single()
 
             if (profileError) {
-              console.error('Error creating profile:', profileError)
+              console.error('Error creating profile:', {
+                message: profileError.message,
+                code: profileError.code,
+                details: profileError.details,
+                hint: profileError.hint
+              })
               // Don't fail the auth flow if profile creation fails, but log it
+            } else {
+              console.log('Profile created successfully:', newProfile?.id)
             }
+          } else {
+            console.log('Profile already exists for user:', existingProfile.id)
           }
         } catch (profileErr) {
-          console.error('Error checking/creating profile:', profileErr)
+          console.error('Exception checking/creating profile:', profileErr)
           // Don't fail the auth flow if profile check/creation fails
         }
 
