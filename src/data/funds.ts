@@ -141,6 +141,14 @@ function getWebsite(fundName: string): string {
     'NK Securities': 'https://www.nksecurities.com',
     '26 Miles Capital': 'https://www.26milescapital.com',
     'Statar Capital': 'https://www.statar.com',
+    'PG3 AG': 'https://www.pg3.ch',
+    'Progressive Capital Partners Ltd': 'https://www.progressivecapitalpartners.com',
+    'Blue Earth Capital AG': 'https://www.blueearthcapital.com',
+    'Stonebridge Capital': 'https://www.stonebridgecapital.com',
+    'Cantab Capital Partners': 'https://www.cantabcapital.com',
+    'Abbey Capital Limited': 'https://www.abbeycapital.com',
+    'Three Rock Capital Management': 'https://www.threerockcapital.com',
+    'Davidson Kempner': 'https://www.davidsonkempner.com',
   }
 
   // Return the website if found, otherwise use a generic search URL
@@ -336,6 +344,7 @@ export const fundsData: FundLocation[] = [
           { name: 'XR Trading', website: getWebsite('XR Trading'), city: 'New York', region: 'North America' },
           { name: 'XTX Markets', website: getWebsite('XTX Markets'), city: 'New York', region: 'North America' },
           { name: 'Statar Capital', website: getWebsite('Statar Capital'), city: 'New York', region: 'North America' },
+          { name: 'Davidson Kempner', website: getWebsite('Davidson Kempner'), city: 'New York', region: 'North America' },
         ]
       },
       {
@@ -430,18 +439,23 @@ export const fundsData: FundLocation[] = [
         city: 'Baar',
         funds: [
           { name: 'UTR8 Group', website: getWebsite('UTR8 Group'), city: 'Baar', region: 'Europe' },
+          { name: 'PG3 AG', website: getWebsite('PG3 AG'), city: 'Baar', region: 'Europe' },
+          { name: 'Progressive Capital Partners Ltd', website: getWebsite('Progressive Capital Partners Ltd'), city: 'Baar', region: 'Europe' },
+          { name: 'Blue Earth Capital AG', website: getWebsite('Blue Earth Capital AG'), city: 'Baar', region: 'Europe' },
         ]
       },
       {
         city: 'Bratislava',
         funds: [
           { name: 'Wincent', website: getWebsite('Wincent'), city: 'Bratislava', region: 'Europe' },
+          { name: 'Stonebridge Capital', website: getWebsite('Stonebridge Capital'), city: 'Bratislava', region: 'Europe' },
         ]
       },
       {
         city: 'Cambridge',
         funds: [
           { name: 'Quantbox Research', website: getWebsite('Quantbox Research'), city: 'Cambridge', region: 'Europe' },
+          { name: 'Cantab Capital Partners', website: getWebsite('Cantab Capital Partners'), city: 'Cambridge', region: 'Europe' },
         ]
       },
       {
@@ -454,6 +468,8 @@ export const fundsData: FundLocation[] = [
         city: 'Dublin',
         funds: [
           { name: 'Mako Trading', website: getWebsite('Mako Trading'), city: 'Dublin', region: 'Europe' },
+          { name: 'Abbey Capital Limited', website: getWebsite('Abbey Capital Limited'), city: 'Dublin', region: 'Europe' },
+          { name: 'Three Rock Capital Management', website: getWebsite('Three Rock Capital Management'), city: 'Dublin', region: 'Europe' },
         ]
       },
       {

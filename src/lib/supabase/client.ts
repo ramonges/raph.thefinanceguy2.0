@@ -13,47 +13,36 @@ export function createClient() {
     )
   }
 
-  // createBrowserClient automatically handles cookies for PKCE flow
-  // Explicitly configure cookie handling for mobile browser compatibility
+  // createBrowserClient from @supabase/ssr handles cookies for PKCE
+  // Explicit cookie handlers ensure compatibility with mobile browsers (especially Safari)
   return createBrowserClient(
     supabaseUrl,
     supabaseAnonKey,
     {
       cookies: {
         getAll() {
-          // Parse document.cookie into array of { name, value } objects
           if (typeof document === 'undefined') return []
           return document.cookie.split('; ').map(cookie => {
             const [name, ...rest] = cookie.split('=')
-            return { name: name.trim(), value: decodeURIComponent(rest.join('=')) }
+            return {
+              name: name.trim(),
+              value: rest.length > 0 ? decodeURIComponent(rest.join('=')) : ''
+            }
           }).filter(c => c.name)
         },
         setAll(cookiesToSet) {
-          // Set cookies with proper options for mobile browsers
+          if (typeof document === 'undefined') return
           cookiesToSet.forEach(({ name, value, options }) => {
-            if (typeof document === 'undefined') return
-            
-            const cookieParts = [
-              `${name}=${encodeURIComponent(value)}`,
-              `path=${options?.path || '/'}`,
-            ]
-            
-            if (options?.maxAge) {
-              cookieParts.push(`max-age=${options.maxAge}`)
-            }
-            
-            if (options?.domain) {
-              cookieParts.push(`domain=${options.domain}`)
-            }
-            
-            // Use 'lax' as default SameSite for better mobile compatibility
-            cookieParts.push(`sameSite=${options?.sameSite || 'lax'}`)
-            
+            let cookieString = `${name}=${encodeURIComponent(value)}`
+            cookieString += `; path=${options?.path || '/'}`
+            if (options?.maxAge) cookieString += `; max-age=${options.maxAge}`
+            if (options?.domain) cookieString += `; domain=${options.domain}`
+            const sameSite = options?.sameSite || 'lax'
+            cookieString += `; sameSite=${sameSite}`
             if (options?.secure || (typeof window !== 'undefined' && window.location.protocol === 'https:')) {
-              cookieParts.push('secure')
+              cookieString += '; secure'
             }
-            
-            document.cookie = cookieParts.join('; ')
+            document.cookie = cookieString
           })
         },
       },

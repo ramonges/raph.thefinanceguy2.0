@@ -92,10 +92,7 @@ export default function SignupPage() {
         provider: 'google',
         options: {
           redirectTo: redirectUrl,
-          queryParams: {
-            access_type: 'offline',
-            prompt: 'consent',
-          },
+          skipBrowserRedirect: false,
         },
       })
 

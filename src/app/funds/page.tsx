@@ -79,23 +79,23 @@ export default function FundsPage() {
       <main className="pt-20 sm:pt-24 pb-12 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="mb-6 sm:mb-8">
-            <h1 className="text-2xl sm:text-3xl font-bold mb-2">Funds</h1>
-            <p className="text-sm sm:text-base text-[#9ca3af]">
+          <div className="mb-4 sm:mb-6">
+            <h1 className="text-2xl sm:text-3xl font-bold mb-1.5 sm:mb-2">Funds</h1>
+            <p className="text-xs sm:text-base text-[#9ca3af]">
               Explore trading firms and hedge funds by location
             </p>
           </div>
 
           {/* Search Bar */}
-          <div className="mb-6 sm:mb-8">
+          <div className="mb-4 sm:mb-6">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6b7280] pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-[#6b7280] pointer-events-none" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by fund name, city, or region..."
-                className="w-full pl-10 pr-4 py-3 bg-[#111827] border border-[#1f2937] rounded-xl text-white placeholder-[#6b7280] focus:outline-none focus:border-[#f97316] transition-colors"
+                className="w-full pl-9 sm:pl-10 pr-4 py-2.5 sm:py-3 bg-[#111827] border border-[#1f2937] rounded-lg sm:rounded-xl text-sm sm:text-base text-white placeholder-[#6b7280] focus:outline-none focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316] transition-colors"
               />
             </div>
           </div>
@@ -110,36 +110,36 @@ export default function FundsPage() {
               </p>
             </div>
           ) : (
-            <div className="space-y-6 sm:space-y-8">
+            <div className="space-y-4 sm:space-y-6">
               {filteredData.map((region) => (
-                <div key={region.region} className="bg-[#111827] border border-[#1f2937] rounded-xl p-4 sm:p-6">
-                  <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2">
-                    <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-[#f97316]" />
+                <div key={region.region} className="bg-[#111827] border border-[#1f2937] rounded-lg sm:rounded-xl p-3 sm:p-6">
+                  <h2 className="text-lg sm:text-2xl font-bold mb-3 sm:mb-4 flex items-center gap-2">
+                    <MapPin className="w-4 h-4 sm:w-6 sm:h-6 text-[#f97316]" />
                     {region.region}
                   </h2>
 
-                  <div className="space-y-6 sm:space-y-8">
+                  <div className="space-y-4 sm:space-y-6">
                     {region.cities.map((city) => (
-                      <div key={city.city} className="border-l-2 border-[#1f2937] pl-4 sm:pl-6">
-                        <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 flex items-center gap-2">
-                          <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#6366f1]" />
+                      <div key={city.city} className="border-l-2 border-[#1f2937] pl-3 sm:pl-6">
+                        <h3 className="text-base sm:text-xl font-semibold mb-2 sm:mb-3 flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                          <Building2 className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-[#6366f1]" />
                           {city.city}
-                          <span className="text-sm text-[#6b7280] font-normal">
+                          <span className="text-xs sm:text-sm text-[#6b7280] font-normal">
                             ({city.funds.length})
                           </span>
                         </h3>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                           {city.funds.map((fund) => (
                             <button
                               key={`${fund.city}-${fund.name}`}
                               onClick={() => handleFundClick(fund.website)}
-                              className="group flex items-center justify-between p-3 sm:p-4 bg-[#0a0f1a] border border-[#1f2937] rounded-lg hover:border-[#f97316] hover:bg-[#1a1f2e] transition-all text-left"
+                              className="group flex items-center justify-between p-2.5 sm:p-3 bg-[#0a0f1a] border border-[#1f2937] rounded-lg hover:border-[#f97316] hover:bg-[#1a1f2e] transition-all text-left"
                             >
-                              <span className="text-sm sm:text-base text-[#e8eaed] group-hover:text-white transition-colors pr-2 flex-1">
+                              <span className="text-xs sm:text-sm text-[#e8eaed] group-hover:text-white transition-colors pr-2 flex-1 line-clamp-1">
                                 {fund.name}
                               </span>
-                              <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 text-[#6b7280] group-hover:text-[#f97316] transition-colors flex-shrink-0" />
+                              <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#6b7280] group-hover:text-[#f97316] transition-colors flex-shrink-0" />
                             </button>
                           ))}
                         </div>
@@ -153,7 +153,7 @@ export default function FundsPage() {
 
           {/* Summary */}
           {searchQuery === '' && (
-            <div className="mt-8 text-center text-sm text-[#6b7280]">
+            <div className="mt-6 sm:mt-8 text-center text-xs sm:text-sm text-[#6b7280]">
               {fundsData.reduce((total, region) => 
                 total + region.cities.reduce((cityTotal, city) => cityTotal + city.funds.length, 0), 0
               )} funds across {fundsData.reduce((total, region) => total + region.cities.length, 0)} cities
