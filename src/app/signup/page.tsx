@@ -17,17 +17,8 @@ export default function SignupPage() {
   const router = useRouter()
   const supabase = createClient()
 
-  // Check if user is already logged in and pre-fill email from URL
+  // Check if user is already logged in
   useEffect(() => {
-    // Check for email in URL params (from login redirect)
-    const urlParams = new URLSearchParams(window.location.search)
-    const emailParam = urlParams.get('email')
-    if (emailParam) {
-      setEmail(decodeURIComponent(emailParam))
-      // Clean up URL
-      window.history.replaceState({}, '', '/signup')
-    }
-
     async function checkSession() {
       try {
         const { data: { user } } = await supabase.auth.getUser()
@@ -92,7 +83,6 @@ export default function SignupPage() {
         provider: 'google',
         options: {
           redirectTo: redirectUrl,
-          skipBrowserRedirect: false,
         },
       })
 
