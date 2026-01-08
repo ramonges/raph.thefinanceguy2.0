@@ -140,7 +140,7 @@ function getWebsite(fundName: string): string {
     'Graviton Research Capital': 'https://www.gravitonresearch.com',
     'NK Securities': 'https://www.nksecurities.com',
     '26 Miles Capital': 'https://www.26milescapital.com',
-    'Statar Capital': 'https://www.statar.com',
+    'Statar Capital': 'https://www.statarcapital.com/',
   }
 
   // Return the website if found, otherwise use a generic search URL
