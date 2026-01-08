@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import DashboardNav from '@/components/DashboardNav'
@@ -96,9 +96,6 @@ export default function SharingPage() {
           setProfile(profileData)
         }
 
-        // Fetch articles with like and comment counts
-        await loadArticles()
-
         // Fetch answered questions for stats
         const { data: answeredQuestions } = await supabase
           .from('user_answered_questions')
@@ -120,18 +117,45 @@ export default function SharingPage() {
     initialize()
   }, [router, supabase])
 
-  const loadArticles = async () => {
+  // Reload articles when userId changes or loadArticles function changes
+  useEffect(() => {
+    if (userId) {
+      loadArticles()
+    }
+  }, [userId, loadArticles])
+
+  const loadArticles = useCallback(async () => {
     try {
-      // Fetch articles with author info
+      // Fetch articles
       const { data: articlesData, error: articlesError } = await supabase
         .from('articles')
-        .select(`
-          *,
-          profiles!articles_user_id_fkey(full_name, avatar_url)
-        `)
+        .select('*')
         .order('created_at', { ascending: false })
 
-      if (articlesError) throw articlesError
+      if (articlesError) {
+        console.error('Error fetching articles:', articlesError)
+        throw articlesError
+      }
+
+      if (!articlesData || articlesData.length === 0) {
+        setArticles([])
+        return
+      }
+
+      // Fetch profiles for all article authors
+      const userIds = [...new Set(articlesData.map((a: any) => a.user_id))]
+      const { data: profilesData } = await supabase
+        .from('profiles')
+        .select('id, full_name, avatar_url')
+        .in('id', userIds)
+
+      // Create a map of user_id to profile
+      const profilesMap = new Map()
+      if (profilesData) {
+        profilesData.forEach((profile: any) => {
+          profilesMap.set(profile.id, profile)
+        })
+      }
 
       // Fetch like counts and check if user liked
       const { data: likesData } = await supabase
@@ -144,15 +168,16 @@ export default function SharingPage() {
         .select('article_id')
 
       // Process articles
-      const processedArticles = (articlesData || []).map((article: any) => {
-        const likeCount = likesData?.filter(l => l.article_id === article.id).length || 0
-        const commentCount = commentsData?.filter(c => c.article_id === article.id).length || 0
-        const userLiked = likesData?.some(l => l.article_id === article.id && l.user_id === userId) || false
+      const processedArticles = articlesData.map((article: any) => {
+        const profile = profilesMap.get(article.user_id)
+        const likeCount = likesData?.filter((l: any) => l.article_id === article.id).length || 0
+        const commentCount = commentsData?.filter((c: any) => c.article_id === article.id).length || 0
+        const userLiked = userId ? likesData?.some((l: any) => l.article_id === article.id && l.user_id === userId) || false : false
 
         return {
           ...article,
-          author_name: article.profiles?.full_name || 'Anonymous',
-          author_avatar: article.profiles?.avatar_url || null,
+          author_name: profile?.full_name || 'Anonymous',
+          author_avatar: profile?.avatar_url || null,
           like_count: likeCount,
           comment_count: commentCount,
           user_liked: userLiked
@@ -162,8 +187,10 @@ export default function SharingPage() {
       setArticles(processedArticles)
     } catch (error) {
       console.error('Error loading articles:', error)
+      // Set empty array on error so UI doesn't break
+      setArticles([])
     }
-  }
+  }, [userId, supabase])
 
   const handlePublish = async () => {
     if (!userId || !publishForm.title.trim() || !publishForm.content.trim()) {
@@ -233,22 +260,46 @@ export default function SharingPage() {
     setSelectedArticle(article)
     
     // Load comments for this article
-    const { data: commentsData } = await supabase
+    const { data: commentsData, error: commentsError } = await supabase
       .from('article_comments')
-      .select(`
-        *,
-        profiles!article_comments_user_id_fkey(full_name, avatar_url)
-      `)
+      .select('*')
       .eq('article_id', article.id)
       .order('created_at', { ascending: true })
 
-    if (commentsData) {
-      const processedComments = commentsData.map((comment: any) => ({
-        ...comment,
-        author_name: comment.profiles?.full_name || 'Anonymous',
-        author_avatar: comment.profiles?.avatar_url || null
-      }))
+    if (commentsError) {
+      console.error('Error fetching comments:', commentsError)
+      setComments([])
+      return
+    }
+
+    if (commentsData && commentsData.length > 0) {
+      // Fetch profiles for comment authors
+      const commentUserIds = [...new Set(commentsData.map((c: any) => c.user_id))]
+      const { data: profilesData } = await supabase
+        .from('profiles')
+        .select('id, full_name, avatar_url')
+        .in('id', commentUserIds)
+
+      // Create a map of user_id to profile
+      const profilesMap = new Map()
+      if (profilesData) {
+        profilesData.forEach((profile: any) => {
+          profilesMap.set(profile.id, profile)
+        })
+      }
+
+      // Process comments
+      const processedComments = commentsData.map((comment: any) => {
+        const profile = profilesMap.get(comment.user_id)
+        return {
+          ...comment,
+          author_name: profile?.full_name || 'Anonymous',
+          author_avatar: profile?.avatar_url || null
+        }
+      })
       setComments(processedComments)
+    } else {
+      setComments([])
     }
   }
 
