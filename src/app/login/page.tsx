@@ -71,9 +71,8 @@ export default function LoginPage() {
     setError(null)
 
     try {
-      // Always use the production domain for OAuth redirect to match Supabase configuration
-      // This ensures consistency even if user is on Vercel preview domain
-      const redirectUrl = 'https://www.raphthefinanceguy.com/auth/callback?next=/select-block'
+      // Use the current origin to ensure OAuth redirect works on all devices (mobile, desktop, preview URLs)
+      const redirectUrl = `${window.location.origin}/auth/callback?next=/select-block`
       
       console.log('Initiating Google OAuth with redirectTo:', redirectUrl)
       

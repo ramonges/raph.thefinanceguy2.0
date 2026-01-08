@@ -76,8 +76,8 @@ export default function SignupPage() {
     setError(null)
 
     try {
-      // Always use the production domain for OAuth redirect to match Supabase configuration
-      const redirectUrl = 'https://www.raphthefinanceguy.com/auth/callback?next=/select-block'
+      // Use the current origin to ensure OAuth redirect works on all devices (mobile, desktop, preview URLs)
+      const redirectUrl = `${window.location.origin}/auth/callback?next=/select-block`
       
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
