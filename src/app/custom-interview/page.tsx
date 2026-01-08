@@ -22,7 +22,7 @@ import {
   Download,
   FileText
 } from 'lucide-react'
-import jsPDF from 'jspdf'
+import { generateLatexSource } from '@/lib/latex-generator'
 
 type CompanyType = 'bank' | 'hedge-fund'
 
@@ -209,80 +209,65 @@ export default function CustomInterviewPage() {
     }
   }
 
-  const handleDownloadPDF = () => {
+  const handleDownloadPDF = async () => {
     if (!interviewFlow) return
 
-    const doc = new jsPDF()
-    let yPos = 20
+    setLoading(true)
+    try {
+      // Generate LaTeX source
+      const latexSource = generateLatexSource(interviewFlow)
 
-    // Title
-    doc.setFontSize(18)
-    doc.setFont('helvetica', 'bold')
-    doc.text(interviewFlow.title, 20, yPos)
-    yPos += 10
-
-    // Goal and Mindset
-    doc.setFontSize(12)
-    doc.setFont('helvetica', 'normal')
-    doc.text(`Goal: ${interviewFlow.goal}`, 20, yPos)
-    yPos += 7
-    doc.text(`Mindset tested: "${interviewFlow.mindset}"`, 20, yPos)
-    yPos += 15
-
-    // Sections
-    interviewFlow.sections.forEach((section, sectionIdx) => {
-      // Section title
-      if (yPos > 250) {
-        doc.addPage()
-        yPos = 20
-      }
-      
-      doc.setFontSize(14)
-      doc.setFont('helvetica', 'bold')
-      doc.text(section.title, 20, yPos)
-      yPos += 8
-
-      if (section.description) {
-        doc.setFontSize(10)
-        doc.setFont('helvetica', 'italic')
-        doc.text(section.description, 20, yPos)
-        yPos += 6
-      }
-
-      // Questions
-      section.questions.forEach((question, qIdx) => {
-        if (yPos > 250) {
-          doc.addPage()
-          yPos = 20
-        }
-
-        doc.setFontSize(11)
-        doc.setFont('helvetica', 'bold')
-        const questionText = `${qIdx + 1}. ${question.question}`
-        const questionLines = doc.splitTextToSize(questionText, 170)
-        doc.text(questionLines, 20, yPos)
-        yPos += questionLines.length * 5 + 3
-
-        if (question.hint) {
-          doc.setFontSize(9)
-          doc.setFont('helvetica', 'italic')
-          doc.text(`Hint: ${question.hint}`, 25, yPos)
-          yPos += 5
-        }
-
-        doc.setFontSize(10)
-        doc.setFont('helvetica', 'normal')
-        const answerLines = doc.splitTextToSize(`Answer: ${question.answer}`, 170)
-        doc.text(answerLines, 20, yPos)
-        yPos += answerLines.length * 5 + 8
+      // Call API to compile LaTeX to PDF
+      const response = await fetch('/api/generate-pdf', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ interviewFlow }),
       })
 
-      yPos += 5
-    })
+      if (!response.ok) {
+        throw new Error('Failed to generate PDF')
+      }
 
-    // Save PDF
-    const fileName = `${interviewFlow.track}-${interviewFlow.companyType}-interview.pdf`
-    doc.save(fileName)
+      // Check if response is PDF (binary) or JSON (LaTeX source)
+      const contentType = response.headers.get('content-type')
+      
+      if (contentType?.includes('application/pdf')) {
+        // PDF binary received - download it
+        const blob = await response.blob()
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `${interviewFlow.track}-${interviewFlow.companyType}-interview.pdf`
+        document.body.appendChild(a)
+        a.click()
+        window.URL.revokeObjectURL(url)
+        document.body.removeChild(a)
+      } else {
+        // LaTeX source received - download .tex file
+        const result = await response.json()
+        const latexSource = result.latexSource || generateLatexSource(interviewFlow)
+        
+        const blob = new Blob([latexSource], { type: 'text/plain' })
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `${interviewFlow.track}-${interviewFlow.companyType}-interview.tex`
+        document.body.appendChild(a)
+        a.click()
+        window.URL.revokeObjectURL(url)
+        document.body.removeChild(a)
+        
+        // Show message to user
+        alert('LaTeX source file downloaded. To generate PDF:\n\n1. Upload to Overleaf.com (overleaf.com)\n2. Or compile locally with pdflatex\n\nNote: PDF compilation requires pdflatex to be installed on the server.')
+      }
+    } catch (error) {
+      console.error('Error generating PDF:', error)
+      setError('Failed to generate PDF. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   const tradingDesks: Array<{ id: AssetCategory; label: string; icon: React.ElementType; color: string }> = [

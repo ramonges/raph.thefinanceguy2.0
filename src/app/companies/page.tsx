@@ -5,13 +5,14 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import DashboardNav from '@/components/DashboardNav'
 import { Profile } from '@/types'
-import { fundsData, Fund } from '@/data/funds'
-import { Search, ExternalLink, Building2, MapPin, Loader2, X } from 'lucide-react'
+import { companiesData, Company, CompanyType } from '@/data/companies'
+import { Search, ExternalLink, Building2, MapPin, Loader2, X, Banknote, TrendingUp } from 'lucide-react'
 
-export default function FundsPage() {
+export default function CompaniesPage() {
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
+  const [filterType, setFilterType] = useState<CompanyType | 'all'>('all')
   const router = useRouter()
   const supabase = createClient()
 
@@ -45,22 +46,27 @@ export default function FundsPage() {
     initialize()
   }, [router, supabase])
 
-  // Filter funds based on search query
-  const filteredData = fundsData.map(region => ({
+  // Filter companies based on search query and type filter
+  const filteredData = companiesData.map(region => ({
     ...region,
     cities: region.cities
       .map(city => ({
         ...city,
-        funds: city.funds.filter(fund =>
-          fund.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          fund.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          fund.region.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+        companies: city.companies.filter(company => {
+          const matchesSearch = 
+            company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            company.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            company.region.toLowerCase().includes(searchQuery.toLowerCase())
+          
+          const matchesType = filterType === 'all' || company.type === filterType
+          
+          return matchesSearch && matchesType
+        })
       }))
-      .filter(city => city.funds.length > 0)
+      .filter(city => city.companies.length > 0)
   })).filter(region => region.cities.length > 0)
 
-  const handleFundClick = (website: string) => {
+  const handleCompanyClick = (website: string) => {
     window.open(website, '_blank', 'noopener,noreferrer')
   }
 
@@ -80,10 +86,46 @@ export default function FundsPage() {
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="mb-6 sm:mb-8">
-            <h1 className="text-2xl sm:text-3xl font-bold mb-2">Funds</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2">Companies</h1>
             <p className="text-sm sm:text-base text-[#9ca3af]">
-              Explore trading firms and hedge funds by location
+              Explore banks and trading firms by location
             </p>
+          </div>
+
+          {/* Filters */}
+          <div className="mb-4 sm:mb-6 flex flex-wrap gap-2 sm:gap-3">
+            <button
+              onClick={() => setFilterType('all')}
+              className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 ${
+                filterType === 'all'
+                  ? 'bg-[#f97316] text-white'
+                  : 'bg-[#1f2937] text-[#9ca3af] hover:bg-[#374151]'
+              }`}
+            >
+              All
+            </button>
+            <button
+              onClick={() => setFilterType('bank')}
+              className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 ${
+                filterType === 'bank'
+                  ? 'bg-[#f97316] text-white'
+                  : 'bg-[#1f2937] text-[#9ca3af] hover:bg-[#374151]'
+              }`}
+            >
+              <Banknote className="w-4 h-4" />
+              Banks
+            </button>
+            <button
+              onClick={() => setFilterType('fund')}
+              className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 ${
+                filterType === 'fund'
+                  ? 'bg-[#f97316] text-white'
+                  : 'bg-[#1f2937] text-[#9ca3af] hover:bg-[#374151]'
+              }`}
+            >
+              <TrendingUp className="w-4 h-4" />
+              Funds
+            </button>
           </div>
 
           {/* Search Bar */}
@@ -94,7 +136,7 @@ export default function FundsPage() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by fund name, city, or region..."
+                placeholder="Search by company name, city, or region..."
                 className="w-full pr-10 py-3.5 sm:py-4 bg-[#111827] border border-[#1f2937] rounded-xl text-white placeholder-[#6b7280] focus:outline-none focus:ring-2 focus:ring-[#f97316]/20 focus:border-[#f97316] transition-all duration-200 text-sm sm:text-base"
                 style={{ paddingLeft: '3.5rem' }}
               />
@@ -109,13 +151,13 @@ export default function FundsPage() {
             </div>
           </div>
 
-          {/* Funds List */}
+          {/* Companies List */}
           {filteredData.length === 0 ? (
             <div className="bg-[#111827] border border-[#1f2937] rounded-2xl p-12 text-center">
               <Search className="w-12 h-12 text-[#6b7280] mx-auto mb-4" />
-              <h2 className="text-xl font-semibold mb-2">No funds found</h2>
+              <h2 className="text-xl font-semibold mb-2">No companies found</h2>
               <p className="text-[#9ca3af]">
-                Try adjusting your search query
+                Try adjusting your search query or filter
               </p>
             </div>
           ) : (
@@ -134,21 +176,28 @@ export default function FundsPage() {
                           <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#6366f1]" />
                           {city.city}
                           <span className="text-sm text-[#6b7280] font-normal">
-                            ({city.funds.length})
+                            ({city.companies.length})
                           </span>
                         </h3>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
-                          {city.funds.map((fund) => (
+                          {city.companies.map((company) => (
                             <button
-                              key={`${fund.city}-${fund.name}`}
-                              onClick={() => handleFundClick(fund.website)}
+                              key={`${company.city}-${company.name}`}
+                              onClick={() => handleCompanyClick(company.website)}
                               className="group flex items-center justify-between p-3 sm:p-4 bg-[#0a0f1a] border border-[#1f2937] rounded-lg hover:border-[#f97316] hover:bg-[#1a1f2e] transition-all text-left"
                             >
-                              <span className="text-sm sm:text-base text-[#e8eaed] group-hover:text-white transition-colors pr-2 flex-1">
-                                {fund.name}
-                              </span>
-                              <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 text-[#6b7280] group-hover:text-[#f97316] transition-colors flex-shrink-0" />
+                              <div className="flex items-center gap-2 flex-1 min-w-0">
+                                {company.type === 'bank' ? (
+                                  <Banknote className="w-4 h-4 text-[#6366f1] flex-shrink-0" />
+                                ) : (
+                                  <TrendingUp className="w-4 h-4 text-[#10b981] flex-shrink-0" />
+                                )}
+                                <span className="text-sm sm:text-base text-[#e8eaed] group-hover:text-white transition-colors truncate">
+                                  {company.name}
+                                </span>
+                              </div>
+                              <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 text-[#6b7280] group-hover:text-[#f97316] transition-colors flex-shrink-0 ml-2" />
                             </button>
                           ))}
                         </div>
@@ -161,11 +210,11 @@ export default function FundsPage() {
           )}
 
           {/* Summary */}
-          {searchQuery === '' && (
+          {searchQuery === '' && filterType === 'all' && (
             <div className="mt-8 text-center text-sm text-[#6b7280]">
-              {fundsData.reduce((total, region) => 
-                total + region.cities.reduce((cityTotal, city) => cityTotal + city.funds.length, 0), 0
-              )} funds across {fundsData.reduce((total, region) => total + region.cities.length, 0)} cities
+              {companiesData.reduce((total, region) => 
+                total + region.cities.reduce((cityTotal, city) => cityTotal + city.companies.length, 0), 0
+              )} companies across {companiesData.reduce((total, region) => total + region.cities.length, 0)} cities
             </div>
           )}
         </div>
@@ -173,4 +222,3 @@ export default function FundsPage() {
     </div>
   )
 }
-

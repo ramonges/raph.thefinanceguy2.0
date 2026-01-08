@@ -52,7 +52,7 @@ export default function DashboardNav({ profile, onOpenStats, blockType }: Dashbo
     { href: '/assets', label: 'Assets', icon: Layers },
     { href: '/strategies', label: 'Strategies', icon: TrendingUp },
     { href: '/missed-questions', label: 'Missed', icon: XCircle },
-    { href: '/funds', label: 'Funds', icon: Building2 },
+    { href: '/companies', label: 'Companies', icon: Building2 },
   ]
 
   return (
