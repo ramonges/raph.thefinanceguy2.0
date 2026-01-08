@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import { BookOpen, XCircle, BarChart3, LogOut, User, Layers, TrendingUp, Target, Share2, Menu, X } from 'lucide-react'
+import { BookOpen, XCircle, BarChart3, LogOut, User, Layers, TrendingUp, Target, Share2, Menu, X, Building2 } from 'lucide-react'
 
 interface Profile {
   full_name: string | null
@@ -52,6 +52,7 @@ export default function DashboardNav({ profile, onOpenStats, blockType }: Dashbo
     { href: '/assets', label: 'Assets', icon: Layers },
     { href: '/strategies', label: 'Strategies', icon: TrendingUp },
     { href: '/missed-questions', label: 'Missed', icon: XCircle },
+    { href: '/funds', label: 'Funds', icon: Building2 },
   ]
 
   return (
