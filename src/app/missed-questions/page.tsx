@@ -64,36 +64,36 @@ function MissedQuestionCard({
     <div className="bg-[#111827] border border-[#1f2937] rounded-xl overflow-hidden transition-all duration-200 hover:border-[#374151]">
       <button
         onClick={onToggle}
-        className="w-full flex items-center gap-3 sm:gap-4 p-4 sm:p-5 text-left"
+        className="w-full flex items-center gap-2.5 sm:gap-4 p-3 sm:p-5 text-left"
       >
         <div 
-          className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+          className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center flex-shrink-0"
           style={{ backgroundColor: `${color}20` }}
         >
           <Icon className="w-4 h-4 sm:w-5 sm:h-5" style={{ color }} />
         </div>
         
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-1.5 sm:gap-2 mb-1 flex-wrap">
+          <div className="flex items-center gap-1 sm:gap-1.5 mb-1 flex-wrap">
             <span className="text-xs font-medium px-1.5 sm:px-2 py-0.5 rounded-full" style={{ backgroundColor: `${color}20`, color }}>
               {categoryLabels[section]}
             </span>
             <span className="text-xs text-[#6b7280]">Q{question.question_number}</span>
             {question.reviewed && (
-              <span className="flex items-center gap-1 text-xs text-green-400">
+              <span className="flex items-center gap-0.5 sm:gap-1 text-xs text-green-400">
                 <CheckCircle2 className="w-3 h-3" />
                 <span className="hidden sm:inline">Reviewed</span>
               </span>
             )}
           </div>
-          <p className="text-sm sm:text-base text-[#e8eaed] line-clamp-2">{question.question_text}</p>
+          <p className="text-xs sm:text-base text-[#e8eaed] line-clamp-2 leading-relaxed">{question.question_text}</p>
         </div>
 
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 ml-1">
           {expanded ? (
-            <ChevronUp className="w-5 h-5 text-[#6b7280]" />
+            <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 text-[#6b7280]" />
           ) : (
-            <ChevronDown className="w-5 h-5 text-[#6b7280]" />
+            <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-[#6b7280]" />
           )}
         </div>
       </button>
@@ -296,9 +296,9 @@ export default function MissedQuestionsPage() {
           </div>
 
           {/* Filters */}
-          <div className="bg-[#111827] border border-[#1f2937] rounded-xl p-3 sm:p-4 mb-6 space-y-3 sm:space-y-4">
+          <div className="bg-[#111827] border border-[#1f2937] rounded-xl p-3 sm:p-4 mb-4 sm:mb-6 space-y-3 sm:space-y-4">
             {/* Main Category Filters */}
-            <div className="flex flex-wrap gap-2 items-center">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2 items-center">
               <button
                 onClick={() => {
                   setFilterCategory('all')
@@ -306,7 +306,7 @@ export default function MissedQuestionsPage() {
                   setFilterAssetCategory('all')
                   setFilterStrategyCategory('all')
                 }}
-                className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors ${
+                className={`px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors ${
                   filterCategory === 'all' && filterBlockType === 'all' && filterAssetCategory === 'all' && filterStrategyCategory === 'all'
                     ? 'bg-[#f97316] text-[#0a0f1a]'
                     : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
@@ -321,7 +321,7 @@ export default function MissedQuestionsPage() {
                   <button
                     key={cat}
                     onClick={() => setFilterCategory(cat)}
-                    className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors ${
+                    className={`px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors ${
                       filterCategory === cat
                         ? 'text-[#0a0f1a]'
                         : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
@@ -336,11 +336,11 @@ export default function MissedQuestionsPage() {
 
             {/* Block Type Filters */}
             {blockTypes.length > 0 && (
-              <div className="flex flex-wrap gap-2 items-center">
-                <span className="text-xs text-[#6b7280] self-center whitespace-nowrap">Block:</span>
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 items-center">
+                <span className="text-xs text-[#6b7280] self-center whitespace-nowrap mr-0.5 sm:mr-0">Block:</span>
                 <button
                   onClick={() => setFilterBlockType('all')}
-                  className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
+                  className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium transition-colors ${
                     filterBlockType === 'all'
                       ? 'bg-[#6366f1] text-white'
                       : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
@@ -352,7 +352,7 @@ export default function MissedQuestionsPage() {
                   <button
                     key={bt}
                     onClick={() => setFilterBlockType(bt)}
-                    className={`px-2 py-1 rounded text-xs font-medium transition-colors capitalize ${
+                    className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium transition-colors capitalize ${
                       filterBlockType === bt
                         ? 'bg-[#6366f1] text-white'
                         : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
@@ -366,11 +366,11 @@ export default function MissedQuestionsPage() {
 
             {/* Asset Category Filters */}
             {assetCategories.length > 0 && (
-              <div className="flex flex-wrap gap-2 items-center">
-                <span className="text-xs text-[#6b7280] self-center whitespace-nowrap">Asset:</span>
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 items-center">
+                <span className="text-xs text-[#6b7280] self-center whitespace-nowrap mr-0.5 sm:mr-0">Asset:</span>
                 <button
                   onClick={() => setFilterAssetCategory('all')}
-                  className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
+                  className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium transition-colors ${
                     filterAssetCategory === 'all'
                       ? 'bg-[#10b981] text-white'
                       : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
@@ -382,7 +382,7 @@ export default function MissedQuestionsPage() {
                   <button
                     key={ac}
                     onClick={() => setFilterAssetCategory(ac)}
-                    className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
+                    className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium transition-colors ${
                       filterAssetCategory === ac
                         ? 'bg-[#10b981] text-white'
                         : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
@@ -396,11 +396,11 @@ export default function MissedQuestionsPage() {
 
             {/* Strategy Category Filters */}
             {strategyCategories.length > 0 && (
-              <div className="flex flex-wrap gap-2 items-center">
-                <span className="text-xs text-[#6b7280] self-center whitespace-nowrap">Strategy:</span>
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 items-center">
+                <span className="text-xs text-[#6b7280] self-center whitespace-nowrap mr-0.5 sm:mr-0">Strategy:</span>
                 <button
                   onClick={() => setFilterStrategyCategory('all')}
-                  className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
+                  className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium transition-colors ${
                     filterStrategyCategory === 'all'
                       ? 'bg-[#8b5cf6] text-white'
                       : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
@@ -412,7 +412,7 @@ export default function MissedQuestionsPage() {
                   <button
                     key={sc}
                     onClick={() => setFilterStrategyCategory(sc)}
-                    className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
+                    className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium transition-colors break-words ${
                       filterStrategyCategory === sc
                         ? 'bg-[#8b5cf6] text-white'
                         : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
@@ -425,13 +425,13 @@ export default function MissedQuestionsPage() {
             )}
 
             {/* Toggle Options */}
-            <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 pt-2 border-t border-[#1f2937]">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-2.5 sm:gap-4 pt-2 border-t border-[#1f2937]">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={showReviewed}
                   onChange={(e) => setShowReviewed(e.target.checked)}
-                  className="w-4 h-4 rounded border-[#374151] bg-[#1f2937] text-[#f97316] focus:ring-[#f97316] focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 rounded border-[#374151] bg-[#1f2937] text-[#f97316] focus:ring-[#f97316] focus:ring-offset-0 cursor-pointer flex-shrink-0"
                 />
                 <span className="text-xs sm:text-sm text-[#9ca3af]">Show reviewed</span>
               </label>
@@ -440,7 +440,7 @@ export default function MissedQuestionsPage() {
                   type="checkbox"
                   checked={showUnderstood}
                   onChange={(e) => setShowUnderstood(e.target.checked)}
-                  className="w-4 h-4 rounded border-[#374151] bg-[#1f2937] text-[#f97316] focus:ring-[#f97316] focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 rounded border-[#374151] bg-[#1f2937] text-[#f97316] focus:ring-[#f97316] focus:ring-offset-0 cursor-pointer flex-shrink-0"
                 />
                 <span className="text-xs sm:text-sm text-[#9ca3af]">Show understood</span>
               </label>
@@ -487,28 +487,28 @@ export default function MissedQuestionsPage() {
 
           {/* Summary Stats */}
           {missedQuestions.length > 0 && (
-            <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="bg-[#111827] border border-[#1f2937] rounded-xl p-4 text-center">
-                <div className="text-2xl font-bold text-[#e8eaed]">{missedQuestions.length}</div>
-                <p className="text-xs text-[#6b7280]">Total Missed</p>
+            <div className="mt-6 sm:mt-8 grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
+              <div className="bg-[#111827] border border-[#1f2937] rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
+                <div className="text-xl sm:text-2xl font-bold text-[#e8eaed]">{missedQuestions.length}</div>
+                <p className="text-xs text-[#6b7280] mt-1">Total Missed</p>
               </div>
-              <div className="bg-[#111827] border border-[#1f2937] rounded-xl p-4 text-center">
-                <div className="text-2xl font-bold text-green-400">
+              <div className="bg-[#111827] border border-[#1f2937] rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
+                <div className="text-xl sm:text-2xl font-bold text-green-400">
                   {missedQuestions.filter(q => q.reviewed).length}
                 </div>
-                <p className="text-xs text-[#6b7280]">Reviewed</p>
+                <p className="text-xs text-[#6b7280] mt-1">Reviewed</p>
               </div>
-              <div className="bg-[#111827] border border-[#1f2937] rounded-xl p-4 text-center">
-                <div className="text-2xl font-bold text-[#f59e0b]">
+              <div className="bg-[#111827] border border-[#1f2937] rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
+                <div className="text-xl sm:text-2xl font-bold text-[#f59e0b]">
                   {missedQuestions.filter(q => !q.reviewed).length}
                 </div>
-                <p className="text-xs text-[#6b7280]">Pending Review</p>
+                <p className="text-xs text-[#6b7280] mt-1">Pending Review</p>
               </div>
-              <div className="bg-[#111827] border border-[#1f2937] rounded-xl p-4 text-center">
-                <div className="text-2xl font-bold" style={{ color: categoryColors[filterCategory as Category] || '#f97316' }}>
+              <div className="bg-[#111827] border border-[#1f2937] rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
+                <div className="text-xl sm:text-2xl font-bold" style={{ color: categoryColors[filterCategory as Category] || '#f97316' }}>
                   {filteredQuestions.length}
                 </div>
-                <p className="text-xs text-[#6b7280]">Showing</p>
+                <p className="text-xs text-[#6b7280] mt-1">Showing</p>
               </div>
             </div>
           )}
