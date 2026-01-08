@@ -72,58 +72,7 @@ export default function SharingPage() {
   const router = useRouter()
   const supabase = createClient()
 
-  // Fetch user and articles
-  useEffect(() => {
-    async function initialize() {
-      try {
-        const { data: { user } } = await supabase.auth.getUser()
-        
-        if (!user) {
-          router.push('/login')
-          return
-        }
-
-        setUserId(user.id)
-
-        // Fetch profile
-        const { data: profileData } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', user.id)
-          .single()
-
-        if (profileData) {
-          setProfile(profileData)
-        }
-
-        // Fetch answered questions for stats
-        const { data: answeredQuestions } = await supabase
-          .from('user_answered_questions')
-          .select('*')
-          .eq('user_id', user.id)
-
-        if (answeredQuestions) {
-          const blockType = detectBlockTypeFromPath('/sharing')
-          const calculatedStats = calculateStats(answeredQuestions, blockType)
-          setStats(calculatedStats)
-        }
-      } catch (error) {
-        console.error('Error initializing:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    initialize()
-  }, [router, supabase])
-
-  // Reload articles when userId changes or loadArticles function changes
-  useEffect(() => {
-    if (userId) {
-      loadArticles()
-    }
-  }, [userId, loadArticles])
-
+  // Define loadArticles function first
   const loadArticles = useCallback(async () => {
     try {
       // Fetch articles
@@ -191,6 +140,58 @@ export default function SharingPage() {
       setArticles([])
     }
   }, [userId, supabase])
+
+  // Fetch user and articles
+  useEffect(() => {
+    async function initialize() {
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        
+        if (!user) {
+          router.push('/login')
+          return
+        }
+
+        setUserId(user.id)
+
+        // Fetch profile
+        const { data: profileData } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single()
+
+        if (profileData) {
+          setProfile(profileData)
+        }
+
+        // Fetch answered questions for stats
+        const { data: answeredQuestions } = await supabase
+          .from('user_answered_questions')
+          .select('*')
+          .eq('user_id', user.id)
+
+        if (answeredQuestions) {
+          const blockType = detectBlockTypeFromPath('/sharing')
+          const calculatedStats = calculateStats(answeredQuestions, blockType)
+          setStats(calculatedStats)
+        }
+      } catch (error) {
+        console.error('Error initializing:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    initialize()
+  }, [router, supabase])
+
+  // Reload articles when userId changes or loadArticles function changes
+  useEffect(() => {
+    if (userId) {
+      loadArticles()
+    }
+  }, [userId, loadArticles])
 
   const handlePublish = async () => {
     if (!userId || !publishForm.title.trim() || !publishForm.content.trim()) {
