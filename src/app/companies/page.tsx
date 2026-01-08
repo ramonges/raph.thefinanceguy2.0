@@ -70,45 +70,60 @@ export default function CompaniesPage() {
     return cityName
   }
 
-  // Filter and merge companies based on search query, type filter, and normalized city names
-  const filteredData = companiesData.map(region => {
-    // Group companies by normalized city name
-    const cityMap = new Map<string, Company[]>()
+  // First, merge regions and cities from all data sources
+  // Group by region, then by normalized city name
+  const regionMap = new Map<string, Map<string, Company[]>>()
+  
+  companiesData.forEach(region => {
+    if (!regionMap.has(region.region)) {
+      regionMap.set(region.region, new Map())
+    }
+    const cityMap = regionMap.get(region.region)!
     
     region.cities.forEach(city => {
       city.companies.forEach(company => {
-        const matchesSearch = 
-          company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          company.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          company.region.toLowerCase().includes(searchQuery.toLowerCase())
-        
-        const matchesType = filterType === 'all' || company.type === filterType
-        
-        if (matchesSearch && matchesType) {
-          const normalizedCity = normalizeCityName(city.city)
-          if (!cityMap.has(normalizedCity)) {
-            cityMap.set(normalizedCity, [])
-          }
-          cityMap.get(normalizedCity)!.push(company)
+        const normalizedCity = normalizeCityName(city.city)
+        if (!cityMap.has(normalizedCity)) {
+          cityMap.set(normalizedCity, [])
         }
+        cityMap.get(normalizedCity)!.push(company)
       })
     })
+  })
 
-    // Convert map back to cities array
-    const mergedCities = Array.from(cityMap.entries()).map(([normalizedCity, companies]) => ({
-      city: normalizedCity,
-      companies: companies.sort((a, b) => {
-        // Sort by type (banks first) then by name
-        if (a.type !== b.type) {
-          return a.type === 'bank' ? -1 : 1
+  // Convert to filtered data structure
+  const filteredData = Array.from(regionMap.entries()).map(([regionName, cityMap]) => {
+    // Filter cities and companies based on search and type
+    const filteredCities = Array.from(cityMap.entries())
+      .map(([normalizedCity, companies]) => {
+        const filteredCompanies = companies.filter(company => {
+          const matchesSearch = 
+            company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            company.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            company.region.toLowerCase().includes(searchQuery.toLowerCase())
+          
+          const matchesType = filterType === 'all' || company.type === filterType
+          
+          return matchesSearch && matchesType
+        })
+
+        return {
+          city: normalizedCity,
+          companies: filteredCompanies.sort((a, b) => {
+            // Sort by type (banks first) then by name
+            if (a.type !== b.type) {
+              return a.type === 'bank' ? -1 : 1
+            }
+            return a.name.localeCompare(b.name)
+          })
         }
-        return a.name.localeCompare(b.name)
       })
-    }))
+      .filter(city => city.companies.length > 0)
+      .sort((a, b) => a.city.localeCompare(b.city)) // Sort cities alphabetically
 
     return {
-      ...region,
-      cities: mergedCities.filter(city => city.companies.length > 0)
+      region: regionName,
+      cities: filteredCities
     }
   }).filter(region => region.cities.length > 0)
 
