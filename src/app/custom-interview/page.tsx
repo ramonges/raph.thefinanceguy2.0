@@ -389,7 +389,7 @@ export default function CustomInterviewPage() {
           doc.setFont('helvetica', 'normal')
           // Add space between "Answer:" label and the answer text
           doc.text(answerLines, 30, yPos + 9) // Space of 4mm between label and text
-          yPos += answerBoxHeight + 25 // Much more space after answer box (before next question)
+          yPos += answerBoxHeight + 15 // Reduced space after answer box (before next question)
         })
       })
 
