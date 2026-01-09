@@ -22,7 +22,7 @@ import {
   Download,
   FileText
 } from 'lucide-react'
-import { generateLatexSource } from '@/lib/latex-generator'
+import jsPDF from 'jspdf'
 
 type CompanyType = 'bank' | 'hedge-fund'
 
@@ -210,60 +210,136 @@ export default function CustomInterviewPage() {
     }
   }
 
-  const handleDownloadPDF = async () => {
+  const handleDownloadPDF = () => {
     if (!interviewFlow) return
 
     setLoading(true)
     setError(null)
     try {
-      // Generate LaTeX source
-      const latexSource = generateLatexSource(interviewFlow)
-
-      // Call API to compile LaTeX to PDF
-      const response = await fetch('/api/generate-pdf', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ interviewFlow }),
+      // Create new PDF document
+      const doc = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
       })
 
-      if (!response.ok) {
-        throw new Error('Failed to generate PDF')
-      }
+      // Set colors
+      const primaryColor = [249, 115, 22] // Orange
+      const secondaryColor = [31, 41, 55] // Dark gray
+      const textColor = [232, 234, 237] // Light gray
+      const darkBg = [10, 15, 26] // Very dark
 
-      // Check if response is PDF (binary) or JSON (LaTeX source)
-      const contentType = response.headers.get('content-type')
+      // Title page
+      doc.setFillColor(...primaryColor)
+      doc.rect(0, 0, 210, 297, 'F')
       
-      if (contentType?.includes('application/pdf')) {
-        // PDF binary received - download it
-        const blob = await response.blob()
-        const url = window.URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = `${interviewFlow.track}-${interviewFlow.companyType}-interview.pdf`
-        document.body.appendChild(a)
-        a.click()
-        window.URL.revokeObjectURL(url)
-        document.body.removeChild(a)
-      } else {
-        // LaTeX source received - download .tex file
-        const result = await response.json()
-        const latexSource = result.latexSource || generateLatexSource(interviewFlow)
+      doc.setTextColor(255, 255, 255)
+      doc.setFontSize(32)
+      doc.setFont('helvetica', 'bold')
+      doc.text(interviewFlow.title, 105, 100, { align: 'center', maxWidth: 180 })
+      
+      doc.setFontSize(18)
+      doc.setFont('helvetica', 'normal')
+      doc.text('Custom Mock Interview', 105, 130, { align: 'center' })
+      
+      doc.setFontSize(14)
+      doc.text(`Track: ${interviewFlow.track.charAt(0).toUpperCase() + interviewFlow.track.slice(1)}`, 105, 160, { align: 'center' })
+      doc.text(`Company Type: ${interviewFlow.companyType === 'bank' ? 'Bank' : 'Hedge Fund'}`, 105, 175, { align: 'center' })
+      
+      doc.setFontSize(12)
+      doc.text(`Generated on ${new Date().toLocaleDateString()}`, 105, 280, { align: 'center' })
+
+      // New page for content
+      doc.addPage()
+      
+      // Table of contents
+      doc.setTextColor(...secondaryColor)
+      doc.setFontSize(20)
+      doc.setFont('helvetica', 'bold')
+      doc.text('Table of Contents', 20, 30)
+      
+      doc.setFontSize(12)
+      doc.setFont('helvetica', 'normal')
+      let tocY = 50
+      interviewFlow.sections.forEach((section, idx) => {
+        doc.text(`${idx + 1}. ${section.title}`, 25, tocY)
+        tocY += 10
+      })
+
+      // Add sections
+      interviewFlow.sections.forEach((section, sectionIdx) => {
+        if (sectionIdx > 0) {
+          doc.addPage()
+        }
+
+        // Section title
+        doc.setTextColor(...primaryColor)
+        doc.setFontSize(18)
+        doc.setFont('helvetica', 'bold')
+        doc.text(`Section ${sectionIdx + 1}: ${section.title}`, 20, 30)
         
-        const blob = new Blob([latexSource], { type: 'text/plain' })
-        const url = window.URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = `${interviewFlow.track}-${interviewFlow.companyType}-interview.tex`
-        document.body.appendChild(a)
-        a.click()
-        window.URL.revokeObjectURL(url)
-        document.body.removeChild(a)
-        
-        // Show message to user
-        alert('LaTeX source file downloaded. To generate PDF:\n\n1. Upload to Overleaf.com (overleaf.com)\n2. Or compile locally with pdflatex\n\nNote: PDF compilation requires pdflatex to be installed on the server.')
-      }
+        // Section description
+        if (section.description) {
+          doc.setTextColor(100, 100, 100)
+          doc.setFontSize(11)
+          doc.setFont('helvetica', 'italic')
+          const descLines = doc.splitTextToSize(section.description, 170)
+          doc.text(descLines, 20, 40)
+        }
+
+        let yPos = section.description ? 55 : 45
+
+        // Questions
+        section.questions.forEach((question, qIdx) => {
+          // Check if we need a new page
+          if (yPos > 250) {
+            doc.addPage()
+            yPos = 20
+          }
+
+          // Question number and text
+          doc.setTextColor(...textColor)
+          doc.setFontSize(12)
+          doc.setFont('helvetica', 'bold')
+          const questionText = `Q${qIdx + 1}: ${question.question}`
+          const questionLines = doc.splitTextToSize(questionText, 170)
+          doc.text(questionLines, 20, yPos)
+          yPos += questionLines.length * 7 + 5
+
+          // Hint box
+          if (question.hint) {
+            doc.setFillColor(...darkBg)
+            doc.setDrawColor(99, 102, 241) // Accent color
+            doc.roundedRect(20, yPos - 3, 170, 15, 2, 2, 'FD')
+            doc.setTextColor(99, 102, 241)
+            doc.setFontSize(10)
+            doc.setFont('helvetica', 'bold')
+            doc.text('Hint:', 25, yPos + 5)
+            doc.setTextColor(...textColor)
+            doc.setFont('helvetica', 'normal')
+            const hintLines = doc.splitTextToSize(question.hint, 160)
+            doc.text(hintLines, 30, yPos + 5)
+            yPos += Math.max(15, hintLines.length * 5) + 8
+          }
+
+          // Answer box
+          doc.setFillColor(...darkBg)
+          doc.setDrawColor(150, 150, 150)
+          doc.roundedRect(20, yPos - 3, 170, 15, 2, 2, 'FD')
+          doc.setTextColor(...textColor)
+          doc.setFontSize(10)
+          doc.setFont('helvetica', 'bold')
+          doc.text('Answer:', 25, yPos + 5)
+          doc.setFont('helvetica', 'normal')
+          const answerLines = doc.splitTextToSize(question.answer, 160)
+          doc.text(answerLines, 30, yPos + 5)
+          yPos += Math.max(15, answerLines.length * 5) + 15
+        })
+      })
+
+      // Save PDF
+      doc.save(`${interviewFlow.track}-${interviewFlow.companyType}-interview.pdf`)
+      
     } catch (error) {
       console.error('Error generating PDF:', error)
       setError('Failed to generate PDF. Please try again.')

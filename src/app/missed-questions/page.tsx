@@ -437,25 +437,29 @@ export default function MissedQuestionsPage() {
             )}
 
             {/* Toggle Options */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2 border-t border-[#1f2937]">
-              <label className="inline-flex items-center gap-1 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={showReviewed}
-                  onChange={(e) => setShowReviewed(e.target.checked)}
-                  className="w-5 h-5 sm:w-4 sm:h-4 rounded border-[#374151] bg-[#1f2937] text-[#f97316] focus:ring-2 focus:ring-[#f97316] focus:ring-offset-0 cursor-pointer flex-shrink-0"
-                />
-                <span className="text-xs sm:text-sm text-[#9ca3af] select-none whitespace-nowrap">Show reviewed</span>
-              </label>
-              <label className="inline-flex items-center gap-1 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={showUnderstood}
-                  onChange={(e) => setShowUnderstood(e.target.checked)}
-                  className="w-5 h-5 sm:w-4 sm:h-4 rounded border-[#374151] bg-[#1f2937] text-[#f97316] focus:ring-2 focus:ring-[#f97316] focus:ring-offset-0 cursor-pointer flex-shrink-0"
-                />
-                <span className="text-xs sm:text-sm text-[#9ca3af] select-none whitespace-nowrap">Show understood</span>
-              </label>
+            <div className="pt-2 border-t border-[#1f2937]">
+              <div className="flex flex-col sm:flex-row sm:gap-4" style={{ gap: '12px' }}>
+                <label className="flex items-center cursor-pointer group" style={{ width: 'fit-content' }}>
+                  <input
+                    type="checkbox"
+                    checked={showReviewed}
+                    onChange={(e) => setShowReviewed(e.target.checked)}
+                    className="w-5 h-5 sm:w-4 sm:h-4 rounded border-[#374151] bg-[#1f2937] text-[#f97316] focus:ring-2 focus:ring-[#f97316] focus:ring-offset-0 cursor-pointer"
+                    style={{ marginRight: '8px', flexShrink: 0 }}
+                  />
+                  <span className="text-xs sm:text-sm text-[#9ca3af] select-none whitespace-nowrap">Show reviewed</span>
+                </label>
+                <label className="flex items-center cursor-pointer group" style={{ width: 'fit-content' }}>
+                  <input
+                    type="checkbox"
+                    checked={showUnderstood}
+                    onChange={(e) => setShowUnderstood(e.target.checked)}
+                    className="w-5 h-5 sm:w-4 sm:h-4 rounded border-[#374151] bg-[#1f2937] text-[#f97316] focus:ring-2 focus:ring-[#f97316] focus:ring-offset-0 cursor-pointer"
+                    style={{ marginRight: '8px', flexShrink: 0 }}
+                  />
+                  <span className="text-xs sm:text-sm text-[#9ca3af] select-none whitespace-nowrap">Show understood</span>
+                </label>
+              </div>
             </div>
           </div>
 
