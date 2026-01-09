@@ -327,30 +327,38 @@ export default function CustomInterviewPage() {
 
         // Questions
         section.questions.forEach((question, qIdx) => {
+          // Clean answer text first
+          let cleanAnswer = question.answer.trim()
+          cleanAnswer = cleanAnswer.replace(/^(Answer|An)\s*:?\s*/i, '')
+          
+          // Clean hint text if exists
+          let cleanHint = question.hint ? question.hint.trim().replace(/^Hint\s*:?\s*/i, '') : ''
+          
           // Calculate required height for question
           doc.setFontSize(11)
           const questionText = `Q${qIdx + 1}: ${question.question}`
           const questionLines = doc.splitTextToSize(questionText, 170)
-          const questionHeight = questionLines.length * 6 + 10
+          const questionHeight = questionLines.length * 6 + 15 // More space
           
           // Calculate hint height if exists
           let hintHeight = 0
-          if (question.hint) {
+          let hintLines: string[] = []
+          if (question.hint && cleanHint) {
             doc.setFontSize(9)
-            const hintLines = doc.splitTextToSize(question.hint, 160)
-            hintHeight = Math.max(15, hintLines.length * 5) + 10
+            hintLines = doc.splitTextToSize(cleanHint, 160)
+            // Height includes label "Hint:" + text + padding
+            hintHeight = Math.max(15, hintLines.length * 5 + 10) + 5
           }
           
           // Calculate answer height (with cleaned text)
           doc.setFontSize(9)
-          let cleanAnswer = question.answer.trim()
-          cleanAnswer = cleanAnswer.replace(/^(Answer|An)\s*:?\s*/i, '')
           const answerLines = doc.splitTextToSize(cleanAnswer, 160)
-          const answerHeight = Math.max(15, answerLines.length * 5) + 15
+          // Height includes label "Answer:" + text + padding
+          const answerHeight = Math.max(15, answerLines.length * 5 + 10) + 5
           
-          const totalHeight = questionHeight + hintHeight + answerHeight
+          const totalHeight = questionHeight + hintHeight + answerHeight + 10 // Extra buffer
           
-          // Check if we need a new page
+          // Check if we need a new page BEFORE starting the question
           yPos = checkNewPage(totalHeight, yPos)
 
           // Question number and text
@@ -358,18 +366,15 @@ export default function CustomInterviewPage() {
           doc.setFontSize(11)
           doc.setFont('helvetica', 'bold')
           doc.text(questionLines, 20, yPos)
-          yPos += questionLines.length * 6 + 12 // More space after question
+          yPos += questionLines.length * 6 + 15 // More space after question
 
           // Hint box
-          if (question.hint) {
-            yPos = checkNewPage(hintHeight, yPos)
+          if (question.hint && cleanHint && hintLines.length > 0) {
+            // Re-check space for hint
+            yPos = checkNewPage(hintHeight + 5, yPos)
             
             doc.setFontSize(9)
-            // Clean hint text - remove "Hint:" prefix if it exists
-            let cleanHint = question.hint.trim()
-            cleanHint = cleanHint.replace(/^Hint\s*:?\s*/i, '')
-            const hintLines = doc.splitTextToSize(cleanHint, 160)
-            const boxHeight = Math.max(12, hintLines.length * 5 + 8)
+            const boxHeight = Math.max(15, hintLines.length * 5 + 10)
             
             doc.setDrawColor(200, 200, 200) // Light gray border
             doc.setFillColor(250, 250, 250) // Very light gray background
@@ -379,15 +384,15 @@ export default function CustomInterviewPage() {
             doc.text('Hint:', 25, yPos + 5)
             doc.setFont('helvetica', 'normal')
             doc.text(hintLines, 30, yPos + 5)
-            yPos += boxHeight + 15 // More space after hint box
+            yPos += boxHeight + 18 // More space after hint box
           }
 
           // Answer box
-          yPos = checkNewPage(answerHeight, yPos)
+          // Re-check space for answer
+          yPos = checkNewPage(answerHeight + 5, yPos)
           
           doc.setFontSize(9)
-          // Use the already cleaned answer and split lines
-          const answerBoxHeight = Math.max(12, answerLines.length * 5 + 8)
+          const answerBoxHeight = Math.max(15, answerLines.length * 5 + 10)
           
           doc.setDrawColor(150, 150, 150) // Gray border
           doc.setFillColor(245, 245, 245) // Light gray background
@@ -397,7 +402,7 @@ export default function CustomInterviewPage() {
           doc.text('Answer:', 25, yPos + 5)
           doc.setFont('helvetica', 'normal')
           doc.text(answerLines, 30, yPos + 5)
-          yPos += answerBoxHeight + 20 // More space after answer box (before next question)
+          yPos += answerBoxHeight + 25 // Much more space after answer box (before next question)
         })
       })
 
