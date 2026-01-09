@@ -426,7 +426,7 @@ export default function MissedQuestionsPage() {
 
             {/* Toggle Options */}
             <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 pt-2 border-t border-[#1f2937]">
-              <label className="flex items-center gap-3 cursor-pointer py-1.5 sm:py-0 -mx-1 px-1 sm:mx-0 sm:px-0 rounded-lg sm:rounded-none hover:bg-[#1f2937]/50 sm:hover:bg-transparent transition-colors">
+              <label className="flex items-center gap-2 cursor-pointer py-1.5 sm:py-0 -mx-1 px-1 sm:mx-0 sm:px-0 rounded-lg sm:rounded-none hover:bg-[#1f2937]/50 sm:hover:bg-transparent transition-colors">
                 <input
                   type="checkbox"
                   checked={showReviewed}
@@ -435,7 +435,7 @@ export default function MissedQuestionsPage() {
                 />
                 <span className="text-sm sm:text-sm text-[#9ca3af] select-none">Show reviewed</span>
               </label>
-              <label className="flex items-center gap-3 cursor-pointer py-1.5 sm:py-0 -mx-1 px-1 sm:mx-0 sm:px-0 rounded-lg sm:rounded-none hover:bg-[#1f2937]/50 sm:hover:bg-transparent transition-colors">
+              <label className="flex items-center gap-2 cursor-pointer py-1.5 sm:py-0 -mx-1 px-1 sm:mx-0 sm:px-0 rounded-lg sm:rounded-none hover:bg-[#1f2937]/50 sm:hover:bg-transparent transition-colors">
                 <input
                   type="checkbox"
                   checked={showUnderstood}
