@@ -223,14 +223,8 @@ export default function CustomInterviewPage() {
         format: 'a4'
       })
 
-      // Set colors
-      const primaryColor = [249, 115, 22] // Orange
-      const secondaryColor = [31, 41, 55] // Dark gray
-      const textColor = [232, 234, 237] // Light gray
-      const darkBg = [10, 15, 26] // Very dark
-
       // Title page
-      doc.setFillColor(...primaryColor)
+      doc.setFillColor(249, 115, 22) // Orange
       doc.rect(0, 0, 210, 297, 'F')
       
       doc.setTextColor(255, 255, 255)
@@ -253,7 +247,7 @@ export default function CustomInterviewPage() {
       doc.addPage()
       
       // Table of contents
-      doc.setTextColor(...secondaryColor)
+      doc.setTextColor(31, 41, 55) // Dark gray
       doc.setFontSize(20)
       doc.setFont('helvetica', 'bold')
       doc.text('Table of Contents', 20, 30)
@@ -273,7 +267,7 @@ export default function CustomInterviewPage() {
         }
 
         // Section title
-        doc.setTextColor(...primaryColor)
+        doc.setTextColor(249, 115, 22) // Orange
         doc.setFontSize(18)
         doc.setFont('helvetica', 'bold')
         doc.text(`Section ${sectionIdx + 1}: ${section.title}`, 20, 30)
@@ -298,7 +292,7 @@ export default function CustomInterviewPage() {
           }
 
           // Question number and text
-          doc.setTextColor(...textColor)
+          doc.setTextColor(232, 234, 237) // Light gray
           doc.setFontSize(12)
           doc.setFont('helvetica', 'bold')
           const questionText = `Q${qIdx + 1}: ${question.question}`
@@ -308,14 +302,14 @@ export default function CustomInterviewPage() {
 
           // Hint box
           if (question.hint) {
-            doc.setFillColor(...darkBg)
+            doc.setFillColor(10, 15, 26) // Very dark
             doc.setDrawColor(99, 102, 241) // Accent color
             doc.roundedRect(20, yPos - 3, 170, 15, 2, 2, 'FD')
             doc.setTextColor(99, 102, 241)
             doc.setFontSize(10)
             doc.setFont('helvetica', 'bold')
             doc.text('Hint:', 25, yPos + 5)
-            doc.setTextColor(...textColor)
+            doc.setTextColor(232, 234, 237) // Light gray
             doc.setFont('helvetica', 'normal')
             const hintLines = doc.splitTextToSize(question.hint, 160)
             doc.text(hintLines, 30, yPos + 5)
@@ -323,10 +317,10 @@ export default function CustomInterviewPage() {
           }
 
           // Answer box
-          doc.setFillColor(...darkBg)
+          doc.setFillColor(10, 15, 26) // Very dark
           doc.setDrawColor(150, 150, 150)
           doc.roundedRect(20, yPos - 3, 170, 15, 2, 2, 'FD')
-          doc.setTextColor(...textColor)
+          doc.setTextColor(232, 234, 237) // Light gray
           doc.setFontSize(10)
           doc.setFont('helvetica', 'bold')
           doc.text('Answer:', 25, yPos + 5)
