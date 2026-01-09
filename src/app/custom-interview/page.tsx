@@ -258,24 +258,6 @@ export default function CustomInterviewPage() {
       // New page for content
       doc.addPage()
       addWatermark()
-      
-      // Table of contents
-      doc.setTextColor(0, 0, 0) // Black
-      doc.setFontSize(18)
-      doc.setFont('helvetica', 'bold')
-      doc.text('Table of Contents', 20, 30)
-      
-      doc.setFontSize(11)
-      doc.setFont('helvetica', 'normal')
-      let tocY = 50
-      interviewFlow.sections.forEach((section, idx) => {
-        // Clean section title - remove any leading numbers or duplicates
-        let cleanTitle = section.title.trim()
-        // Remove patterns like "1. " or "1. 1. " at the start
-        cleanTitle = cleanTitle.replace(/^\d+\.\s*(\d+\.\s*)?/, '')
-        doc.text(`${idx + 1}. ${cleanTitle}`, 25, tocY)
-        tocY += 10
-      })
 
       // Helper function to check if we need a new page and add it if needed
       const checkNewPage = (requiredHeight: number, currentY: number) => {
@@ -292,13 +274,16 @@ export default function CustomInterviewPage() {
       }
 
       // Add sections
+      let yPos = 30 // Start position for first section
       interviewFlow.sections.forEach((section, sectionIdx) => {
+        // Check if we need a new page before starting a new section (except first one)
         if (sectionIdx > 0) {
-          doc.addPage()
-          addWatermark()
+          // Calculate approximate height needed for section title
+          const sectionTitleHeight = 30
+          yPos = checkNewPage(sectionTitleHeight, yPos)
+          // Add extra space between sections
+          yPos += 10
         }
-
-        let yPos = 30
 
         // Section title - clean it first
         doc.setTextColor(0, 0, 0) // Black
@@ -392,7 +377,8 @@ export default function CustomInterviewPage() {
           yPos = checkNewPage(answerHeight + 5, yPos)
           
           doc.setFontSize(9)
-          const answerBoxHeight = Math.max(15, answerLines.length * 5 + 10)
+          // Calculate box height with space for label and spacing
+          const answerBoxHeight = Math.max(15, answerLines.length * 5 + 12) // Extra space for spacing
           
           doc.setDrawColor(150, 150, 150) // Gray border
           doc.setFillColor(245, 245, 245) // Light gray background
@@ -401,7 +387,8 @@ export default function CustomInterviewPage() {
           doc.setFont('helvetica', 'bold')
           doc.text('Answer:', 25, yPos + 5)
           doc.setFont('helvetica', 'normal')
-          doc.text(answerLines, 30, yPos + 5)
+          // Add space between "Answer:" label and the answer text
+          doc.text(answerLines, 30, yPos + 9) // Space of 4mm between label and text
           yPos += answerBoxHeight + 25 // Much more space after answer box (before next question)
         })
       })
