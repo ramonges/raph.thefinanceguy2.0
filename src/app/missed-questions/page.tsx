@@ -425,24 +425,24 @@ export default function MissedQuestionsPage() {
             )}
 
             {/* Toggle Options */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2 border-t border-[#1f2937]">
-              <label className="flex items-center gap-2 cursor-pointer">
+            <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-4 pt-2 border-t border-[#1f2937]">
+              <label className="flex items-center gap-2 cursor-pointer w-full sm:w-auto">
                 <input
                   type="checkbox"
                   checked={showReviewed}
                   onChange={(e) => setShowReviewed(e.target.checked)}
                   className="w-5 h-5 sm:w-4 sm:h-4 rounded border-[#374151] bg-[#1f2937] text-[#f97316] focus:ring-2 focus:ring-[#f97316] focus:ring-offset-0 cursor-pointer flex-shrink-0"
                 />
-                <span className="text-xs sm:text-sm text-[#9ca3af] select-none">Show reviewed</span>
+                <span className="text-xs sm:text-sm text-[#9ca3af] select-none whitespace-nowrap">Show reviewed</span>
               </label>
-              <label className="flex items-center gap-2 cursor-pointer">
+              <label className="flex items-center gap-2 cursor-pointer w-full sm:w-auto">
                 <input
                   type="checkbox"
                   checked={showUnderstood}
                   onChange={(e) => setShowUnderstood(e.target.checked)}
                   className="w-5 h-5 sm:w-4 sm:h-4 rounded border-[#374151] bg-[#1f2937] text-[#f97316] focus:ring-2 focus:ring-[#f97316] focus:ring-offset-0 cursor-pointer flex-shrink-0"
                 />
-                <span className="text-xs sm:text-sm text-[#9ca3af] select-none">Show understood</span>
+                <span className="text-xs sm:text-sm text-[#9ca3af] select-none whitespace-nowrap">Show understood</span>
               </label>
             </div>
           </div>
