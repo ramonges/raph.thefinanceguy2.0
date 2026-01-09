@@ -437,8 +437,8 @@ export default function MissedQuestionsPage() {
             )}
 
             {/* Toggle Options */}
-            <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-4 pt-2 border-t border-[#1f2937]">
-              <label className="flex items-center gap-2 cursor-pointer w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2 border-t border-[#1f2937]">
+              <label className="inline-flex items-center gap-1 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={showReviewed}
@@ -447,7 +447,7 @@ export default function MissedQuestionsPage() {
                 />
                 <span className="text-xs sm:text-sm text-[#9ca3af] select-none whitespace-nowrap">Show reviewed</span>
               </label>
-              <label className="flex items-center gap-2 cursor-pointer w-full sm:w-auto">
+              <label className="inline-flex items-center gap-1 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={showUnderstood}
