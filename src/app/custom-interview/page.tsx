@@ -331,8 +331,8 @@ export default function CustomInterviewPage() {
           if (question.hint && cleanHint) {
             doc.setFontSize(9)
             hintLines = doc.splitTextToSize(cleanHint, 160)
-            // Height includes label "Hint:" + text + padding
-            hintHeight = Math.max(15, hintLines.length * 5 + 10) + 5
+            // Height includes: label "Hint:" (5mm) + spacing (4mm) + text lines (5mm per line) + padding (6mm)
+            hintHeight = Math.max(20, hintLines.length * 5 + 15)
           }
           
           // Calculate answer height (with cleaned text)
@@ -359,8 +359,8 @@ export default function CustomInterviewPage() {
             yPos = checkNewPage(hintHeight + 5, yPos)
             
             doc.setFontSize(9)
-            // Calculate box height: label (5mm) + text lines (5mm per line) + padding (6mm)
-            const boxHeight = Math.max(15, hintLines.length * 5 + 11)
+            // Calculate box height: label (5mm) + spacing (4mm) + text lines (5mm per line) + padding (6mm)
+            const boxHeight = Math.max(20, hintLines.length * 5 + 15)
             
             // Make sure box doesn't go off the page
             const pageHeight = 297
@@ -378,7 +378,9 @@ export default function CustomInterviewPage() {
             doc.setFont('helvetica', 'bold')
             doc.text('Hint:', 25, yPos + 5)
             doc.setFont('helvetica', 'normal')
-            doc.text(hintLines, 30, yPos + 5)
+            // Add space between "Hint:" label and the hint text
+            const hintTextStartY = yPos + 9
+            doc.text(hintLines, 30, hintTextStartY)
             yPos += boxHeight + 18 // More space after hint box
           }
 
