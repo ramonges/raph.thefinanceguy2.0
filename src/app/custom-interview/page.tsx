@@ -223,25 +223,14 @@ export default function CustomInterviewPage() {
         format: 'a4'
       })
 
-      // Helper function to add multiple watermarks on each page
+      // Helper function to add watermark on each page (single diagonal)
       const addWatermark = () => {
         doc.setTextColor(220, 220, 220) // Light gray for watermark
-        doc.setFontSize(9)
+        doc.setFontSize(10)
         doc.setFont('helvetica', 'normal')
         const watermarkText = 'raphthefinanceguy.com'
         
-        // Add multiple watermarks across the page
-        // Top-left to bottom-right diagonal
-        doc.text(watermarkText, 50, 80, { angle: 45 })
-        doc.text(watermarkText, 120, 150, { angle: 45 })
-        doc.text(watermarkText, 190, 220, { angle: 45 })
-        
-        // Bottom-left to top-right diagonal
-        doc.text(watermarkText, 50, 220, { angle: -45 })
-        doc.text(watermarkText, 120, 150, { angle: -45 })
-        doc.text(watermarkText, 190, 80, { angle: -45 })
-        
-        // Center watermark
+        // Single diagonal watermark from top-left to bottom-right
         doc.text(watermarkText, 105, 150, { align: 'center', angle: 45 })
         
         doc.setTextColor(0, 0, 0) // Reset to black
@@ -320,20 +309,20 @@ export default function CustomInterviewPage() {
         cleanSectionTitle = cleanSectionTitle.replace(/^\d+\.\s*(\d+\.\s*)?/, '')
         const sectionTitle = `Section ${sectionIdx + 1}: ${cleanSectionTitle}`
         doc.text(sectionTitle, 20, yPos)
-        yPos += 12
+        yPos += 18 // More space after section title
         
         // Section description
         if (section.description) {
-          yPos = checkNewPage(15, yPos)
+          yPos = checkNewPage(20, yPos)
           doc.setTextColor(60, 60, 60) // Dark gray for description
           doc.setFontSize(10)
           doc.setFont('helvetica', 'italic')
           const descLines = doc.splitTextToSize(section.description, 170)
           const descHeight = descLines.length * 5
           doc.text(descLines, 20, yPos)
-          yPos += descHeight + 10
+          yPos += descHeight + 15 // More space after description
         } else {
-          yPos += 5
+          yPos += 10 // More space even without description
         }
 
         // Questions
@@ -369,7 +358,7 @@ export default function CustomInterviewPage() {
           doc.setFontSize(11)
           doc.setFont('helvetica', 'bold')
           doc.text(questionLines, 20, yPos)
-          yPos += questionLines.length * 6 + 8
+          yPos += questionLines.length * 6 + 12 // More space after question
 
           // Hint box
           if (question.hint) {
@@ -390,7 +379,7 @@ export default function CustomInterviewPage() {
             doc.text('Hint:', 25, yPos + 5)
             doc.setFont('helvetica', 'normal')
             doc.text(hintLines, 30, yPos + 5)
-            yPos += boxHeight + 10
+            yPos += boxHeight + 15 // More space after hint box
           }
 
           // Answer box
@@ -408,7 +397,7 @@ export default function CustomInterviewPage() {
           doc.text('Answer:', 25, yPos + 5)
           doc.setFont('helvetica', 'normal')
           doc.text(answerLines, 30, yPos + 5)
-          yPos += answerBoxHeight + 15
+          yPos += answerBoxHeight + 20 // More space after answer box (before next question)
         })
       })
 
