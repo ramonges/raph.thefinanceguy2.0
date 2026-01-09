@@ -223,36 +223,45 @@ export default function CustomInterviewPage() {
         format: 'a4'
       })
 
+      // Helper function to add watermark on each page
+      const addWatermark = () => {
+        doc.setTextColor(200, 200, 200) // Light gray for watermark
+        doc.setFontSize(10)
+        doc.setFont('helvetica', 'normal')
+        doc.text('raphthefinanceguy.com', 105, 290, { align: 'center', angle: 45 })
+        doc.setTextColor(0, 0, 0) // Reset to black
+      }
+
       // Title page
-      doc.setFillColor(249, 115, 22) // Orange
-      doc.rect(0, 0, 210, 297, 'F')
-      
-      doc.setTextColor(255, 255, 255)
-      doc.setFontSize(32)
+      doc.setTextColor(0, 0, 0) // Black text
+      doc.setFontSize(28)
       doc.setFont('helvetica', 'bold')
       doc.text(interviewFlow.title, 105, 100, { align: 'center', maxWidth: 180 })
       
-      doc.setFontSize(18)
+      doc.setFontSize(16)
       doc.setFont('helvetica', 'normal')
-      doc.text('Custom Mock Interview', 105, 130, { align: 'center' })
-      
-      doc.setFontSize(14)
-      doc.text(`Track: ${interviewFlow.track.charAt(0).toUpperCase() + interviewFlow.track.slice(1)}`, 105, 160, { align: 'center' })
-      doc.text(`Company Type: ${interviewFlow.companyType === 'bank' ? 'Bank' : 'Hedge Fund'}`, 105, 175, { align: 'center' })
+      doc.text('Custom Mock Interview', 105, 120, { align: 'center' })
       
       doc.setFontSize(12)
+      doc.text(`Track: ${interviewFlow.track.charAt(0).toUpperCase() + interviewFlow.track.slice(1)}`, 105, 145, { align: 'center' })
+      doc.text(`Company Type: ${interviewFlow.companyType === 'bank' ? 'Bank' : 'Hedge Fund'}`, 105, 160, { align: 'center' })
+      
+      doc.setFontSize(10)
       doc.text(`Generated on ${new Date().toLocaleDateString()}`, 105, 280, { align: 'center' })
+      
+      addWatermark()
 
       // New page for content
       doc.addPage()
+      addWatermark()
       
       // Table of contents
-      doc.setTextColor(31, 41, 55) // Dark gray
-      doc.setFontSize(20)
+      doc.setTextColor(0, 0, 0) // Black
+      doc.setFontSize(18)
       doc.setFont('helvetica', 'bold')
       doc.text('Table of Contents', 20, 30)
       
-      doc.setFontSize(12)
+      doc.setFontSize(11)
       doc.setFont('helvetica', 'normal')
       let tocY = 50
       interviewFlow.sections.forEach((section, idx) => {
@@ -264,18 +273,19 @@ export default function CustomInterviewPage() {
       interviewFlow.sections.forEach((section, sectionIdx) => {
         if (sectionIdx > 0) {
           doc.addPage()
+          addWatermark()
         }
 
         // Section title
-        doc.setTextColor(249, 115, 22) // Orange
-        doc.setFontSize(18)
+        doc.setTextColor(0, 0, 0) // Black
+        doc.setFontSize(16)
         doc.setFont('helvetica', 'bold')
         doc.text(`Section ${sectionIdx + 1}: ${section.title}`, 20, 30)
         
         // Section description
         if (section.description) {
-          doc.setTextColor(100, 100, 100)
-          doc.setFontSize(11)
+          doc.setTextColor(60, 60, 60) // Dark gray for description
+          doc.setFontSize(10)
           doc.setFont('helvetica', 'italic')
           const descLines = doc.splitTextToSize(section.description, 170)
           doc.text(descLines, 20, 40)
@@ -288,46 +298,46 @@ export default function CustomInterviewPage() {
           // Check if we need a new page
           if (yPos > 250) {
             doc.addPage()
-            yPos = 20
+            addWatermark()
+            yPos = 30
           }
 
           // Question number and text
-          doc.setTextColor(232, 234, 237) // Light gray
-          doc.setFontSize(12)
+          doc.setTextColor(0, 0, 0) // Black
+          doc.setFontSize(11)
           doc.setFont('helvetica', 'bold')
           const questionText = `Q${qIdx + 1}: ${question.question}`
           const questionLines = doc.splitTextToSize(questionText, 170)
           doc.text(questionLines, 20, yPos)
-          yPos += questionLines.length * 7 + 5
+          yPos += questionLines.length * 6 + 8
 
           // Hint box
           if (question.hint) {
-            doc.setFillColor(10, 15, 26) // Very dark
-            doc.setDrawColor(99, 102, 241) // Accent color
-            doc.roundedRect(20, yPos - 3, 170, 15, 2, 2, 'FD')
-            doc.setTextColor(99, 102, 241)
-            doc.setFontSize(10)
+            doc.setDrawColor(200, 200, 200) // Light gray border
+            doc.setFillColor(250, 250, 250) // Very light gray background
+            doc.roundedRect(20, yPos - 2, 170, 12, 1, 1, 'FD')
+            doc.setTextColor(0, 0, 0) // Black
+            doc.setFontSize(9)
             doc.setFont('helvetica', 'bold')
-            doc.text('Hint:', 25, yPos + 5)
-            doc.setTextColor(232, 234, 237) // Light gray
+            doc.text('Hint:', 25, yPos + 4)
             doc.setFont('helvetica', 'normal')
             const hintLines = doc.splitTextToSize(question.hint, 160)
-            doc.text(hintLines, 30, yPos + 5)
-            yPos += Math.max(15, hintLines.length * 5) + 8
+            doc.text(hintLines, 30, yPos + 4)
+            yPos += Math.max(12, hintLines.length * 4.5) + 8
           }
 
           // Answer box
-          doc.setFillColor(10, 15, 26) // Very dark
-          doc.setDrawColor(150, 150, 150)
-          doc.roundedRect(20, yPos - 3, 170, 15, 2, 2, 'FD')
-          doc.setTextColor(232, 234, 237) // Light gray
-          doc.setFontSize(10)
+          doc.setDrawColor(150, 150, 150) // Gray border
+          doc.setFillColor(245, 245, 245) // Light gray background
+          doc.roundedRect(20, yPos - 2, 170, 12, 1, 1, 'FD')
+          doc.setTextColor(0, 0, 0) // Black
+          doc.setFontSize(9)
           doc.setFont('helvetica', 'bold')
-          doc.text('Answer:', 25, yPos + 5)
+          doc.text('Answer:', 25, yPos + 4)
           doc.setFont('helvetica', 'normal')
           const answerLines = doc.splitTextToSize(question.answer, 160)
-          doc.text(answerLines, 30, yPos + 5)
-          yPos += Math.max(15, answerLines.length * 5) + 15
+          doc.text(answerLines, 30, yPos + 4)
+          yPos += Math.max(12, answerLines.length * 4.5) + 12
         })
       })
 
