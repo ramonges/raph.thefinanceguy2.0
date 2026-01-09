@@ -298,7 +298,7 @@ export default function MissedQuestionsPage() {
           {/* Filters */}
           <div className="bg-[#111827] border border-[#1f2937] rounded-xl p-3 sm:p-4 mb-4 sm:mb-6 space-y-3 sm:space-y-4">
             {/* Main Category Filters */}
-            <div className="flex flex-wrap gap-1.5 sm:gap-2 items-center">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2 items-center overflow-hidden">
               <button
                 onClick={() => {
                   setFilterCategory('all')
@@ -306,7 +306,7 @@ export default function MissedQuestionsPage() {
                   setFilterAssetCategory('all')
                   setFilterStrategyCategory('all')
                 }}
-                className={`px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors ${
+                className={`px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors flex-shrink-0 ${
                   filterCategory === 'all' && filterBlockType === 'all' && filterAssetCategory === 'all' && filterStrategyCategory === 'all'
                     ? 'bg-[#f97316] text-[#0a0f1a]'
                     : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
@@ -321,7 +321,7 @@ export default function MissedQuestionsPage() {
                   <button
                     key={cat}
                     onClick={() => setFilterCategory(cat)}
-                    className={`px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors ${
+                    className={`px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors flex-shrink-0 ${
                       filterCategory === cat
                         ? 'text-[#0a0f1a]'
                         : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
@@ -336,11 +336,11 @@ export default function MissedQuestionsPage() {
 
             {/* Block Type Filters */}
             {blockTypes.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 sm:gap-2 items-center">
-                <span className="text-xs text-[#6b7280] self-center whitespace-nowrap mr-0.5 sm:mr-0">Block:</span>
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 items-center overflow-hidden">
+                <span className="text-xs text-[#6b7280] self-center whitespace-nowrap flex-shrink-0">Block:</span>
                 <button
                   onClick={() => setFilterBlockType('all')}
-                  className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium transition-colors ${
+                  className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium transition-colors flex-shrink-0 ${
                     filterBlockType === 'all'
                       ? 'bg-[#6366f1] text-white'
                       : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
@@ -348,29 +348,33 @@ export default function MissedQuestionsPage() {
                 >
                   All
                 </button>
-                {blockTypes.map((bt) => (
-                  <button
-                    key={bt}
-                    onClick={() => setFilterBlockType(bt)}
-                    className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium transition-colors capitalize ${
-                      filterBlockType === bt
-                        ? 'bg-[#6366f1] text-white'
-                        : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
-                    }`}
-                  >
-                    {bt}
-                  </button>
-                ))}
+                {blockTypes.map((bt) => {
+                  const count = missedQuestions.filter(q => q.block_type === bt).length
+                  if (count === 0) return null
+                  return (
+                    <button
+                      key={bt}
+                      onClick={() => setFilterBlockType(bt)}
+                      className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium transition-colors capitalize flex-shrink-0 ${
+                        filterBlockType === bt
+                          ? 'bg-[#6366f1] text-white'
+                          : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
+                      }`}
+                    >
+                      {bt}
+                    </button>
+                  )
+                })}
               </div>
             )}
 
             {/* Asset Category Filters */}
             {assetCategories.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 sm:gap-2 items-center">
-                <span className="text-xs text-[#6b7280] self-center whitespace-nowrap mr-0.5 sm:mr-0">Asset:</span>
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 items-center overflow-hidden">
+                <span className="text-xs text-[#6b7280] self-center whitespace-nowrap flex-shrink-0">Asset:</span>
                 <button
                   onClick={() => setFilterAssetCategory('all')}
-                  className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium transition-colors ${
+                  className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium transition-colors flex-shrink-0 ${
                     filterAssetCategory === 'all'
                       ? 'bg-[#10b981] text-white'
                       : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
@@ -378,29 +382,33 @@ export default function MissedQuestionsPage() {
                 >
                   All
                 </button>
-                {assetCategories.map((ac) => (
-                  <button
-                    key={ac}
-                    onClick={() => setFilterAssetCategory(ac)}
-                    className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium transition-colors ${
-                      filterAssetCategory === ac
-                        ? 'bg-[#10b981] text-white'
-                        : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
-                    }`}
-                  >
-                    {ac.replace('-', ' ')}
-                  </button>
-                ))}
+                {assetCategories.map((ac) => {
+                  const count = missedQuestions.filter(q => q.asset_category === ac).length
+                  if (count === 0) return null
+                  return (
+                    <button
+                      key={ac}
+                      onClick={() => setFilterAssetCategory(ac)}
+                      className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium transition-colors flex-shrink-0 ${
+                        filterAssetCategory === ac
+                          ? 'bg-[#10b981] text-white'
+                          : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
+                      }`}
+                    >
+                      {ac.replace('-', ' ')}
+                    </button>
+                  )
+                })}
               </div>
             )}
 
             {/* Strategy Category Filters */}
             {strategyCategories.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 sm:gap-2 items-center">
-                <span className="text-xs text-[#6b7280] self-center whitespace-nowrap mr-0.5 sm:mr-0">Strategy:</span>
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 items-center overflow-hidden">
+                <span className="text-xs text-[#6b7280] self-center whitespace-nowrap flex-shrink-0">Strategy:</span>
                 <button
                   onClick={() => setFilterStrategyCategory('all')}
-                  className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium transition-colors ${
+                  className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium transition-colors flex-shrink-0 ${
                     filterStrategyCategory === 'all'
                       ? 'bg-[#8b5cf6] text-white'
                       : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
@@ -408,19 +416,23 @@ export default function MissedQuestionsPage() {
                 >
                   All
                 </button>
-                {strategyCategories.map((sc) => (
-                  <button
-                    key={sc}
-                    onClick={() => setFilterStrategyCategory(sc)}
-                    className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium transition-colors break-words ${
-                      filterStrategyCategory === sc
-                        ? 'bg-[#8b5cf6] text-white'
-                        : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
-                    }`}
-                  >
-                    {sc.replace('-', ' ')}
-                  </button>
-                ))}
+                {strategyCategories.map((sc) => {
+                  const count = missedQuestions.filter(q => q.strategy_category === sc).length
+                  if (count === 0) return null
+                  return (
+                    <button
+                      key={sc}
+                      onClick={() => setFilterStrategyCategory(sc)}
+                      className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium transition-colors flex-shrink-0 ${
+                        filterStrategyCategory === sc
+                          ? 'bg-[#8b5cf6] text-white'
+                          : 'bg-[#1f2937] text-[#9ca3af] hover:text-white'
+                      }`}
+                    >
+                      {sc.replace('-', ' ')}
+                    </button>
+                  )
+                })}
               </div>
             )}
 
