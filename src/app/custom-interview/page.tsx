@@ -338,8 +338,8 @@ export default function CustomInterviewPage() {
           // Calculate answer height (with cleaned text)
           doc.setFontSize(9)
           const answerLines = doc.splitTextToSize(cleanAnswer, 160)
-          // Height includes label "Answer:" + text + padding
-          const answerHeight = Math.max(15, answerLines.length * 5 + 10) + 5
+          // Height includes: label "Answer:" (5mm) + spacing (4mm) + text lines (5mm per line) + padding (6mm top/bottom)
+          const answerHeight = Math.max(20, answerLines.length * 5 + 15)
           
           const totalHeight = questionHeight + hintHeight + answerHeight + 10 // Extra buffer
           
@@ -359,7 +359,17 @@ export default function CustomInterviewPage() {
             yPos = checkNewPage(hintHeight + 5, yPos)
             
             doc.setFontSize(9)
-            const boxHeight = Math.max(15, hintLines.length * 5 + 10)
+            // Calculate box height: label (5mm) + text lines (5mm per line) + padding (6mm)
+            const boxHeight = Math.max(15, hintLines.length * 5 + 11)
+            
+            // Make sure box doesn't go off the page
+            const pageHeight = 297
+            const maxBoxBottom = pageHeight - 20
+            if (yPos + boxHeight > maxBoxBottom) {
+              doc.addPage()
+              addWatermark()
+              yPos = 30
+            }
             
             doc.setDrawColor(200, 200, 200) // Light gray border
             doc.setFillColor(250, 250, 250) // Very light gray background
@@ -377,8 +387,17 @@ export default function CustomInterviewPage() {
           yPos = checkNewPage(answerHeight + 5, yPos)
           
           doc.setFontSize(9)
-          // Calculate box height with space for label and spacing
-          const answerBoxHeight = Math.max(15, answerLines.length * 5 + 12) // Extra space for spacing
+          // Calculate box height: label (5mm) + spacing (4mm) + text lines (5mm per line) + padding (6mm)
+          const answerBoxHeight = Math.max(20, answerLines.length * 5 + 15)
+          
+          // Make sure box doesn't go off the page
+          const pageHeight = 297
+          const maxBoxBottom = pageHeight - 20 // Leave margin at bottom
+          if (yPos + answerBoxHeight > maxBoxBottom) {
+            doc.addPage()
+            addWatermark()
+            yPos = 30
+          }
           
           doc.setDrawColor(150, 150, 150) // Gray border
           doc.setFillColor(245, 245, 245) // Light gray background
@@ -388,7 +407,9 @@ export default function CustomInterviewPage() {
           doc.text('Answer:', 25, yPos + 5)
           doc.setFont('helvetica', 'normal')
           // Add space between "Answer:" label and the answer text
-          doc.text(answerLines, 30, yPos + 9) // Space of 4mm between label and text
+          // Calculate starting Y for text: label at yPos+5, then 4mm spacing
+          const textStartY = yPos + 9
+          doc.text(answerLines, 30, textStartY)
           yPos += answerBoxHeight + 15 // Reduced space after answer box (before next question)
         })
       })
