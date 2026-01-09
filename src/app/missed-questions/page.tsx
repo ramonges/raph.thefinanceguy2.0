@@ -158,8 +158,7 @@ export default function MissedQuestionsPage() {
   const [filterBlockType, setFilterBlockType] = useState<string | 'all'>('all')
   const [filterAssetCategory, setFilterAssetCategory] = useState<string | 'all'>('all')
   const [filterStrategyCategory, setFilterStrategyCategory] = useState<string | 'all'>('all')
-  const [showReviewed, setShowReviewed] = useState(true)
-  const [showUnderstood, setShowUnderstood] = useState(false)
+  const [showFilter, setShowFilter] = useState<'all' | 'reviewed' | 'understood'>('all')
   const [showStats, setShowStats] = useState(false)
   const [stats, setStats] = useState<UserStats>(emptyStats)
   
@@ -256,8 +255,11 @@ export default function MissedQuestionsPage() {
     if (filterBlockType !== 'all' && q.block_type !== filterBlockType) return false
     if (filterAssetCategory !== 'all' && q.asset_category !== filterAssetCategory) return false
     if (filterStrategyCategory !== 'all' && q.strategy_category !== filterStrategyCategory) return false
-    if (!showReviewed && q.reviewed) return false
-    if (!showUnderstood && q.understood) return false
+    
+    // Apply showFilter logic
+    if (showFilter === 'reviewed' && !q.reviewed) return false
+    if (showFilter === 'understood' && !q.understood) return false
+    
     return true
   })
 
@@ -304,9 +306,10 @@ export default function MissedQuestionsPage() {
                   setFilterBlockType('all')
                   setFilterAssetCategory('all')
                   setFilterStrategyCategory('all')
+                  setShowFilter('all')
                 }}
                 className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-colors flex-shrink-0 whitespace-nowrap ${
-                  filterCategory === 'all' && filterBlockType === 'all' && filterAssetCategory === 'all' && filterStrategyCategory === 'all'
+                  showFilter === 'all'
                     ? 'bg-[#f97316] text-white'
                     : 'bg-[#1f2937] text-[#9ca3af] hover:text-white hover:bg-[#374151]'
                 }`}
@@ -316,9 +319,9 @@ export default function MissedQuestionsPage() {
               
               {/* Show Reviewed toggle button */}
               <button
-                onClick={() => setShowReviewed(!showReviewed)}
+                onClick={() => setShowFilter('reviewed')}
                 className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-colors flex-shrink-0 whitespace-nowrap ${
-                  showReviewed
+                  showFilter === 'reviewed'
                     ? 'bg-[#6366f1] text-white'
                     : 'bg-[#1f2937] text-[#9ca3af] hover:text-white hover:bg-[#374151]'
                 }`}
@@ -328,9 +331,9 @@ export default function MissedQuestionsPage() {
 
               {/* Show Understood toggle button */}
               <button
-                onClick={() => setShowUnderstood(!showUnderstood)}
+                onClick={() => setShowFilter('understood')}
                 className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-colors flex-shrink-0 whitespace-nowrap ${
-                  showUnderstood
+                  showFilter === 'understood'
                     ? 'bg-[#6366f1] text-white'
                     : 'bg-[#1f2937] text-[#9ca3af] hover:text-white hover:bg-[#374151]'
                 }`}
