@@ -1,20 +1,31 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import DashboardNav from '@/components/DashboardNav'
-import { Profile } from '@/types'
+import Statistics from '@/components/Statistics'
+import { Profile, UserStats } from '@/types'
 import { companiesData, Company, CompanyType } from '@/data/companies'
 import { Search, ExternalLink, Building2, MapPin, Loader2, X, Banknote, TrendingUp } from 'lucide-react'
+import { calculateStats, detectBlockTypeFromPath } from '@/lib/stats'
+
+const emptyStats: UserStats = {
+  overall: { total: 0, correct: 0, wrong: 0, percentage: 0 },
+  byCategory: {}
+}
 
 export default function CompaniesPage() {
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
   const [filterType, setFilterType] = useState<CompanyType | 'all'>('all')
+  const [showStats, setShowStats] = useState(false)
+  const [stats, setStats] = useState<UserStats>(emptyStats)
   const router = useRouter()
+  const pathname = usePathname()
   const supabase = createClient()
+  const blockType = detectBlockTypeFromPath(pathname)
 
   useEffect(() => {
     async function initialize() {
@@ -35,6 +46,18 @@ export default function CompaniesPage() {
 
         if (profileData) {
           setProfile(profileData)
+        }
+
+        // Fetch stats
+        const { data: answeredQuestions } = await supabase
+          .from('user_answered_questions')
+          .select('*')
+          .eq('user_id', user.id)
+
+        if (answeredQuestions) {
+          // Calculate stats filtered by block type
+          const newStats = calculateStats(answeredQuestions, blockType || undefined)
+          setStats(newStats)
         }
       } catch (error) {
         console.error('Error initializing:', error)
@@ -141,7 +164,7 @@ export default function CompaniesPage() {
 
   return (
     <div className="min-h-screen gradient-bg">
-      <DashboardNav profile={profile} onOpenStats={() => {}} />
+      <DashboardNav profile={profile} onOpenStats={() => setShowStats(true)} blockType={blockType} />
 
       <main className="pt-20 sm:pt-24 pb-12 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
@@ -280,6 +303,17 @@ export default function CompaniesPage() {
           )}
         </div>
       </main>
+
+      {/* Statistics Modal */}
+      {showStats && (
+        <Statistics 
+          stats={stats} 
+          onClose={() => setShowStats(false)} 
+          blockType={blockType || undefined}
+          userId={profile?.id || null}
+          showGlobalStats={true}
+        />
+      )}
     </div>
   )
 }
