@@ -298,8 +298,8 @@ export default function MissedQuestionsPage() {
           {/* Filters */}
           <div className="bg-[#111827] border border-[#1f2937] rounded-xl p-3 sm:p-4 mb-4 sm:mb-6 space-y-3 sm:space-y-4">
             {/* Filter Bar with All button and checkboxes */}
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-              <span className="text-xs sm:text-sm text-[#9ca3af] whitespace-nowrap mr-1">Filter by:</span>
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+              <span className="text-xs sm:text-sm text-[#9ca3af] whitespace-nowrap flex-shrink-0">Filter by:</span>
               <button
                 onClick={() => {
                   setFilterCategory('all')
@@ -317,7 +317,7 @@ export default function MissedQuestionsPage() {
               </button>
               
               {/* Show Reviewed checkbox button */}
-              <label className="inline-flex items-center gap-1.5 cursor-pointer px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#1f2937] hover:bg-[#374151] transition-colors">
+              <label className="inline-flex items-center gap-2 cursor-pointer px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#1f2937] hover:bg-[#374151] transition-colors flex-shrink-0">
                 <input
                   type="checkbox"
                   checked={showReviewed}
@@ -325,11 +325,11 @@ export default function MissedQuestionsPage() {
                   className="w-4 h-4 rounded border-2 border-[#6366f1] bg-[#1f2937] text-[#6366f1] focus:ring-2 focus:ring-[#6366f1] focus:ring-offset-0 cursor-pointer flex-shrink-0 checked:bg-[#6366f1] checked:border-[#6366f1]"
                   style={showReviewed ? { backgroundColor: '#6366f1', borderColor: '#6366f1' } : {}}
                 />
-                <span className="text-xs sm:text-sm text-[#9ca3af] select-none whitespace-nowrap">Show</span>
+                <span className="text-xs sm:text-sm text-[#9ca3af] select-none whitespace-nowrap">Show Reviewed</span>
               </label>
               
               {/* Show Understood checkbox button */}
-              <label className="inline-flex items-center gap-1.5 cursor-pointer px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#1f2937] hover:bg-[#374151] transition-colors">
+              <label className="inline-flex items-center gap-2 cursor-pointer px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#1f2937] hover:bg-[#374151] transition-colors flex-shrink-0">
                 <input
                   type="checkbox"
                   checked={showUnderstood}
