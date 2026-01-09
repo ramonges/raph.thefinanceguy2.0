@@ -207,7 +207,6 @@ export default function MissedQuestionsPage() {
           .eq('user_id', user.id)
 
         if (answeredQuestions) {
-          // Calculate stats filtered by block type
           const newStats = calculateStats(answeredQuestions, blockType || undefined)
           setStats(newStats)
         }
@@ -220,7 +219,7 @@ export default function MissedQuestionsPage() {
     }
 
     initialize()
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleMarkReviewed = async (questionId: string) => {
     try {
@@ -262,7 +261,6 @@ export default function MissedQuestionsPage() {
     return true
   })
 
-  // Get unique filter values
   const blockTypes = Array.from(new Set(missedQuestions.map(q => q.block_type).filter((bt): bt is string => Boolean(bt))))
   const assetCategories = Array.from(new Set(missedQuestions.map(q => q.asset_category).filter((ac): ac is string => Boolean(ac))))
   const strategyCategories = Array.from(new Set(missedQuestions.map(q => q.strategy_category).filter((sc): sc is string => Boolean(sc))))
@@ -298,7 +296,7 @@ export default function MissedQuestionsPage() {
           {/* Filters */}
           <div className="bg-[#111827] border border-[#1f2937] rounded-xl p-3 sm:p-4 mb-4 sm:mb-6 space-y-3 sm:space-y-4">
             {/* Filter Bar with All button and checkboxes */}
-            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
               <span className="text-xs sm:text-sm text-[#9ca3af] whitespace-nowrap flex-shrink-0">Filter by:</span>
               <button
                 onClick={() => {
@@ -307,7 +305,7 @@ export default function MissedQuestionsPage() {
                   setFilterAssetCategory('all')
                   setFilterStrategyCategory('all')
                 }}
-                className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-colors flex-shrink-0 ${
+                className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-colors flex-shrink-0 whitespace-nowrap ${
                   filterCategory === 'all' && filterBlockType === 'all' && filterAssetCategory === 'all' && filterStrategyCategory === 'all'
                     ? 'bg-[#f97316] text-white'
                     : 'bg-[#1f2937] text-[#9ca3af] hover:text-white hover:bg-[#374151]'
@@ -317,29 +315,28 @@ export default function MissedQuestionsPage() {
               </button>
               
               {/* Show Reviewed checkbox button */}
-{/* Show Reviewed checkbox button */}
-            <label className="inline-flex items-center gap-1.5 cursor-pointer px-2.5 sm:px-3 py-2 rounded-full bg-[#1f2937] hover:bg-[#374151] transition-colors flex-shrink-0">
-              <input
-                type="checkbox"
-                checked={showReviewed}
-                onChange={(e) => setShowReviewed(e.target.checked)}
-                className="w-4 h-4 rounded border-2 border-[#6366f1] bg-[#1f2937] text-[#6366f1] focus:ring-2 focus:ring-[#6366f1] focus:ring-offset-0 cursor-pointer flex-shrink-0 checked:bg-[#6366f1] checked:border-[#6366f1]"
-                style={showReviewed ? { backgroundColor: '#6366f1', borderColor: '#6366f1' } : {}}
-              />
-              <span className="text-xs sm:text-sm text-[#9ca3af] select-none whitespace-nowrap">Reviewed</span>
-            </label>
+              <label className="inline-flex items-center gap-1.5 cursor-pointer px-2.5 py-1.5 sm:py-2 rounded-full bg-[#1f2937] hover:bg-[#374151] transition-colors flex-shrink-0">
+                <input
+                  type="checkbox"
+                  checked={showReviewed}
+                  onChange={(e) => setShowReviewed(e.target.checked)}
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border-2 border-[#6366f1] bg-[#1f2937] text-[#6366f1] focus:ring-2 focus:ring-[#6366f1] focus:ring-offset-0 cursor-pointer flex-shrink-0"
+                  style={showReviewed ? { backgroundColor: '#6366f1', borderColor: '#6366f1' } : {}}
+                />
+                <span className="text-xs sm:text-sm text-[#9ca3af] select-none whitespace-nowrap">Reviewed</span>
+              </label>
 
-            {/* Show Understood checkbox button */}
-            <label className="inline-flex items-center gap-1.5 cursor-pointer px-2.5 sm:px-3 py-2 rounded-full bg-[#1f2937] hover:bg-[#374151] transition-colors flex-shrink-0">
-              <input
-                type="checkbox"
-                checked={showUnderstood}
-                onChange={(e) => setShowUnderstood(e.target.checked)}
-                className="w-4 h-4 rounded border-2 border-[#6366f1] bg-[#1f2937] text-[#6366f1] focus:ring-2 focus:ring-[#6366f1] focus:ring-offset-0 cursor-pointer flex-shrink-0 checked:bg-[#6366f1] checked:border-[#6366f1]"
-                style={showUnderstood ? { backgroundColor: '#6366f1', borderColor: '#6366f1' } : {}}
-              />
-              <span className="text-xs sm:text-sm text-[#9ca3af] select-none whitespace-nowrap">Understood</span>
-            </label>
+              {/* Show Understood checkbox button */}
+              <label className="inline-flex items-center gap-1.5 cursor-pointer px-2.5 py-1.5 sm:py-2 rounded-full bg-[#1f2937] hover:bg-[#374151] transition-colors flex-shrink-0">
+                <input
+                  type="checkbox"
+                  checked={showUnderstood}
+                  onChange={(e) => setShowUnderstood(e.target.checked)}
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border-2 border-[#6366f1] bg-[#1f2937] text-[#6366f1] focus:ring-2 focus:ring-[#6366f1] focus:ring-offset-0 cursor-pointer flex-shrink-0"
+                  style={showUnderstood ? { backgroundColor: '#6366f1', borderColor: '#6366f1' } : {}}
+                />
+                <span className="text-xs sm:text-sm text-[#9ca3af] select-none whitespace-nowrap">Understood</span>
+              </label>
             </div>
 
             {/* Main Category Filters */}
@@ -465,7 +462,6 @@ export default function MissedQuestionsPage() {
                 })}
               </div>
             )}
-
           </div>
 
           {/* Questions List */}
@@ -549,4 +545,3 @@ export default function MissedQuestionsPage() {
     </div>
   )
 }
-
