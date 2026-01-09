@@ -352,9 +352,11 @@ export default function CustomInterviewPage() {
             hintHeight = Math.max(15, hintLines.length * 5) + 10
           }
           
-          // Calculate answer height
+          // Calculate answer height (with cleaned text)
           doc.setFontSize(9)
-          const answerLines = doc.splitTextToSize(question.answer, 160)
+          let cleanAnswer = question.answer.trim()
+          cleanAnswer = cleanAnswer.replace(/^(Answer|An)\s*:?\s*/i, '')
+          const answerLines = doc.splitTextToSize(cleanAnswer, 160)
           const answerHeight = Math.max(15, answerLines.length * 5) + 15
           
           const totalHeight = questionHeight + hintHeight + answerHeight
@@ -395,10 +397,7 @@ export default function CustomInterviewPage() {
           yPos = checkNewPage(answerHeight, yPos)
           
           doc.setFontSize(9)
-          // Clean answer text - remove "Answer:" or "An" prefixes if they exist
-          let cleanAnswer = question.answer.trim()
-          cleanAnswer = cleanAnswer.replace(/^(Answer|An)\s*:?\s*/i, '')
-          const answerLines = doc.splitTextToSize(cleanAnswer, 160)
+          // Use the already cleaned answer and split lines
           const answerBoxHeight = Math.max(12, answerLines.length * 5 + 8)
           
           doc.setDrawColor(150, 150, 150) // Gray border
