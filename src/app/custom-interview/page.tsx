@@ -223,12 +223,27 @@ export default function CustomInterviewPage() {
         format: 'a4'
       })
 
-      // Helper function to add watermark on each page
+      // Helper function to add multiple watermarks on each page
       const addWatermark = () => {
-        doc.setTextColor(200, 200, 200) // Light gray for watermark
-        doc.setFontSize(10)
+        doc.setTextColor(220, 220, 220) // Light gray for watermark
+        doc.setFontSize(9)
         doc.setFont('helvetica', 'normal')
-        doc.text('raphthefinanceguy.com', 105, 290, { align: 'center', angle: 45 })
+        const watermarkText = 'raphthefinanceguy.com'
+        
+        // Add multiple watermarks across the page
+        // Top-left to bottom-right diagonal
+        doc.text(watermarkText, 50, 80, { angle: 45 })
+        doc.text(watermarkText, 120, 150, { angle: 45 })
+        doc.text(watermarkText, 190, 220, { angle: 45 })
+        
+        // Bottom-left to top-right diagonal
+        doc.text(watermarkText, 50, 220, { angle: -45 })
+        doc.text(watermarkText, 120, 150, { angle: -45 })
+        doc.text(watermarkText, 190, 80, { angle: -45 })
+        
+        // Center watermark
+        doc.text(watermarkText, 105, 150, { align: 'center', angle: 45 })
+        
         doc.setTextColor(0, 0, 0) // Reset to black
       }
 
@@ -265,9 +280,27 @@ export default function CustomInterviewPage() {
       doc.setFont('helvetica', 'normal')
       let tocY = 50
       interviewFlow.sections.forEach((section, idx) => {
-        doc.text(`${idx + 1}. ${section.title}`, 25, tocY)
+        // Clean section title - remove any leading numbers or duplicates
+        let cleanTitle = section.title.trim()
+        // Remove patterns like "1. " or "1. 1. " at the start
+        cleanTitle = cleanTitle.replace(/^\d+\.\s*(\d+\.\s*)?/, '')
+        doc.text(`${idx + 1}. ${cleanTitle}`, 25, tocY)
         tocY += 10
       })
+
+      // Helper function to check if we need a new page and add it if needed
+      const checkNewPage = (requiredHeight: number, currentY: number) => {
+        const pageHeight = 297 // A4 height in mm
+        const marginBottom = 20 // Bottom margin
+        const maxY = pageHeight - marginBottom
+        
+        if (currentY + requiredHeight > maxY) {
+          doc.addPage()
+          addWatermark()
+          return 30 // Start Y position on new page
+        }
+        return currentY
+      }
 
       // Add sections
       interviewFlow.sections.forEach((section, sectionIdx) => {
@@ -276,68 +309,107 @@ export default function CustomInterviewPage() {
           addWatermark()
         }
 
-        // Section title
+        let yPos = 30
+
+        // Section title - clean it first
         doc.setTextColor(0, 0, 0) // Black
         doc.setFontSize(16)
         doc.setFont('helvetica', 'bold')
-        doc.text(`Section ${sectionIdx + 1}: ${section.title}`, 20, 30)
+        // Clean section title - remove any leading numbers or duplicates
+        let cleanSectionTitle = section.title.trim()
+        cleanSectionTitle = cleanSectionTitle.replace(/^\d+\.\s*(\d+\.\s*)?/, '')
+        const sectionTitle = `Section ${sectionIdx + 1}: ${cleanSectionTitle}`
+        doc.text(sectionTitle, 20, yPos)
+        yPos += 12
         
         // Section description
         if (section.description) {
+          yPos = checkNewPage(15, yPos)
           doc.setTextColor(60, 60, 60) // Dark gray for description
           doc.setFontSize(10)
           doc.setFont('helvetica', 'italic')
           const descLines = doc.splitTextToSize(section.description, 170)
-          doc.text(descLines, 20, 40)
+          const descHeight = descLines.length * 5
+          doc.text(descLines, 20, yPos)
+          yPos += descHeight + 10
+        } else {
+          yPos += 5
         }
-
-        let yPos = section.description ? 55 : 45
 
         // Questions
         section.questions.forEach((question, qIdx) => {
-          // Check if we need a new page
-          if (yPos > 250) {
-            doc.addPage()
-            addWatermark()
-            yPos = 30
+          // Calculate required height for question
+          doc.setFontSize(11)
+          const questionText = `Q${qIdx + 1}: ${question.question}`
+          const questionLines = doc.splitTextToSize(questionText, 170)
+          const questionHeight = questionLines.length * 6 + 10
+          
+          // Calculate hint height if exists
+          let hintHeight = 0
+          if (question.hint) {
+            doc.setFontSize(9)
+            const hintLines = doc.splitTextToSize(question.hint, 160)
+            hintHeight = Math.max(15, hintLines.length * 5) + 10
           }
+          
+          // Calculate answer height
+          doc.setFontSize(9)
+          const answerLines = doc.splitTextToSize(question.answer, 160)
+          const answerHeight = Math.max(15, answerLines.length * 5) + 15
+          
+          const totalHeight = questionHeight + hintHeight + answerHeight
+          
+          // Check if we need a new page
+          yPos = checkNewPage(totalHeight, yPos)
 
           // Question number and text
           doc.setTextColor(0, 0, 0) // Black
           doc.setFontSize(11)
           doc.setFont('helvetica', 'bold')
-          const questionText = `Q${qIdx + 1}: ${question.question}`
-          const questionLines = doc.splitTextToSize(questionText, 170)
           doc.text(questionLines, 20, yPos)
           yPos += questionLines.length * 6 + 8
 
           // Hint box
           if (question.hint) {
+            yPos = checkNewPage(hintHeight, yPos)
+            
+            doc.setFontSize(9)
+            // Clean hint text - remove "Hint:" prefix if it exists
+            let cleanHint = question.hint.trim()
+            cleanHint = cleanHint.replace(/^Hint\s*:?\s*/i, '')
+            const hintLines = doc.splitTextToSize(cleanHint, 160)
+            const boxHeight = Math.max(12, hintLines.length * 5 + 8)
+            
             doc.setDrawColor(200, 200, 200) // Light gray border
             doc.setFillColor(250, 250, 250) // Very light gray background
-            doc.roundedRect(20, yPos - 2, 170, 12, 1, 1, 'FD')
+            doc.roundedRect(20, yPos - 2, 170, boxHeight, 1, 1, 'FD')
             doc.setTextColor(0, 0, 0) // Black
-            doc.setFontSize(9)
             doc.setFont('helvetica', 'bold')
-            doc.text('Hint:', 25, yPos + 4)
+            doc.text('Hint:', 25, yPos + 5)
             doc.setFont('helvetica', 'normal')
-            const hintLines = doc.splitTextToSize(question.hint, 160)
-            doc.text(hintLines, 30, yPos + 4)
-            yPos += Math.max(12, hintLines.length * 4.5) + 8
+            doc.text(hintLines, 30, yPos + 5)
+            yPos += boxHeight + 10
           }
 
           // Answer box
+          yPos = checkNewPage(answerHeight, yPos)
+          
+          doc.setFontSize(9)
+          // Clean answer text - remove "Answer:" or "An" prefixes if they exist
+          let cleanAnswer = question.answer.trim()
+          cleanAnswer = cleanAnswer.replace(/^(Answer|An)\s*:?\s*/i, '')
+          const answerLines = doc.splitTextToSize(cleanAnswer, 160)
+          const answerBoxHeight = Math.max(12, answerLines.length * 5 + 8)
+          
           doc.setDrawColor(150, 150, 150) // Gray border
           doc.setFillColor(245, 245, 245) // Light gray background
-          doc.roundedRect(20, yPos - 2, 170, 12, 1, 1, 'FD')
+          doc.roundedRect(20, yPos - 2, 170, answerBoxHeight, 1, 1, 'FD')
           doc.setTextColor(0, 0, 0) // Black
-          doc.setFontSize(9)
           doc.setFont('helvetica', 'bold')
-          doc.text('Answer:', 25, yPos + 4)
+          doc.text('Answer:', 25, yPos + 5)
           doc.setFont('helvetica', 'normal')
-          const answerLines = doc.splitTextToSize(question.answer, 160)
-          doc.text(answerLines, 30, yPos + 4)
-          yPos += Math.max(12, answerLines.length * 4.5) + 12
+          doc.text(answerLines, 30, yPos + 5)
+          yPos += answerBoxHeight + 15
         })
       })
 
