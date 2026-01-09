@@ -336,7 +336,7 @@ export default function MissedQuestionsPage() {
 
             {/* Block Type Filters */}
             {blockTypes.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 sm:gap-2 items-center overflow-hidden">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 items-center">
                 <span className="text-xs text-[#6b7280] self-center whitespace-nowrap flex-shrink-0">Block:</span>
                 <button
                   onClick={() => setFilterBlockType('all')}
