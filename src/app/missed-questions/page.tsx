@@ -317,28 +317,29 @@ export default function MissedQuestionsPage() {
               </button>
               
               {/* Show Reviewed checkbox button */}
-              <label className="inline-flex items-center gap-2 cursor-pointer px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#1f2937] hover:bg-[#374151] transition-colors flex-shrink-0">
-                <input
-                  type="checkbox"
-                  checked={showReviewed}
-                  onChange={(e) => setShowReviewed(e.target.checked)}
-                  className="w-4 h-4 rounded border-2 border-[#6366f1] bg-[#1f2937] text-[#6366f1] focus:ring-2 focus:ring-[#6366f1] focus:ring-offset-0 cursor-pointer flex-shrink-0 checked:bg-[#6366f1] checked:border-[#6366f1]"
-                  style={showReviewed ? { backgroundColor: '#6366f1', borderColor: '#6366f1' } : {}}
-                />
-                <span className="text-xs sm:text-sm text-[#9ca3af] select-none whitespace-nowrap">Show Reviewed</span>
-              </label>
-              
-              {/* Show Understood checkbox button */}
-              <label className="inline-flex items-center gap-2 cursor-pointer px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#1f2937] hover:bg-[#374151] transition-colors flex-shrink-0">
-                <input
-                  type="checkbox"
-                  checked={showUnderstood}
-                  onChange={(e) => setShowUnderstood(e.target.checked)}
-                  className="w-4 h-4 rounded border-2 border-[#6366f1] bg-[#1f2937] text-[#6366f1] focus:ring-2 focus:ring-[#6366f1] focus:ring-offset-0 cursor-pointer flex-shrink-0 checked:bg-[#6366f1] checked:border-[#6366f1]"
-                  style={showUnderstood ? { backgroundColor: '#6366f1', borderColor: '#6366f1' } : {}}
-                />
-                <span className="text-xs sm:text-sm text-[#9ca3af] select-none whitespace-nowrap">Show Understood</span>
-              </label>
+{/* Show Reviewed checkbox button */}
+            <label className="inline-flex items-center gap-1.5 cursor-pointer px-2.5 sm:px-3 py-2 rounded-full bg-[#1f2937] hover:bg-[#374151] transition-colors flex-shrink-0">
+              <input
+                type="checkbox"
+                checked={showReviewed}
+                onChange={(e) => setShowReviewed(e.target.checked)}
+                className="w-4 h-4 rounded border-2 border-[#6366f1] bg-[#1f2937] text-[#6366f1] focus:ring-2 focus:ring-[#6366f1] focus:ring-offset-0 cursor-pointer flex-shrink-0 checked:bg-[#6366f1] checked:border-[#6366f1]"
+                style={showReviewed ? { backgroundColor: '#6366f1', borderColor: '#6366f1' } : {}}
+              />
+              <span className="text-xs sm:text-sm text-[#9ca3af] select-none whitespace-nowrap">Reviewed</span>
+            </label>
+
+            {/* Show Understood checkbox button */}
+            <label className="inline-flex items-center gap-1.5 cursor-pointer px-2.5 sm:px-3 py-2 rounded-full bg-[#1f2937] hover:bg-[#374151] transition-colors flex-shrink-0">
+              <input
+                type="checkbox"
+                checked={showUnderstood}
+                onChange={(e) => setShowUnderstood(e.target.checked)}
+                className="w-4 h-4 rounded border-2 border-[#6366f1] bg-[#1f2937] text-[#6366f1] focus:ring-2 focus:ring-[#6366f1] focus:ring-offset-0 cursor-pointer flex-shrink-0 checked:bg-[#6366f1] checked:border-[#6366f1]"
+                style={showUnderstood ? { backgroundColor: '#6366f1', borderColor: '#6366f1' } : {}}
+              />
+              <span className="text-xs sm:text-sm text-[#9ca3af] select-none whitespace-nowrap">Understood</span>
+            </label>
             </div>
 
             {/* Main Category Filters */}
