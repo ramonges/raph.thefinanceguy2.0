@@ -150,6 +150,25 @@ export default function CompaniesPage() {
     }
   }).filter(region => region.cities.length > 0)
 
+  // Calculate unique banks and funds counts
+  const uniqueBanks = new Set<string>()
+  const uniqueFunds = new Set<string>()
+  
+  companiesData.forEach(region => {
+    region.cities.forEach(city => {
+      city.companies.forEach(company => {
+        if (company.type === 'bank') {
+          uniqueBanks.add(company.name)
+        } else if (company.type === 'fund') {
+          uniqueFunds.add(company.name)
+        }
+      })
+    })
+  })
+
+  const uniqueBanksCount = uniqueBanks.size
+  const uniqueFundsCount = uniqueFunds.size
+
   const handleCompanyClick = (website: string) => {
     window.open(website, '_blank', 'noopener,noreferrer')
   }
@@ -172,7 +191,7 @@ export default function CompaniesPage() {
           <div className="mb-6 sm:mb-8">
             <h1 className="text-2xl sm:text-3xl font-bold mb-2">Companies</h1>
             <p className="text-sm sm:text-base text-[#9ca3af]">
-              Explore banks and trading firms by location
+              Explore {uniqueBanksCount} banks and {uniqueFundsCount} prop firms by location
             </p>
           </div>
 
