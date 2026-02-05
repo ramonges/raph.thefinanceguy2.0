@@ -408,7 +408,7 @@ export default function ResourcesPage() {
             </div>
           </div>
         </div>
-      </main>
+      )}
     </div>
   )
 }
